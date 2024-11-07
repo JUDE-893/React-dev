@@ -1,0 +1,96 @@
+.App {
+  text-align: center;
+  background-color: var(--darkGrey);
+  height : 120vh;
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+:root {
+  --darkGrey : #282c34;
+  --clearGrey : #343A47;
+  --random : #61dafb;
+  --white : #FAFAFA;
+}
+
+@font-face {
+  font-family: "pointerSister";
+  src: url("./fonts/PointerSisters-Freeformed.ttf") format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* @keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */
+
+/***************************/
+/*   app head styling     */
+/*************************/
+.App-header {
+  height: 50vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  /* font-size: calc(10px + 2vmin); */
+  color: white;
+}
+
+.app-title {
+  color: var(--random);
+  font-family: "pointerSister";
+  font-size: calc(5rem + 2vmin);
+
+}
+
+.App-logo {
+  height: 30vmin;
+  pointer-events: none;
+}
+/***************************/
+/*   intro styling        */
+/*************************/
+
+.intro {
+  color:var(--white);
+  margin-left: 5rem
+}
+
+.b-para {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: -1rem 0px 0rem 0rem;
+}
+
+.m-para {
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.btn, .btn-outline:hover {
+  border : none;
+  background-color: var(--clearGrey);
+  height: 3.5rem;
+  width:9rem;
+  border-radius: 5rem;
+  color: var(--white);
+  font-size: 1rem;
+  margin-top:2rem
+}
+
+.btn:hover, .btn-outline {
+  border : 2px solid var(--clearGrey);
+  background-color: transparent;
+  color: var(--white);
+}
