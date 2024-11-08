@@ -1,0 +1,9 @@
+<div className="question-section">
+  <p class="m-para">what is the most popular JavaScript framework ?</p>
+  <div className="">
+    {Array.from({length:4},(_,i) => i).map( (i) => {
+      return <button className='btn btn-question' onClick={handleStart}>Vue.js</button>
+    })}
+
+  </div>
+</div>
