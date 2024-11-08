@@ -1,23 +1,35 @@
-import {useState,useEffect} from 'react';
+import {useState,useEffect,useRef} from 'react';
 
 
 export default (function Counter(props) {
 
-  const [count,setCount] = useState(new Date())
+  const [count,setCount] = useState({min:7,sec:0}),
+  countRef = useRef(count),
+  {min,sec} = count;
+
+  console.log('minisec : ',min,sec);
 
   useEffect ( ()=> {
-    var now = new Date();
-    now.setMinutes(now.getMinutes() + 7)
-    setCount(now)
+    countRef.current = count;
+  },[count]);
 
-    setInterval( () => {
-      console.log(count.getSeconds());
-      setCount( count.setSeconds(count.getSeconds() - 0.5 ))
-    }, 1000)
-  },[])
+
+  useEffect ( ()=> {
+    const timer = setInterval( () => {
+      var num = (countRef.current.min*60 + countRef.current.sec)-1,
+      Min = Math.floor(num / 60),
+      Sec = (num % 60);
+      setCount( {min: Min,sec:Sec} )
+    }, 900);
+
+    return () =>{
+      clearInterval(timer);
+      console.log('interval was cleared');
+    }
+  },[]);
 
 
   return (
-    <button className='btn btn-outline' >{count.getMinutes}:{count.getSeconds}</button>
+    <button className='btn btn-outline' >{count.min}:{count.sec}</button>
   )
 })
