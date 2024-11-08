@@ -7,7 +7,7 @@ export default (function Counter(props) {
   countRef = useRef(count),
   {min,sec} = count;
 
-  console.log('minisec : ',min,sec);
+  //console.log('minisec : ',min,sec);
 
   useEffect ( ()=> {
     countRef.current = count;
@@ -20,7 +20,7 @@ export default (function Counter(props) {
       Min = Math.floor(num / 60),
       Sec = (num % 60);
       setCount( {min: Min,sec:Sec} )
-    }, 900);
+    }, 1000);
 
     return () =>{
       clearInterval(timer);
