@@ -9,13 +9,15 @@ function reducer(state,action) {
 
   switch (action.operation) {
     case "start":
-      console.log('called',state.started === true ? false : true);
       return {...state, started: (state.started === true ? false : true)}
+      break;
+
+    case "finish":
+      return {...state, finished: (state.finished === true ? false : true)}
       break;
 
     case "correct":
       return {...state, score: state.score + 10}
-
 
     case "answered":
       return {...state, answered: state.answered ? false : true, questionNum : state.questionNum + 1}
@@ -37,8 +39,8 @@ var data = [
 // App Component
 function App() {
 
-  const [state,dispatch] = useReducer(reducer,{started : false, score:0, answered:false, questionNum:0});
-  const {started,score,answered,questionNum} = state;
+  const [state,dispatch] = useReducer(reducer,{started : false,finished:false, score:0, answered:false, questionNum:0});
+  const {started,score,answered,questionNum,finished} = state;
 
   // the function that triggers the dispatcher and pass the proper action to perform, The action is recieve by the function as argument: {operation : optExemple}
   var handleDispatcher = function(action) {
@@ -53,7 +55,7 @@ function App() {
         <p className="app-title">React Quiz</p>
       </header>
 
-      { !started ? <div className="intro">
+      {!finished ? (!started ? <div className="intro">
         <p className='b-para'> Welcome To The React.Js Quiz!</p>
         <p className='m-para'> 15 question to test your React knowlege</p>
         <button className='btn' onClick={() => handleDispatcher({operation: 'start'})}>Let's start</button>
@@ -61,9 +63,10 @@ function App() {
       : <>
         <ProgressBar score={score} questionNum={questionNum}/>
         <Question key={questionNum} data={data[questionNum]} handleDispatcher={handleDispatcher}>
-          <Counter />
+          <Counter handleDispatcher={handleDispatcher} />
         </Question>
-      </>
+      </>)
+      : <div>finished!!!!!!!!!!!!!!!!</div>
     }
 
     </div>
