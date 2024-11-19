@@ -34,17 +34,17 @@ export default memo( function DetailsInfo(props) {
 
    // function that toggles the visibitiy of the trailer video frame by updating a state variable that allow to include the video frame conditionally into the Dom
    var videoToggler = (e) => {
-      movieId !== false && (e.target.className === "video-box ") && setmovieId(false);
-      console.log("stillllllllllllll");
+     (e.target.className === "video-box ") && setmovieId(false);
+
     };
 
    // EvantHanling Function
-   var EvantHanling = function(){
+   useEffect (function(){
      // set the click evant to toggle down the display of the video trailer component
-      document.addEventListener('click',videoToggler)
+     movieId !== false && document.addEventListener('click',videoToggler);
     // remove the event Listener
-      return () => document.removeEventListener('click',videoToggler)
-     }
+      return () => document.removeEventListener('click',videoToggler);
+    },[movieId])
 
 
   return (
@@ -78,7 +78,7 @@ export default memo( function DetailsInfo(props) {
 
         {movieId !== false &&  <VideoTrailer className="" Id={movieId}/>}
         {data.id && (document.querySelector('.detail-head') !== null) && (document.querySelector('.detail-head').style.display = (movieId ? 'none' : ''))}
-        {movieId !== false && EvantHanling()}
+        {/*movieId !== false && EvantHanling()*/}
       </>
       : <div className='d-flex justify-content-center align-items-center vh-100 mb-150' > {error.length === 0 ? <div className="spinner-border" id="spinner" role="status"><span className="sr-only">Loading...</span></div>
       : <ErrorPannel imgPath='/offline.svg' message={error}/>}</div>}
