@@ -1,0 +1,165 @@
+{
+  "questions": [
+      {
+        "question": "What is the purpose of the `Event Loop` in JavaScript?",
+        "correct": 2,
+        "answers": [
+          "Handles HTTP requests",
+          "Manages memory allocation",
+          "Handles asynchronous code execution",
+          "Executes synchronous code only"
+        ]
+      },
+      {
+        "question": "Which of the following is NOT a feature of ES6?",
+        "correct": 1,
+        "answers": [
+          "Arrow functions",
+          "Prototype-based inheritance",
+          "Classes",
+          "Template literals"
+        ]
+      },
+      {
+        "question": "What is the `Virtual DOM` in React?",
+        "correct": 0,
+        "answers": [
+          "A lightweight copy of the real DOM that React uses for fast updates",
+          "A browser feature that helps with rendering speed",
+          "A technique for styling components",
+          "A custom component library in React"
+        ]
+      },
+      {
+        "question": "What is the primary difference between `localStorage` and `sessionStorage`?",
+        "correct": 3,
+        "answers": [
+          "`localStorage` is accessible across tabs, while `sessionStorage` is only available within the same session",
+          "`sessionStorage` persists across browser sessions, while `localStorage` is temporary",
+          "`sessionStorage` is only for cookies, while `localStorage` is for general storage",
+          "`localStorage` persists until cleared, while `sessionStorage` is cleared when the tab is closed"
+        ]
+      },
+      {
+        "question": "What is the purpose of Webpack in a modern JavaScript project?",
+        "correct": 0,
+        "answers": [
+          "Bundles JavaScript, CSS, and other assets to optimize loading time",
+          "Handles HTTP requests and APIs",
+          "Optimizes server-side rendering",
+          "Manages local storage for web applications"
+        ]
+      },
+      {
+        "question": "What does the `this` keyword refer to in JavaScript?",
+        "correct": 3,
+        "answers": [
+          "The function that was called",
+          "The object that owns the current function",
+          "The global window object",
+          "The object that invoked the current function"
+        ]
+      },
+      {
+        "question": "What is CORS and why is it important in web development?",
+        "correct": 2,
+        "answers": [
+          "Cross-Origin Resource Sharing, a security feature for sharing resources between different domains",
+          "Cross-Origin Resource Security, a feature for securing APIs",
+          "Cross-Origin Request Sharing, a security mechanism to prevent unauthorized cross-origin requests",
+          "Cross-Origin Retrieval Services, a service for fetching resources from external APIs"
+        ]
+      },
+      {
+        "question": "Which CSS property can be used to create a flex container?",
+        "correct": 0,
+        "answers": [
+          "display: flex",
+          "display: block",
+          "position: relative",
+          "float: left"
+        ]
+      },
+      {
+        "question": "What is the role of `webpack.config.js` in a Webpack setup?",
+        "correct": 1,
+        "answers": [
+          "Defines the webpack version to use in the project",
+          "Contains configuration for how Webpack should bundle files",
+          "Contains the list of files to be bundled",
+          "Defines the file extensions to support"
+        ]
+      },
+      {
+        "question": "What is the purpose of server-side rendering (SSR) in React?",
+        "correct": 0,
+        "answers": [
+          "To generate the initial HTML on the server for faster page loads",
+          "To allow React to execute JavaScript code on the server",
+          "To render the entire app in the browser before sending any HTML to the client",
+          "To fetch data from the server asynchronously before rendering"
+        ]
+      },
+      {
+        "question": "What is a Progressive Web App (PWA)?",
+        "correct": 2,
+        "answers": [
+          "A web app that can be installed as a native application",
+          "A web app that requires a JavaScript framework like Angular or React",
+          "A web app that works offline and provides a native-like experience",
+          "A web app that uses server-side rendering"
+        ]
+      },
+      {
+        "question": "What is the purpose of `async/await` in JavaScript?",
+        "correct": 1,
+        "answers": [
+          "To manage errors in asynchronous functions",
+          "To handle asynchronous operations in a more readable manner than `callbacks` or `promises`",
+          "To allow for synchronous code execution in asynchronous functions",
+          "To create parallel tasks in JavaScript"
+        ]
+      },
+      {
+        "question": "What is the difference between `==` and `===` in JavaScript?",
+        "correct": 2,
+        "answers": [
+          "`==` checks for equality with type conversion, while `===` checks for equality without type conversion",
+          "`==` checks for strict equality, while `===` checks for loose equality",
+          "`==` is faster than `===`",
+          "`===` only works for strings and numbers, while `==` works for all types"
+        ]
+      },
+      {
+        "question": "Which of the following is an example of a CSS preprocessor?",
+        "correct": 1,
+        "answers": [
+          "SASS",
+          "React",
+          "Webpack",
+          "Node.js"
+        ]
+      },
+      {
+        "question": "What is the role of the `Service Worker` in a Progressive Web App (PWA)?",
+        "correct": 0,
+        "answers": [
+          "It acts as a proxy between the app and network, enabling offline functionality",
+          "It provides security by blocking malicious content",
+          "It manages user authentication",
+          "It handles requests to the server for fetching data"
+        ]
+      },
+      {
+        "question": "Which HTTP method is used to update a resource in a REST API?",
+        "correct": 2,
+        "answers": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE"
+        ]
+      }
+  ]
+
+}

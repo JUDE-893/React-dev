@@ -32,13 +32,19 @@ export default memo( function DetailsInfo(props) {
 
    },[ID]);
 
+   // function that toggles the visibitiy of the trailer video frame by updating a state variable that allow to include the video frame conditionally into the Dom
+   var videoToggler = (e) => {
+      movieId !== false && (e.target.className === "video-box ") && setmovieId(false);
+      console.log("stillllllllllllll");
+    };
+
    // EvantHanling Function
    var EvantHanling = function(){
      // set the click evant to toggle down the display of the video trailer component
-      setTimeout(() => {return 1},3000);
-      document.addEventListener('click',(e) => {
-         movieId !== false && (e.target.className === "video-box ") && setmovieId(false);
-       })}
+      document.addEventListener('click',videoToggler)
+    // remove the event Listener
+      return () => document.removeEventListener('click',videoToggler)
+     }
 
 
   return (

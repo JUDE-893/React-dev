@@ -34,7 +34,7 @@ export default memo(function InfoLabel(props) {
         <p className='movie-title'>{(itm.original_title ?? itm.original_name ?? "").slice(0,titleLimit)+(itm.original_title && (itm.original_title.length > titleLimit) ? '..' : '')}</p>
         <p className="release-date" >{(itm.release_date ?? itm.first_air_date ?? "").split('-')[0]}</p>
         <p className="overview-title">overview :</p>
-        <p className='s-para'>
+        <p className='s-para overview'>
           {stringReducer((itm.overview ?? ''),overviewLimit)}
         {(itm.overview && itm.overview.length > 200 && typeof props.setOverExpanded !== 'undefined' ? readMore : "")}
         </p>

@@ -1,7 +1,7 @@
-.App {
+body {
   text-align: center;
   background-color: var(--darkGrey);
-  height : 100vw;
+  height : cover;
 }
 
 
@@ -114,14 +114,18 @@
   gap : 0px;
 }
 
-.suggestions .btn {
-  width : 35%;
+.btn-question {
+  width : 45%;
   margin-top: 0.98rem;
   transform: translateX(0rem);
   transition: transform 0.5s;
+  white-space: normal;
+  word-wrap: break-word;
+  height: auto;
+  padding: 20px;
 }
 
-.suggestions .btn:hover {
+.btn-question:hover {
   transform: translateX(1rem);
 }
 
@@ -167,4 +171,24 @@
   font-size: 1.2rem;
   font-weight: 700;
   gap:80%
+}
+
+  /**************************/
+ /*   scoreSheet styling   */
+/**************************/
+.average {
+  font-size: 7rem;
+  color: var(--skyBlue);
+  font-style: italic;
+}
+
+.score {
+  color: var(--white);
+  font-size: 1.4rem;
+  font-weight: 300;
+  margin-bottom: 0.4rem
+}
+
+.hight-score {
+  color: var(--green)
 }

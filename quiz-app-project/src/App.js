@@ -1,9 +1,12 @@
-import {useReducer} from 'react';
+import {useReducer,useEffect} from 'react';
+import axios from 'axios';
 import logo from './logo.svg';
 import './App.css';
 import Question from './Components/Question';
 import ProgressBar from './Components/ProgressBar';
 import Counter from './Components/Counter';
+import ScoreSheet from './Components/ScoreSheet';
+
 
 function reducer(state,action) {
 
@@ -17,10 +20,19 @@ function reducer(state,action) {
       break;
 
     case "correct":
-      return {...state, score: state.score + 10}
+      var obj = {...state, score: state.score + (280/state.data.length)}
+      return {...obj, highiestScore: (state.highiestScore < obj.score ? obj.score : state.highiestScore)}
 
     case "answered":
       return {...state, answered: state.answered ? false : true, questionNum : state.questionNum + 1}
+      break;
+
+    case "restart":
+      return {...state ,started : false,finished:false, score:0, answered:false, questionNum:0}
+      break;
+
+    case "dataSetting":
+      return {...state ,data : action.data}
       break;
 
     default:
@@ -28,23 +40,33 @@ function reducer(state,action) {
   }
 }
 
-var data = [
-  {question : 'Wht is the most popular JavaScript framework ?', correct:0, answers: ["react.js" ,'Angular' , "Vue.js", "Next.js"]},
-  {question : 'Wht is the most popular JavaScript framework ?', correct:0, answers: ["react.js" ,'Angular' , "Vue.js", "Next.js"]},
-  {question : 'Wht is the most popular JavaScript framework ?', correct:0, answers: ["react.js" ,'Angular' , "Vue.js", "Next.js"]},
-  {question : 'Wht is the most popular JavaScript framework ?', correct:0, answers: ["react.js" ,'Angular' , "Vue.js", "Next.js"]}
-]
-
 
 // App Component
 function App() {
 
-  const [state,dispatch] = useReducer(reducer,{started : false,finished:false, score:0, answered:false, questionNum:0});
-  const {started,score,answered,questionNum,finished} = state;
+  const [state,dispatch] = useReducer(reducer,{data:[], started : false,finished:false, score:0,highiestScore:0, answered:false, questionNum:0});
+  const {data,started,score,highiestScore,answered,questionNum,finished} = state;
 
   // the function that triggers the dispatcher and pass the proper action to perform, The action is recieve by the function as argument: {operation : optExemple}
   var handleDispatcher = function(action) {
     dispatch(action)
+  }
+
+  useEffect( () => {
+    axios.get("http://localhost:9600/questions").then( (request) => {handleDispatcher({data: request.data, operation:"dataSetting"})}).catch( (e) => {console.log(e);})
+  },[])
+
+  // add a keyPress Event
+  useEffect ( () => {
+    !started  && document.addEventListener("keypress",handleEnterKey );
+    return () => {document.removeEventListener("keypress",handleEnterKey );}
+  },[started])
+
+  // function that get called as the user presses a keyboard button & returns an action to the reducer as the user clickes the «Enter» key
+  function handleEnterKey(e) {
+    if (e.code === "Enter" || e.keyCode === 13 || e.which === 13) {
+      handleDispatcher({operation: 'start'})
+    }
   }
 
   return (
@@ -61,12 +83,12 @@ function App() {
         <button className='btn' onClick={() => handleDispatcher({operation: 'start'})}>Let's start</button>
       </div>
       : <>
-        <ProgressBar score={score} questionNum={questionNum}/>
-        <Question key={questionNum} data={data[questionNum]} handleDispatcher={handleDispatcher}>
+        <ProgressBar score={score} questionNum={questionNum} />
+        <Question key={questionNum} questionNum={questionNum} lastQuestionNum={data.length-1} data={data[questionNum] ?? {}} handleDispatcher={handleDispatcher}>
           <Counter handleDispatcher={handleDispatcher} />
         </Question>
       </>)
-      : <div>finished!!!!!!!!!!!!!!!!</div>
+      : <ScoreSheet handleDispatcher={handleDispatcher} score={score} highiestScore={highiestScore}/>
     }
 
     </div>

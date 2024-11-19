@@ -3,7 +3,7 @@ import {useState,useEffect,useRef} from 'react';
 
 export default (function Counter(props) {
 
-  const [count,setCount] = useState({min:0,sec:30}),
+  const [count,setCount] = useState({min:7,sec:30}),
   countRef = useRef(count),
   {min,sec} = count;
 

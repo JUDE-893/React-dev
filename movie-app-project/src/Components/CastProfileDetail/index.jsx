@@ -46,8 +46,7 @@ export default memo( function EpisodeDetails(props) {
         <div className="detail-head row ">
           <img className="detail-profile col" src={`https://image.tmdb.org/t/p/w500${data.profile_path}`} alt="" />
           <div className="season-info col">
-            <p className='s-para'>{stringReducer((data.biography ?? ''),(overExpanded ? 100000 : 500))}</p>
-            {console.log('bios : ', data.biography && data.biography.length , 300)}
+            <p className='s-para bios'>{stringReducer((data.biography ?? ''),(overExpanded ? 100000 : 500))}</p>
             {data.biography && data.biography.length > 300 && <ReadMore setOverExpanded={setOverExpanded} overExpanded={overExpanded} />}
           </div>
         </div>
