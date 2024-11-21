@@ -17,10 +17,10 @@ export default memo( function Pagination(props) {
 
   return (
     <nav aria-label="...">
-      <ul class="pagination pagination-sm justify-content-center">
+      <ul className="pagination pagination-sm justify-content-center">
 
-          {pagesIndexes > 10 && (<li class="page-item" >
-                                       <span class="page-link" href="#" aria-label="Previous" onClick={()=>(deckIndex > 0) && setDeckIndex(deckIndex-1)}><span aria-hidden="true">&laquo;</span></span>
+          {pagesIndexes > 10 && (<li className="page-item" >
+                                       <span className="page-link" href="#" aria-label="Previous" onClick={()=>(deckIndex > 0) && setDeckIndex(deckIndex-1)}><span aria-hidden="true">&laquo;</span></span>
                                      </li>)}
 
           {Array.from({ length: pagesIndexes }, (_, l) => l).slice(deckIndex*10,deckIndex*10+10).map ((i) => {
@@ -28,8 +28,8 @@ export default memo( function Pagination(props) {
                          <span onClick={()=> setPageIndex(i)} className="page-link">{i + 1}</span>
                      </li>)})}
 
-           {pagesIndexes > 10 && (<li class="page-item" >
-                                        <span class="page-link" href="#" aria-label="Next" onClick={()=>(deckIndex +1 < maxDeck) && setDeckIndex(deckIndex+1)}><span aria-hidden="true">&raquo;</span></span>
+           {pagesIndexes > 10 && (<li className="page-item" >
+                                        <span className="page-link" href="#" aria-label="Next" onClick={()=>(deckIndex +1 < maxDeck) && setDeckIndex(deckIndex+1)}><span aria-hidden="true">&raquo;</span></span>
                                   </li>)}
       </ul>
     </nav>

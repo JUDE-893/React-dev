@@ -52,12 +52,9 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,.detail::-webkit-scrollbar, .se
   grid-template-columns: repeat(2,1fr);
   align-items: center;
   height : 80px;
-  /* justify-items: center; */
-  /* background-color: var(--darkRed); */
   background: #c31432;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #240b36, #c31432);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right,rgba(11, 33, 54,1), #c31432 ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
   color: var(--white);
   padding: 0px 25px 0px 25px;
 
@@ -67,6 +64,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,.detail::-webkit-scrollbar, .se
   font-family: "arciform";
   font-size: 29px;
   cursor: pointer;
+  white-space: nowrap;
   user-select: none; /* Standard syntax */
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
@@ -81,7 +79,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,.detail::-webkit-scrollbar, .se
 
 
 /**********************/
-/*  NavBar Styling   */
+/*  search Styling   */
 /********************/
 
 .search {
@@ -98,7 +96,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,.detail::-webkit-scrollbar, .se
   border:none;
   width: 320px;
   border-radius: 50px;
-  padding: 5px 10px 5px 10px;
+  padding: 8px 10px 8px 10px;
 }
 
 .search-bar input {
@@ -386,18 +384,20 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,.detail::-webkit-scrollbar, .se
 /*  MovieCarousel Styling   */
 /***************************/
 
+.carousel { margin-left: -10px;margin-bottom: 50px}
+
 .carousel-item {
   flex-direction: column!important;
   background-size: cover!important;
   background-position: center!important;
   background-repeat: no-repeat!important;
   backface-visibility: visible!important;
-  height:350px!important;
+  height:32vw!important;
+  max-height:500px;
   color: white!important
 }
 
-
-.active > *{
+ .active > *{
   margin-left: 25px!important;
   width : 350px;
   background-size: cover!important;
@@ -503,13 +503,20 @@ margin-left: 28px
 }
 
 /* carousel layouts */
+.indicators {
+  position: relative;
+  background-color: blue!important;
+  width: 300px;
+  margin-left: auto;
+}
+
 .carousel-control-prev, .carousel-control-next{
-  margin-top: 30%;
+  margin-top: -18%;
 
 }
 
 .carousel-control-prev{
-  margin-left: 50%;
+  margin-left: 0%;
 }
 
 .carousel-control-prev-icon, .carousel-control-next-icon{
@@ -518,9 +525,9 @@ margin-left: 28px
 }
 
 .carousel-indicators {
-  margin-left: 62%;
-  overflow-x: hidden!important;
-  width:200px!important;
+  margin-left: 15%;
+  /* overflow-x: hidden!important; */
+
 
 }
 
@@ -773,7 +780,7 @@ margin-left: 28px
   align-content: flex-start;
   align-items: flex-start;
   justify-content: flex-start;
-  gap:0px!important
+
 }
 
 .episode-box {
@@ -801,6 +808,7 @@ margin-left: 28px
 .episode-box .movie-content {
   color :var(--Weat);
   margin: -3px auto 0px 5px;
+  height:cover;
 }
 
 .episode-poster {
@@ -853,7 +861,8 @@ margin-left: 28px
 }
 
 .episode-detail .release-date {
-  font-weight: 600
+  font-weight: 600;
+
 }
 
 .released {
@@ -898,7 +907,8 @@ margin-left: 28px
 
 .read-more {
   color : var(--darkWeat);
-  margin-top: 10px
+  margin-top: 10px;
+  cursor: pointer;
 }
 
 .cast-detail .read-more {
@@ -913,9 +923,6 @@ margin-left: 28px
   display: flex;
   flex-direction: column;
   height: cover!important
-}
-
-.discover .pagination {
 }
 
 .filter {
@@ -992,6 +999,10 @@ margin-left: 28px
   margin-top: 20px
 }
 
+.find-movies-header .s-para {
+  font-style:italic
+}
+
 .select-type {
   display: flex;
   width:400px;
@@ -1040,8 +1051,7 @@ margin-left: 28px
 
 .error-pannel {
   text-align: center;
-
-
+  font-style: oblique;
 }
 
 .error-pannel img{
@@ -1049,4 +1059,379 @@ margin-left: 28px
   border : none;
   margin-bottom: 25px;
   pointer-events: none;
+}
+
+/* custom styling for medium screen resolutions */
+@media screen and (max-width:1000px) {
+  /* menu styling */
+  .menu {
+    position: absolute;
+    z-index: 102;
+  }
+
+  /* main section' body styling */
+  .main >:nth-child(2) {
+    padding-left: 10%;
+  }
+
+
+  /*carousel styling*/
+  .carousel-item {
+    height:40vw!important;
+  }
+
+}
+
+/* custom styling for small-medium screen resolutions */
+@media screen and (max-width:800px) {
+  /* main section' body styling */
+  .main >:nth-child(2) {
+    padding-left: 13%;
+  }
+
+
+  /*carousel styling*/
+  .carousel-item {
+    height:50vw!important;
+  }
+
+  /* detail head */
+  .inactive {
+      padding-left: 2%;
+    }
+  .overview,.bios {
+    max-height: 200px;
+  }
+  .bios {
+    max-height: 550px !important;
+  }
+}
+
+/* custom styling for small screen resolutions */
+@media screen and (max-width:650px) {
+  /* main section' body styling */
+  .main >:nth-child(2) {
+    padding-left: 15%;
+  }
+
+
+  /*carousel styling*/
+  .carousel-item {
+    height:60vw!important;
+  }
+
+  .indicators {
+    margin-top: -55vw;
+    margin-left: 45vw;
+  }
+
+  .carousel-control-prev, .carousel-control-next{
+    display: none;
+  }
+
+  .carousel-indicators {
+    margin-left: 0%;
+    margin-bottom: 1%!important;
+  }
+}
+@media screen and (max-width:600px)  {
+  .Nav { position: relative;}
+  .search {
+    background: #c31432;
+    background: -webkit-linear-gradient(to right, #240b36, #c31432);
+    background: linear-gradient(to right,rgba(11, 33, 54,1), #c31432 );;
+    position: absolute;
+    width:100%;
+  }
+  .searchBar-btn {
+    font-size: 15px;
+  }
+  .search-bar {
+    width: 80%;
+    border-radius: 50px;
+    padding: 8px 10px 8px 10px;
+  }
+
+  .search-bar input {
+    height: 30px;
+    width: 100%;
+    padding : 5px;
+    margin-right : 15px;
+
+  }
+
+  .Nav:has(.search) .nav-logo{
+    display: none
+  }
+
+  /* head detail */
+  .detail-head + #cast , .cast-detail #known-for-movies,.detail #seasons{
+    margin-top: 160vh!important;
+    /* margin-bottom:-200px!important; */
+  }
+  .detail-head {
+    flex-direction: column;
+  }
+  .detail-poster {
+    width : 100%;
+    height :auto;
+    max-width: 260px;
+  }
+
+  .inactive {
+      padding-top: 4%;
+    }
+
+    .overview,.bios {
+      max-height: 200px;
+      margin-left: 1%!important
+    }
+    .bios {
+      max-height: 400px !important;
+      width:95%!important;
+    }
+}
+
+/* custom styling for extra-small screen resolutions */
+@media screen and (max-width:520px) {
+  /* main section' body styling */
+  .main >:nth-child(2) {
+    padding-left: 16%;
+  }
+
+
+  /*carousel styling*/
+  .carousel-item {
+    height:80vw!important;
+  }
+
+  .indicators {
+    margin-top: -73vw;
+    margin-left: 38vw;
+  }
+
+}
+
+/* custom styling for large mobiles screen resolutions */
+@media screen and (max-width:400px) {
+  /* navBar */
+  .nav-logo {
+    font-size: 24px;
+  }
+
+  .searchBar-btn {
+    font-size: 15px;
+  }
+
+  /* menu */
+  .menu {
+    margin: 6px 6px 0px 6px;
+    width : 180px;
+    padding-left: -10px;
+  }
+  .menu a {
+    margin-left: -4px;
+  }
+  .menu .active svg{
+    margin-left: 21px!important;
+  }
+  .menu-reduced {
+    width: 0px!important;
+  }
+
+  /* main section' body */
+  .main >:nth-child(2) {
+    padding-left: 5%;
+  }
+
+  /* movies container */
+  .movies,.movies-block {
+    gap:13px;
+  }
+
+  .movie-box {
+    width: 90px;
+  }
+
+  .movie-pannel {
+    width: 90px;
+    height:150px;
+  }
+
+  .scroll-btns .btn {
+    width:100px;
+    height:40px;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .scroll-btns > svg {
+    display: none;
+  }
+
+  /*carousel*/
+  .carousel-item {
+    height:100vw!important;
+    width : 100%;
+  }
+
+  .carousel-item .overview {
+    width : 95%;
+  }
+
+  .element-buttons button {
+    width:90px;
+    height:40px;
+    font-size: 14px;
+  }
+
+  .active > * {
+    margin-left: 10px !important
+  }
+  .indicators {
+    margin-top: -92vw;
+    margin-left: 35vw;
+  }
+
+  /* block movies container */
+  .movies-block {
+    gap : 3px;
+  }
+  .filter {
+    margin-left: -15%;
+    gap:0px;
+    width:-700%
+  }
+  /* pagination */
+  .pagination {
+    flex-wrap: wrap!important;
+  }
+  .pagination .active {
+    margin-left: -10px!important
+  }
+  /* profile cast */
+  .profile-img {
+    width: 70px;
+    height: 50%;
+  }
+  .profile-img + p{
+    font-size: 11px
+  }
+  .movies .review-box {
+    padding: 15px;
+    flex-basis: 100%!important;
+    width: 250px !important;
+  }
+  .review-box .s-para {
+    font-size: 13px;
+    width: 220px!important
+  }
+  /* episode container */
+
+    .episode-box {
+      flex-basis: 45%;
+      margin-left: 10px;
+    }
+
+    .episode-box a {
+      height:90px!important;
+      width : 100%!important;
+    }
+
+    .episode-box .movie-content {
+      font-size: 12px;
+      margin: 3px auto 0px 5px;
+    }
+
+    .episode-poster {
+      width:100%!important;
+      height:100%!important;
+    }
+    /* error pannel */
+    .error-pannel .s-para{
+      font-size: 13px;
+      font-style:italic;
+    }
+    /* find movies */
+    .find-movies-header {
+      grid-template-columns: repeat(1,1fr);
+      gap : 0px;
+    }
+    .find-movies-header .s-para {
+      font-size: 13px;
+      margin-top: -10px;
+    }
+    .select-type {
+      justify-content: center;
+      gap:50px;
+      width:100%;
+    }
+    .select-type p{
+      font-size: 20px!important
+    }
+}
+
+/* custom styling for medium-small mobiles screen resolutions */
+@media screen and (max-width:360px) {
+
+  /* main section' body */
+  .main >:nth-child(2) {
+    padding-left: 5%;
+  }
+
+  /*carousel*/
+  .carousel-item {
+    height:106vw!important;
+  }
+
+  .container-lg {
+    margin-bottom: 1000px!important
+  }
+
+  .indicators {
+    margin-top: -98vw;
+    margin-left: 32vw;
+  }
+
+  /* info label */
+  .movie-title {
+    font-size: 20px;
+    width: 90%;
+  }
+}
+
+/* custom styling for xtra-small mobiles screen resolutions */
+@media screen and (max-width:320px) {
+  /* navBar */
+  .Nav {
+    padding: 0px 5px 0px 5px;
+  }
+  /* main section' body */
+  .main >:nth-child(2) {
+    padding-left: 2.8%;
+  }
+
+  /*carousel*/
+  .carousel-item {
+    height:135vw!important;
+  }
+
+  .indicators {
+    margin-top: -125vw;
+    margin-left: 24vw;
+  }
+  /* info label */
+  .movie-title {
+    font-size: 18px;
+  }
+  .inactive {
+      padding-top: 4%;
+      margin-left: 3%
+    }
+
+  /* Episode container */
+  .Episode-container{
+    margin-left: -4%!important
+  }
+
 }

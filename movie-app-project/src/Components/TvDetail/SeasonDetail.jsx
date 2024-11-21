@@ -48,7 +48,7 @@ export default memo( function SeasonDetail(props) {
           </div>
 
           <p className="overview-title">{data.episodes && data.episodes.length} Episodes</p>
-          <div class="Episode-container ">
+          <div class="Episode-container mb-5">
             {data.episodes && data.episodes.slice(pageIndex*50, pageIndex*50+50).map( (epd,index) => {
               return <EpisodeBox  data={epd} index={index+1} tvName={about} aboutSeason={data.name} ID={ID} seasonId={seasonID}/>
             })}

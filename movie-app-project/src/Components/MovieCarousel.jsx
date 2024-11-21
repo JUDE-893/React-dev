@@ -62,14 +62,7 @@ export default memo(function MovieCarousel(props) {
 
    return (
      <div className="container-lg my-3">
-        <div id="myCarousel" className="carousel slide" data-bs-ride="">
-            <ol className="carousel-indicators">
-
-              {data.map( (it, ind) => {
-                return (<li data-bs-target="#myCarousel" data-bs-slide-to={ind} id={ind} className={ind === 0 ? "active" : ""} style={{display : ind >=5 ? 'none' : 'block'}}></li>);
-              })}
-
-            </ol>
+        <div id="myCarousel" className="carousel slide" data-bs-ride="carousel">
 
             <div className="carousel-inner">
                 {data.map( (itm, ind) => {
@@ -85,12 +78,22 @@ export default memo(function MovieCarousel(props) {
 
             </div>
 
+            <div className="indicators">
+            <ol className="carousel-indicators">
+
+              {data.map( (it, ind) => {
+                return (<li data-bs-target="#myCarousel" data-bs-slide-to={ind} id={ind} className={ind === 0 ? "active" : ""} style={{display : ind >=5 ? 'none' : 'block'}}></li>);
+              })}
+
+            </ol>
+
             <a className="carousel-control-prev" href="#myCarousel" data-bs-slide="prev">
                 <span className="carousel-control-prev-icon"></span>
             </a>
             <a className="carousel-control-next" href="#myCarousel" data-bs-slide="next">
                 <span className="carousel-control-next-icon"></span>
             </a>
+            </div>
         </div>
         {movieId && <VideoTrailer className={movieId ? "" : "hidden-video-box"} Id={movieId}/>}
         { (data.length > 0) && EvantHanling()}

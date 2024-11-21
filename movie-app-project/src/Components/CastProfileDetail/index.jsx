@@ -9,7 +9,7 @@ import MovieContainer from '../MovieContainer';
 import MovieBox from '../MovieBox';
 import NavigateBack from '../NavigateBack';
 
-export default memo( function EpisodeDetails(props) {
+export default memo( function CastProfileDetails(props) {
 
   const { about,ID} = useParams(),
    [data,setData] = useState({}),

@@ -32,7 +32,7 @@ export default memo( function EpisodeDetails(props) {
           </div>
           <div className='episode-content'>
               <p className='s-para'>{data.overview && data.overview.length > 0 ? data.overview : "Oops! No overview available. "}</p>
-              <p className='release-date'><span className='released'>Released : </span>{data.air_date}</p>
+              <p className='release-date mb-5'><span className='released'>Released : </span>{data.air_date}</p>
           </div>
         </div>
 

@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import { BrowserRouter as Router, Route, Routes,Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes,useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
 import NavBar from "./Components/NavBar";
@@ -16,8 +16,7 @@ import FindMovie from "./Components/FindMovies";
 
 function App() {
 
-  const [date,setData] = useState([]),
-  [searchTerm,setSearchTerm] = useState(""),
+  const[searchTerm,setSearchTerm] = useState(""),
   [searching,setSearching] = useState(false),
   [menuReduced,setMenuReduced] = useState(false);
 
@@ -33,13 +32,6 @@ function App() {
        menuReduced ? setMenuReduced(false) : setMenuReduced(true);
      }
    };
-
-  useEffect( () => {
-     // // let res = axios.get(`http://www.omdbapi.com/?s=${'fight club'}&apikey=80c4c657`).then( (response) => {console.log(response.data);});
-     // let res = axios.get(`https://api.themoviedb.org/3/search/movie?api_key=231423fc80b78690e4e5f233f191b78b&query=${encodeURIComponent("openheimer")}`).then( (response) => {})
-     // .catch( (e) => {console.log("Error : ", e)});
-
-   },[searchTerm])
 
   return (
     <>
@@ -61,6 +53,7 @@ function App() {
           <Route path="/tvdetail/:about/:ID/season/:seasonID" element={<SeasonDetail />}/>
           <Route path="/tvdetail/:about/:ID/:season/:seasonID/episode/:episodeID" element={<EpisodeDetails />}/>
           <Route path="/person/:about/:ID" element={<CastProfileDetail />}/>
+          <Route path='*' element={<LastVisited/>}/>
         </Routes>
       </div>
     </Router>
@@ -69,4 +62,23 @@ function App() {
   )
 }
 
+// function component that re-render the user to the last visited page if the user requested a non existing page or a non defined Route
+function LastVisited() {
+  console.log('LOST');
+  const navigate = useNavigate(),
+  handleGoBack = () => {
+    console.log('back');
+        navigate(-2);
+    };
+
+  // updating the session variable
+  // useEffect ( ()=> {
+  //   if(location.pathname !== '/') {
+  //     sessionStorage.setItem('lastVisited',location.pathname);
+  //   }
+  // },[])
+
+  const lastVisited = sessionStorage.getItem('lastVisited') || '/';
+  return (<div className='Lost'>{handleGoBack()}</div>)
+}
 export default App;

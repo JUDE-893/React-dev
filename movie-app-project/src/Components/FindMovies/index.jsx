@@ -36,7 +36,7 @@ export default memo( function FindMovie(props){
        </div>
        {console.log("Error : ",typeof data)}
        { data ? <MoviesBlockContainer type={type === "tv" ? type : ''} data={data}/> : <div className='d-flex justify-content-center align-items-center vh-100' > {error.length === 0 ? <div className="spinner-border" id="spinner" role="status"><span className="sr-only">Loading...</span></div> : <ErrorPannel imgPath='/offline.svg' message={error}/>}</div> }
-       { props.query === '' && <ErrorPannel imgPath='/search.svg' message='Waiting for you to search..'/> }
+       { data && props.query === '' && <ErrorPannel imgPath='/search.svg' message='Waiting for you to search..'/> }
        { props.query !== '' && data.length === 0 &&  <ErrorPannel imgPath='/nothing.svg' message='No results was found!'/> }
        {pages >1 && <Pagination setPageIndex={setPageIndex} pageIndex={pageIndex} pagesIndexes={pages} />}
      </div>

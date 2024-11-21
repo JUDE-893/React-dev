@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 
-export default memo( function DetailsInfo(props) {
+export default memo( function CastProfile(props) {
 
 
    return (

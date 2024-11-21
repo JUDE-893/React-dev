@@ -10,7 +10,7 @@ export default memo( function MoviesBlockContainer(props) {
     <div className='movies-block-container'>
     <div className='movies-block'>
       {props.data.map( (m) => {
-        return <MovieBox type={props.type} data={m} />
+        return <MovieBox key={m.id} type={props.type} data={m} />
       })
 
       }

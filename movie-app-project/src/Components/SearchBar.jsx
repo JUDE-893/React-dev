@@ -33,23 +33,36 @@ export default memo(function SearchBar(props) {
     }
   }
 
+  // function that handles the search event (as previously mentioned in onclickSearch func) after the ENTER Key is pressed
+  var onEnterPressSearch = (e) => {
+    console.log(e);
+    if (e.code === "Enter" || e.charCode === 13 || e.which === 13){
+      onClickSearch();
+    }
+  }
+
+
   useEffect(
       () => {
 
           if (entry.length === 0 ) {
-            console.log("entry : ",entry.length);
             document.body.addEventListener('mousedown',handleVisbility);
           }else {
-            console.log('removeEventListener');
             document.body.removeEventListener('mousedown',handleVisbility);
           }
   },[entry]);
+
+  useEffect( () => {
+    document.addEventListener('keypress',onEnterPressSearch);
+
+    return () => document.removeEventListener('keypress',onEnterPressSearch)
+  })
 
 
   return (
       <div className="search">
         <div className="search-bar">
-          <input type="text" value={entry ?? ""} placeholder="Seach For Any Movie, Serie Or Show" onChange={handleEntry}/>
+          <input type="text" value={entry ?? ""} placeholder="Seach For Any Movie, Serie Or Show" onChange={handleEntry} autoFocus/>
           <button type="button" className='search-btn' onClick={ onClickSearch } ><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
         </div>
       </div>

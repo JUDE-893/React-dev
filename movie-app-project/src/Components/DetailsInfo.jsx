@@ -26,7 +26,7 @@ export default memo( function DetailsInfo(props) {
    showType = props.type ? props.type : 'movie' ;
 
   useEffect( () => {
-     console.log(ID ," : ID", showType , ' : showType');
+     setOverExpanded(false);
      axios.get(`https://api.themoviedb.org/3/${showType}/${ID}?api_key=231423fc80b78690e4e5f233f191b78b`).then( (response) => {setData(response.data);setError('')})
      .catch( (e) => {setError('Oops! Something went wrong. Try again..')});
 
@@ -53,9 +53,7 @@ export default memo( function DetailsInfo(props) {
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
   }}>
-
       <NavigateBack pageName={data.original_title ? "Movie" : "TV Show"} />
-
       {data.id !== undefined ? <>
 
         <div className="detail-head row ">
