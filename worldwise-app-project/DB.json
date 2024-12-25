@@ -1,0 +1,10 @@
+{
+  "city" : {
+      "latitude": 44.368568675147664,
+      "longitude" : -100.35069413656038 ,
+      "city" : "Rashmoond",
+      "countryName": "United States",
+      "countryCode": "us",
+      "wikipediaId" : 234
+  }
+}

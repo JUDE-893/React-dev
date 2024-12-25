@@ -2,6 +2,7 @@
 
 .App {
   text-align: center;
+  font-family: "Segoe UI Emoji", "Apple Color Emoji", "Segoe UI", sans-serif;
 }
 
 .body {
@@ -9,6 +10,7 @@
 }
 
 body,main,#root, .Nav + div ,.Home{
+  font-family: "Segoe UI Emoji", "Apple Color Emoji", "Segoe UI", sans-serif;
   outline: none;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -48,6 +50,7 @@ body::-webkit-scrollbar,main::-webkit-scrollbar,#root::-webkit-scrollbar,.Nav + 
   background-color: transparent !important;
   color: var(--white);
 }
+
 
 .btn-sml {
   background-color: var(--darkerGrey)!important;
@@ -201,6 +204,14 @@ main, .Main-App {
   font-size: 1.02rem
 }
 
+  /****************/
+ /*    SignUp    */
+/****************/
+.Signup input[type=file] {
+  background-color: var(--darkerBrown);
+  padding-top: 10px
+}
+
   /*******************/
  /*    Main-App     */
 /*******************/
@@ -294,8 +305,9 @@ main, .Main-App {
 }
 
 .flag {
-  font-size: 1.5rem;
+  /* font-size: 1.5rem; */
   margin: -3px 0.7rem auto 0px;
+  font-family: Verdana, sans-serif;
 }
 
 .trip-box >:nth-child(2) {
