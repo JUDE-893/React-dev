@@ -13,7 +13,7 @@ export default memo( function Cities(props) {
   return (
     <div className="Cities">
 
-      {trips.map((item, i) => {
+      {trips !== null && trips.map((item, i) => {
 
         return <div key={i} id={i} className="trip-box">
               <div className="">
