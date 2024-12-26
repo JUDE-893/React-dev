@@ -30,11 +30,11 @@ function App() {
               <Route path='/login' element={<Login />} />
               <Route path='/signup' element={<SignUp />} />
             </Route>
-           {userData.api_token !== null && <Route path='/app' element={<Main/>} >
+           {userData.api_token !== null && <Route path='/app' element={<TripsProvider><Main/></TripsProvider>} >
 
-             <Route path='/app/cities' element={<TripsProvider><Cities/></TripsProvider>} />
-             <Route path='/app/countries' element={<TripsProvider><Countries/></TripsProvider>} />
-             <Route path='/app/add' element={<TripsProvider><AddForm/></TripsProvider>} />
+             <Route path='/app/cities' element={<Cities/>} />
+             <Route path='/app/countries' element={<Countries/>} />
+             <Route path='/app/add' element={<AddForm/>} />
 
             </Route>}
           </Routes>
