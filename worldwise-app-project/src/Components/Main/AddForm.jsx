@@ -58,7 +58,7 @@ export default memo( function AddForm() {
       axios.post('http://127.0.0.1:8000/api/add_trip',Data)
       .then( (respond) => {tripsDispatcher({operation:'reset'}); navigate('/app/cities'); console.log('trip',respond);})
       .catch( (e) => {console.log(e);});
-      //submitRef.current.disabled = true;
+      submitRef.current.disabled = true;
     };
   }
 
@@ -77,7 +77,7 @@ export default memo( function AddForm() {
         <textarea name="description" rows="0" cols="0" value={data.description} onChange={(e) => {handleTyping(e)}}></textarea>
         <div className='dual-btn'>
           <button ref={submitRef} className="btn" type="button" name="button" onClick={handleSubmit} >ADD</button>
-          <button className=" btn btn-outline" type="button" name="button" ><FontAwesomeIcon icon={faArrowLeft} />BACK</button>
+          <button className=" btn btn-outline" type="button" name="button" onClick={() => navigate('/app/cities')} ><FontAwesomeIcon icon={faArrowLeft} />BACK</button>
         </div>
       </form>
     </div>

@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import Profile from './Profile'
 import {useTrips} from '../../Providers/TripsProvider';
 import {useActiveTrip} from '../../Providers/ActiveTripProvider';
-//import useActiveTrip from '../../Hooks/useActiveTrip';
+// import useActiveTrip from '../../Hooks/useActiveTrip';
 
 
 
