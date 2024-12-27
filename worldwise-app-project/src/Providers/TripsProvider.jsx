@@ -10,6 +10,9 @@ const tripsReducer = (state,action) => {
     case 'delete_success':
       return {...state, trips: state.trips.filter( (t) => t.id !== action.id)};
       break
+    case 'reset':
+      return {};
+      break
     default:
     return state;
 

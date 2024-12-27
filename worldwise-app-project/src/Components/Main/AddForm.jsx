@@ -1,21 +1,25 @@
-import {useState,useEffect,memo} from 'react'
+import {useState,useEffect,memo,useRef} from 'react'
 import {useNavigate,useLocation} from 'react-router-dom';
 import axios from 'axios';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import {useAuth} from '../../Providers/AuthProvider';
+import {useTrips} from '../../Providers/TripsProvider';
 
 
 export default memo( function AddForm() {
 
   const cords = new URLSearchParams(useLocation().search).get('lat').split('?lng='),
   [lat,lng] = cords;
+  const navigate = useNavigate();
 
   const {userData} = useAuth();
+  const {tripsDispatcher} = useTrips();
   const [data, setData] = useState({
     date: new Date().toISOString().split('T')[0],
     description : null,
   });
+  const submitRef = useRef(null);
 
   // fetching the city information
   useEffect( ()=> {
@@ -52,13 +56,15 @@ export default memo( function AddForm() {
     if ( data.cityName !== "" && typeof data.cityName === 'string' ) {
       var Data = {...data, 'user_id' : userData.data.id};
       axios.post('http://127.0.0.1:8000/api/add_trip',Data)
-      .then( (respond) => {console.log('trip',respond);})
-      .catch( (e) => {console.log(e);})
+      .then( (respond) => {tripsDispatcher({operation:'reset'}); navigate('/app/cities'); console.log('trip',respond);})
+      .catch( (e) => {console.log(e);});
+      //submitRef.current.disabled = true;
     };
   }
 
   return (
     <div className="add-form">
+    {console.log("addTrip")}
       <form className="Login" action="" method="post">
         <label for="cityName">City name</label>
         <div className="cityInput">
@@ -70,7 +76,7 @@ export default memo( function AddForm() {
         <label for="description">Notes about your trip to {data.cityName}</label>
         <textarea name="description" rows="0" cols="0" value={data.description} onChange={(e) => {handleTyping(e)}}></textarea>
         <div className='dual-btn'>
-          <button className="btn" type="button" name="button" onClick={handleSubmit} >ADD</button>
+          <button ref={submitRef} className="btn" type="button" name="button" onClick={handleSubmit} >ADD</button>
           <button className=" btn btn-outline" type="button" name="button" ><FontAwesomeIcon icon={faArrowLeft} />BACK</button>
         </div>
       </form>

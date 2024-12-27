@@ -26,7 +26,7 @@ export default memo( function Cities(props) {
               </div>
               <div className="">
               <p>{format(new Date(item.date), 'MMMM d,yyyy')}</p>
-              <FontAwesomeIcon id={item.id} icon={faCircleXmark} onClick={ () => deleteTrip(item.id,item.user_id)} />
+              <FontAwesomeIcon id={item.id} icon={faCircleXmark} onClick={ (e) =>{deleteTrip(item.id,item.user_id); e.stopPropagation()}} />
               </div>
               </div>
             })
