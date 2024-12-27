@@ -12,6 +12,7 @@ import Countries from './Components/Main/Countries';
 import AddForm from './Components/Main/AddForm';
 import {useAuth} from './Providers/AuthProvider';
 import {TripsProvider} from './Providers/TripsProvider';
+import {ActiveTripProvider} from './Providers/ActiveTripProvider';
 
 import {useState} from 'react';
 
@@ -22,6 +23,7 @@ function App() {
 
   return (
     <>
+      <ActiveTripProvider>
         <Router>
           <Routes>
             <Route path='/' element={<Home/>}>
@@ -31,14 +33,13 @@ function App() {
               <Route path='/signup' element={<SignUp />} />
             </Route>
            {userData.api_token !== null && <Route path='/app' element={<TripsProvider><Main/></TripsProvider>} >
-
              <Route path='/app/cities' element={<Cities/>} />
              <Route path='/app/countries' element={<Countries/>} />
              <Route path='/app/add' element={<AddForm/>} />
-
             </Route>}
           </Routes>
         </Router>
+      </ActiveTripProvider>
     </>
   );
 }

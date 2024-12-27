@@ -7,6 +7,9 @@ const tripsReducer = (state,action) => {
     case "allTrips":
       return {trips : action.trips}
       break;
+    case 'delete_success':
+      return {...state, trips: state.trips.filter( (t) => t.id !== action.id)};
+      break
     default:
     return state;
 
@@ -23,16 +26,29 @@ function TripsProvider({children}) {
 
   // fetch all user's trips
   useEffect( () => {
-    axios.get(`http://127.0.0.1:8000/api/trips/${user_id}`).then( (response) => {tripsDispatcher({trips: response.data.trips, operation : 'allTrips'}); console.log('getTrips',response);})
-    .catch( (e) => {
-      console.log('getTrips',e);
-    });
-  },[user_id])
+    if (Object.keys(state).length === 0 ){
+      axios.get(`http://127.0.0.1:8000/api/trips/${user_id}`).then( (response) => {
+        tripsDispatcher({trips: response.data.trips, operation : 'allTrips'}); console.log('getTrips',response);})
+        .catch( (e) => {
+          console.log('getTrips',e);
+    })};
+  },[state])
+
+  // function that delete a user's trip
+  const deleteTrip = (id,user_id) => {
+    axios.post(`http://127.0.0.1:8000/api/trips/delete`,{id:id,user_id:user_id}).then( (response) =>{
+      tripsDispatcher({operation: "delete_success",id:id});
+      })
+      .catch( (e) => {
+        console.log('delete',e);
+    })
+  }
 
   return (
     <TripsContext.Provider value={{
       trips : state.trips ?? null,
-      tripsDispatcher
+      tripsDispatcher,
+      deleteTrip
     }}>
       {children}
     </TripsContext.Provider>
