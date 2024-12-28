@@ -1,5 +1,5 @@
 import {memo} from 'react';
-import {Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {format} from 'date-fns';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCircleXmark} from '@fortawesome/free-solid-svg-icons';
@@ -11,16 +11,16 @@ export default memo( function Cities(props) {
 
   const {trips,tripsDispatcher,deleteTrip} = useTrips();
   const {active, activate} = useActiveTrip();
+  const navigate = useNavigate();
 
-//  console.log('trps: ',trips);
- console.log('active: ',active);
+ //console.log('active: ',active);
 
   return (
     <div className="Cities">
 
       {trips !== null && trips.map((item, i) => {
 
-        return <div key={i} id={i} className={`trip-box ${active.index === i ? 'trip-box-active' : ""}`} onClick={()=>activate({index:i,trip:item})}>
+        return <div key={i} id={i} className={`trip-box ${active.index === i ? 'trip-box-active' : ""}`} onClick={()=>{activate({index:i,trip:item}); navigate('/app/trip/'+ item.cityName)}}>
               <div className="">
               <span className="flag">{item.countryFlag}</span>
               <span className="">{item.cityName}</span>

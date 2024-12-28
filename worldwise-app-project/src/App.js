@@ -8,6 +8,7 @@ import Login from './Components/Home/Login';
 import SignUp from './Components/Home/SignUp';
 import Main from './Components/Main';
 import Cities from './Components/Main/Cities';
+import Trip from './Components/Main/Trip';
 import Countries from './Components/Main/Countries';
 import AddForm from './Components/Main/AddForm';
 import {useAuth} from './Providers/AuthProvider';
@@ -36,6 +37,7 @@ function App() {
              <Route path='/app/cities' element={<Cities/>} />
              <Route path='/app/countries' element={<Countries/>} />
              <Route path='/app/add' element={<AddForm/>} />
+             <Route path='/app/trip/:cityName' element={<Trip/>} />
             </Route>}
           </Routes>
         </Router>

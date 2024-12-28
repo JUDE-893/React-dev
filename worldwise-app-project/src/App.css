@@ -315,7 +315,7 @@ main, .Main-App {
   font-family: Verdana, sans-serif;
 }
 
-.trip-box >:nth-child(2) {
+.trip-box >:nth-child(2){
   margin-left: auto;
   font-size: 0.9rem;
   font-weight: 100
@@ -474,4 +474,46 @@ textarea {
 }
 .profile-head .btn-sml {
   margin-left: auto;
+}
+
+    /***************/
+  /*    trip     */
+/***************/
+.Trip {
+  background-color: var(--darkerGrey);
+  width:100%;
+  border-radius: 7px;
+  border-left: 3px solid var(--green);
+  padding: 10px 1rem 30px 2rem!important;
+  margin-top: 40px;
+  white-space: nowrap;
+  font-size: 1.13rem;
+  font-weight: 600
+}
+.Trip .sec-title {
+  color : var(--grey);
+  font-size: 0.85rem;
+  margin-bottom: 4px
+}
+.freak {
+  margin-bottom: -10px!important;
+  margin-top: 18px!important
+}
+.Trip .dual-btn {
+  margin-top: 25px!important
+}
+.trip-date {
+  font-size: 1rem;
+  font-weight: 200
+}
+.wiki-link {
+  font-size: 0.9rem;
+  font-weight: 200;
+  color : var(--green)
+}
+.trip-desc{
+  font-size: 0.87rem;
+  font-weight: 200;
+  width : 100%!important;
+  white-space: normal;
 }
