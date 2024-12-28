@@ -37,7 +37,7 @@ export default memo( function Trip() {
       </div>
 
       <div className='dual-btn'>
-        <button className="btn" type="button" name="button" onClick={() => navigate('/app/cities')} >MODIFY</button>
+        <button className="btn" type="button" name="button" onClick={() => navigate(`/app/trip/modify`)} >MODIFY</button>
         <button className=" btn btn-outline" type="button" name="button" onClick={() => navigate('/app/cities')} ><FontAwesomeIcon icon={faArrowLeft} />BACK</button>
       </div>
 

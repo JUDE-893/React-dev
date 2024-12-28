@@ -1,5 +1,4 @@
 import './App.css';
-import {useContext} from 'react';
 import {BrowserRouter as Router,Routes,Route} from 'react-router-dom';
 import Home from './Components/Home';
 import Pricing from './Components/Home/Pricing';
@@ -21,7 +20,6 @@ function App() {
 
   const {userData} = useAuth();
 
-
   return (
     <>
       <ActiveTripProvider>
@@ -36,7 +34,8 @@ function App() {
            {userData.api_token !== null && <Route path='/app' element={<TripsProvider><Main/></TripsProvider>} >
              <Route path='/app/cities' element={<Cities/>} />
              <Route path='/app/countries' element={<Countries/>} />
-             <Route path='/app/add' element={<AddForm/>} />
+             <Route path='/app/trip/add' element={<AddForm/>} />
+             <Route path='/app/trip/modify' element={<AddForm/>} />
              <Route path='/app/trip/:cityName' element={<Trip/>} />
             </Route>}
           </Routes>

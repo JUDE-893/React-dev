@@ -1,6 +1,6 @@
 import {memo, useState} from 'react';
 import {MapContainer,TileLayer,Marker,Popup,useMapEvents,useMap} from 'react-leaflet';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 import Profile from './Profile'
 import {useTrips} from '../../Providers/TripsProvider';
 import {useActiveTrip} from '../../Providers/ActiveTripProvider';
@@ -38,9 +38,10 @@ export default memo(function Map() {
 // functionnal component that navigate to add trip form and update the url with the current position cords on the map
 function InteractiveMap() {
   const navigate = useNavigate();
+  const isModify = useLocation().pathname.includes('/modify');
 
   useMapEvents({
-    click : e => {console.log(e.latlng.lng); navigate(`/app/add?lat=${e.latlng.lat}?lng=${e.latlng.lng}`)}
+    click : e => {console.log(e.latlng.lng); navigate(`/app/trip/${isModify ? 'modify' : 'add'}?lat=${e.latlng.lat}?lng=${e.latlng.lng}`)}
   })
 }
 
