@@ -203,7 +203,19 @@ main, .Main-App {
   height:37px;
   font-size: 1.02rem
 }
-
+.login-Or-signup{
+  text-align: center;
+  color: var(--grey);
+  font-size: 0.90rem
+}
+.login-Or-signup span{
+  font-size: 1rem;
+  cursor: pointer;
+}
+.login-Or-signup span:hover{
+  text-decoration: underline;
+  color: var(--green);
+}
   /****************/
  /*    SignUp    */
 /****************/
@@ -265,7 +277,7 @@ main, .Main-App {
   width:100%;
   margin-top: 30px;
   gap:15px;
-  height: 55vh;
+  height: 60vh;
   overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: var(--darkerBrown) transparent;
@@ -516,4 +528,23 @@ textarea {
   font-weight: 200;
   width : 100%!important;
   white-space: normal;
+}
+
+
+    /********************/
+  /*    copyright     */
+/********************/
+.copyright {
+  color: var(--grey);
+  font-size: 0.8rem;
+  font-weight: 100;
+  bottom:6%!important;
+  left:40%!important;
+  position: absolute;
+}
+.aside-section .copyright {
+  position:static!important;
+}
+.copyright::first-letter {
+  color: var(--grey);
 }

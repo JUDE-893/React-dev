@@ -21,7 +21,7 @@ export default memo( function AddForm() {
   const isModify = location.pathname.includes('/modify');
   const [lat,lng] = cords ?? active.cors;
   const [data, setData] = useState({
-    date: new Date().toISOString().split('T')[0],
+    date: (isModify ? active.trip.date : new Date().toISOString().split('T')[0]),
     description : null,
   });
 
@@ -70,8 +70,7 @@ export default memo( function AddForm() {
 
       if (isModify){
          Data = {...Data, 'id' : active.trip.id};
-         url = 'http://127.0.0.1:8000/api/modify_trip';
-         console.log('modifing');
+         url = 'http://127.0.0.1:8000/api/trips/modify';
        };
 
        axios.post(url,Data)
@@ -83,7 +82,6 @@ export default memo( function AddForm() {
 
   return (
     <div className="add-form">
-    {console.log("addTrip")}
       <form className="Login" action="" method="post">
         <label for="cityName">City name</label>
         <div className="cityInput">

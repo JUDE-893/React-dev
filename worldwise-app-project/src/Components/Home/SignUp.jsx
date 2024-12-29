@@ -14,15 +14,11 @@ export default memo( function Login(props){
   const [next,setNext] = useState(true);
 
 
+  // function that handle validating authentification data and submitting it
   const handleSubmit = () => {
-    // props.setLogged(true);
     // navigate('/app/cities');
     const emailRe = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const passwordRe = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{12,20}$/;
-
-    console.log(emailRe.test(data.email));
-    console.log(passwordRe.test(data.password));
-    console.log((data.password));
 
     if (emailRe.test(data.email)){
       if (passwordRe.test(data.password)){
@@ -32,19 +28,16 @@ export default memo( function Login(props){
           formData.append(item, data[item]);
         });
 
-        for (let [key, value] of formData.entries()) {
-          console.log(`${key}:`, value);}
-
         axios.post("http://127.0.0.1:8000/api/signup",formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data', // Necessary for file uploads
-      },
-    }).then( (response) => { console.log(response);})
+        headers: {
+          'Content-Type': 'multipart/form-data', // Necessary for file uploads
+        },})
+        .then( (response) => { console.log(response);})
         .catch( (e) => console.log('eer',e))
-      }
     }
-  }
+  }}
 
+  // function that handles updating the state with the current entry value
   const handleType = (e) => {
 
     if (e.target.name === 'profile_img') {
@@ -57,6 +50,7 @@ export default memo( function Login(props){
 
 
   return (
+    <>
       <form className="Login Signup" method="post" enctype="multipart/form-data">
       { next ?  <><label for="text">Full name</label>
         <input type="text" name="name" value={data.name} onChange={handleType} required />
@@ -84,5 +78,8 @@ export default memo( function Login(props){
         <div className='dual-btn'><button className="btn btn-outline" type="button" name="button" onClick={()=> setNext(true)}>Previous</button>
         <button className="btn" type="button" name="button" onClick={handleSubmit}>SIGN UP</button></div></>}
       </form>
+      <p className='login-Or-signup'>Already have an account? <span onClick={ () => navigate('/login')}>Log In.</span></p>
+      <p className="copyright">&copy; Copyright 2024 by <span>@Jude-893</span> Inc.</p>
+    </>
   )
 })

@@ -44,6 +44,7 @@ export default memo( function Login(props){
   }
 
   return (
+    <>
       <form className="Login" action="" method="post">
         <label for="email">Email address</label>
         <input type="email" name="email" value={data.email} onChange={handleType} />
@@ -51,5 +52,8 @@ export default memo( function Login(props){
         <input type="password" name="password" value={data.password} onChange={handleType} />
         <button className="btn" type="button" name="button" onClick={handleSubmit}>LOGIN</button>
       </form>
+      <p className='login-Or-signup'>You don't have an account yet? <span onClick={ () => navigate('/signup')}>Sign Up.</span></p>
+      <p className="copyright">&copy; Copyright 2024 by <span>@Jude-893</span> Inc.</p>
+    </>
   )
 })
