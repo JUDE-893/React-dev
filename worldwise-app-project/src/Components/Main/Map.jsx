@@ -9,7 +9,7 @@ import {useGeoLocation} from '../../Hooks/useGeoLocation';
 
 
 
-export default memo(function Map() {
+export default function Map() {
 
   const [position,setPosition] = useState([55.505, -0.09]);
   const {trips} = useTrips();
@@ -69,7 +69,7 @@ export default memo(function Map() {
         <TripPointer position={position} />
    </MapContainer>
   )
-})
+}
 
 // functionnal component that navigate to add trip form and update the url with the current position cords on the map
 function InteractiveMap() {

@@ -2,7 +2,7 @@ import {memo} from 'react';
 import {Link,Outlet,useLocation} from 'react-router-dom';
 import Nav from "./Nav"
 
-export default memo(function Home(){
+export default function Home(){
 
   const location = useLocation();
   const notInserted = location.pathname === '/'
@@ -20,4 +20,4 @@ export default memo(function Home(){
 
     </main>
   )
-})
+}

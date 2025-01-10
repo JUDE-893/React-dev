@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft,faArrowRight} from '@fortawesome/free-solid-svg-icons';
 import {useActiveTrip} from '../../Providers/ActiveTripProvider';
 
-export default memo( function Trip() {
+export default function Trip() {
 
   const {active} = useActiveTrip();
   const navigate = useNavigate();
@@ -43,4 +43,4 @@ export default memo( function Trip() {
 
     </div>
   )
-})
+}

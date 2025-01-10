@@ -2,7 +2,7 @@ import {memo} from 'react';
 import {NavLink,Outlet} from 'react-router-dom';
 import MAP from './Map';
 
-export default memo(function(props) {
+export default function(props) {
 
   return (
     <div className="Main-App">
@@ -23,4 +23,4 @@ export default memo(function(props) {
       <MAP />
     </div>
   );
-})
+}

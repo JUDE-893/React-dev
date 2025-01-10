@@ -4,7 +4,7 @@ import axios from 'axios';
 import {useAuth} from '../../Providers/AuthProvider';
 
 
-export default memo( function Login(props){
+export default function Login(props){
 
   const navigate = useNavigate();
 
@@ -56,4 +56,4 @@ export default memo( function Login(props){
       <p className="copyright">&copy; Copyright 2024 by <a href="https://github.com/JUDE-893" target='_blanc'>@JUDE-893</a> Inc.</p>
     </>
   )
-})
+}

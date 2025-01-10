@@ -1,11 +1,11 @@
-import {memo} from 'react';
 import {useTrips} from '../../Providers/TripsProvider';
 
 
-export default memo(function Countries() {
+export default function Countries() {
 
   const {trips} = useTrips();
 
+  // function that felters the trips object then returns the contries content data
   const countries = () => {
     if (trips !== null){
       return Array.from(new Set(trips.map((cnt) => {
@@ -30,4 +30,4 @@ export default memo(function Countries() {
 
     </div>
   )
-})
+}

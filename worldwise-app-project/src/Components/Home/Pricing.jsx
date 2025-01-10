@@ -1,6 +1,6 @@
 import {memo} from 'react';
 
-export default memo( function Pricing(){
+export default function Pricing(){
   return (
     <>
       <div className="Pricing">
@@ -14,4 +14,4 @@ export default memo( function Pricing(){
 
     </>
   )
-})
+}

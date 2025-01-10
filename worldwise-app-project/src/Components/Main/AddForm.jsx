@@ -8,7 +8,7 @@ import {useTrips} from '../../Providers/TripsProvider';
 import {useActiveTrip} from '../../Providers/ActiveTripProvider';
 
 
-export default memo( function AddForm() {
+export default function AddForm() {
 
   const location = useLocation();
   const cords = new URLSearchParams(location.search).get('lat')?.split('?lng=');
@@ -99,4 +99,4 @@ export default memo( function AddForm() {
       </form>
     </div>
   )
-})
+}
