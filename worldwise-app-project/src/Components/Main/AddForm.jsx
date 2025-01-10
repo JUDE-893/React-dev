@@ -27,17 +27,17 @@ export default memo( function AddForm() {
 
   // fetching the city information
   useEffect( ()=> {
-    //axios.get(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`)
-    axios.get(`http://localhost:9600/city`)
+    //axios.get(`http://localhost:9600/city`)
+    axios.get(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`)
     .then( (response) =>{
       setData({...data,lat: response.data.latitude,
         lng : response.data.longitude,
         cityName : response.data.city,
         countryName: response.data.countryName,
         countryFlag: countryFlag(response.data.countryCode),
-        wikipediaId : response.data.wikidataId
+        wikipediaId : response.data.localityInfo.administrative[3].wikidataId
        });
-       //wikipediaId : response.data.localityInfo.administrative[3].wikidataId
+       // wikipediaId : response.data.wikidataId
     })
     .catch( (e) => {console.log(e);})
   },[lat,lng])
