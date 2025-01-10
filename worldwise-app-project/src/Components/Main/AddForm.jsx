@@ -1,4 +1,4 @@
-import {useState,useEffect,memo,useRef} from 'react'
+import {useState,useEffect,useRef} from 'react'
 import {useNavigate,useLocation} from 'react-router-dom';
 import axios from 'axios';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -47,7 +47,7 @@ export default function AddForm() {
     if (isModify) {
       setData({...active.trip});
     }
-  },[])
+  },[isModify])
 
   // function that ..
   var handleTyping = (e) => {

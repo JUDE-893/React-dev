@@ -1,4 +1,3 @@
-import {memo} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {format} from 'date-fns';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';

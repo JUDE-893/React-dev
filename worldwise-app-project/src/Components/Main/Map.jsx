@@ -1,4 +1,4 @@
-import {memo, useState,useEffect} from 'react';
+import {useState,useEffect} from 'react';
 import {MapContainer,TileLayer,Marker,Popup,useMapEvents,useMap} from 'react-leaflet';
 import L from 'leaflet';
 import {useNavigate, useLocation} from 'react-router-dom';
@@ -13,7 +13,7 @@ export default function Map() {
 
   const [position,setPosition] = useState([55.505, -0.09]);
   const {trips} = useTrips();
-  const {active, activate} = useActiveTrip();
+  const {active} = useActiveTrip();
   const {position : currentPosition, error : currentPositionError,isLoading,setIsLoading,getGeoLocation} = useGeoLocation();
 
   // updatting the state variable with e the user's current position

@@ -1,4 +1,4 @@
-import {memo,useState,useContext,useEffect} from 'react';
+import {useState,useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {useAuth} from '../../Providers/AuthProvider';
@@ -15,7 +15,7 @@ export default function Login(props){
   //redirect the user if authentificated
   useEffect( () => {
     var n = userData.api_token === null ? true : navigate('/app/cities');
-  },[userData])
+  },[userData,navigate])
 
   // function that handle validating & submitting the user credits. info.
   const handleSubmit = () => {

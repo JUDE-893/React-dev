@@ -1,5 +1,3 @@
-import {memo} from 'react';
-
 export default function Pricing(){
   return (
     <>

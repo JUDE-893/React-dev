@@ -1,7 +1,6 @@
-import {memo,useState,useContext} from 'react';
+import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
-import {useAuth} from '../../Providers/AuthProvider';
 
 
 export default function Login(){

@@ -16,7 +16,7 @@ useEffect( () => {
     }
   }).then( (response) => { console.log(response);})
   .catch( (e) => console.log(e))
-},[])
+},[userData.api_token])
 
   return (
     <AuthContext.Provider value={{ userData, setUserData }}>

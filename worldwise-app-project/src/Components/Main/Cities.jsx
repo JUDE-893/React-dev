@@ -8,7 +8,7 @@ import {useActiveTrip} from '../../Providers/ActiveTripProvider';
 
 export default function Cities(props) {
 
-  const {trips,tripsDispatcher,deleteTrip} = useTrips();
+  const {trips,deleteTrip} = useTrips();
   const {active, activate} = useActiveTrip();
   const navigate = useNavigate();
 

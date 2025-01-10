@@ -1,4 +1,3 @@
-import {memo} from 'react';
 import {NavLink,Outlet} from 'react-router-dom';
 import MAP from './Map';
 

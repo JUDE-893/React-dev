@@ -14,7 +14,7 @@ import {useAuth} from './Providers/AuthProvider';
 import {TripsProvider} from './Providers/TripsProvider';
 import {ActiveTripProvider} from './Providers/ActiveTripProvider';
 
-import {useState} from 'react';
+ 
 
 function App() {
 
