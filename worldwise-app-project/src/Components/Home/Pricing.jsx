@@ -10,7 +10,8 @@ export default memo( function Pricing(){
         </div>
         <img src="/imgs/img-2.jpg" alt="@photo with a city view on the background"/>
       </div>
-      <p className="copyright">&copy; Copyright 2024 by <span>@Jude-893</span> Inc.</p>
+      <p className="copyright">&copy; Copyright 2024 by <a href="https://github.com/JUDE-893" target='_blanc'>@JUDE-893</a> Inc.</p>
+
     </>
   )
 })

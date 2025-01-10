@@ -18,12 +18,9 @@ export default memo(function(props) {
         </div>
 
         <Outlet/>
-        <p className="copyright">&copy; Copyright 2024 by <span>@Jude-893</span> Inc.</p>
+        <p className="copyright">&copy; Copyright 2024 by <a href="https://github.com/JUDE-893" target='_blanc'>@JUDE-893</a> Inc.</p>
       </div>
-
-
       <MAP />
-
     </div>
   );
 })

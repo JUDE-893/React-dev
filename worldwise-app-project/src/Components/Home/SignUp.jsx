@@ -79,7 +79,7 @@ export default memo( function Login(props){
         <button className="btn" type="button" name="button" onClick={handleSubmit}>SIGN UP</button></div></>}
       </form>
       <p className='login-Or-signup'>Already have an account? <span onClick={ () => navigate('/login')}>Log In.</span></p>
-      <p className="copyright">&copy; Copyright 2024 by <span>@Jude-893</span> Inc.</p>
+      <p className="copyright">&copy; Copyright 2024 by <a href="https://github.com/JUDE-893" target='_blanc'>@JUDE-893</a> Inc.</p>
     </>
   )
 })

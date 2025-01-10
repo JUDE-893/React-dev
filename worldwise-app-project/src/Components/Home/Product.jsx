@@ -11,7 +11,7 @@ export default memo( function Pricing(){
           <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis doloribus libero sunt expedita ratione iusto, magni, id sapiente sequi officiis et.</p>
         </div>
       </div>
-      <p className="copyright">&copy; Copyright 2024 by <span>@Jude-893</span> Inc.</p>
+      <p className="copyright">&copy; Copyright 2024 by <a href="https://github.com/JUDE-893" target='_blanc'>@JUDE-893</a> Inc.</p>
     </>
   )
 })

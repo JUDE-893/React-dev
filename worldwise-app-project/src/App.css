@@ -548,3 +548,26 @@ textarea {
 .copyright::first-letter {
   color: var(--grey);
 }
+.copyright a {
+  color: var(--grey);
+  text-decoration: none;
+  cursor: pointer;
+}
+.copyright a:hover {
+  color: var(--green);
+  text-decoration: underline;
+}
+
+
+.btn-position {
+  position: absolute;
+  top :105%;
+  z-index: 1000;
+}
+.btm-center{
+  display: flex;
+  justify-content:  center;
+  white-space: nowrap;
+  position: relative;
+  height: 80vh
+}
