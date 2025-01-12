@@ -1,12 +1,13 @@
 import styled from "styled-components";
-
-const NavList = styled.ul`
+import {NavLink} from 'react-router-dom';
+export const NavList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+  margin-top: 7rem
 `;
 
-const Link = styled.a`
+export const StyledNavLink = styled(NavLink)`
   &:link,
   &:visited {
     display: flex;
@@ -15,7 +16,7 @@ const Link = styled.a`
 
     color: var(--color-grey-600);
     font-size: 1.6rem;
-    font-weight: 500;
+    font-weight: 600;
     padding: 1.2rem 2.4rem;
     transition: all 0.3s;
   }
@@ -35,6 +36,7 @@ const Link = styled.a`
     height: 2.4rem;
     color: var(--color-grey-400);
     transition: all 0.3s;
+    font-weight: 600
   }
 
   &:hover svg,
