@@ -10,9 +10,18 @@ const StyledLayout = styled.div`
 
 const StyledMain = styled.main`
   background-color: var(--color-grey-50);
-  height :100vh;
-  padding : 4rem
+  height :91vh;
+  padding : 4rem;
+  overflow:scroll
 `;
+
+const Container = styled.div`
+  max-width: 120rem;
+  margin: 0 auto;
+  display:flex;
+  flex-direction:column;
+  gap: 4rem
+`
 
 function AppLayout() {
   return (
@@ -21,7 +30,9 @@ function AppLayout() {
       <div>
         <Header/>
         <StyledMain>
-         <Outlet / >
+          <Container>
+            <Outlet / >
+          </Container>
         </StyledMain>
       </div>
     </StyledLayout>

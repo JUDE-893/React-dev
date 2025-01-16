@@ -1,4 +1,8 @@
+import {useQuery} from '@tanstack/react-query';
 import styled from "styled-components";
+import {getCabins} from '../../services/apiCabins';
+import CabinRow from './CabinRow';
+import Spinner from '../../ui/Spinner';
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -23,3 +27,33 @@ const TableHeader = styled.header`
   color: var(--color-grey-600);
   padding: 1.6rem 2.4rem;
 `;
+
+
+export default function CabinsTable({children}) {
+
+  // fetching the cabins data periodically [60s] using the react-Query
+  // the data is kept in the cach as long as it is  fresh
+  const {data,error,isPending} = useQuery({
+    queryKey: ['cabins'],
+    queryFn: getCabins
+  })
+
+  console.log(data);
+
+  return (
+    <>
+      {!isPending ?<Table role='table'>
+        <TableHeader>
+          <div></div>
+          <div>Name</div>
+          <div>Capacity</div>
+          <div>Price</div>
+          <div>Discount</div>
+          <div></div>
+        </TableHeader>
+        {data.map( (cabin) =>{ return <CabinRow cabin={cabin} /> })}
+      </Table>
+      :<Spinner/>}
+    </>
+  )
+}
