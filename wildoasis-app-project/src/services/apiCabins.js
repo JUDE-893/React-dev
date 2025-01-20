@@ -14,7 +14,67 @@ export async function getCabins() {
 }
 
 // function that deleting a cabin row that is referenced by id
-export async function deleteCabin(id) {
+export async function deleteCabin(toDelete) {
+  const {id,imageName} = toDelete;
+  console.log(id,imageName);
+  // delete the record
+  const { error } = await supabase
+    .from('cabins')
+    .delete()
+    .eq('id', id);
+
+    if (error) {
+      console.log(error);
+      throw new Error("Oops! Something went wrong, can't fetch cabins");
+      return null;
+    };
+
+    if (imageName !== null){
+      //delete the image
+      console.log("imageName",imageName);
+      let ar = imageName.split('/');
+      deleteStoredImage(ar[ar.length-1])}
+    }
+
+// function that creating a cabin with the passed object data
+export async function createCabin({editting,data:newCabin,oldImage}) {
+
+  // determin the image name and url
+  let imageUrl,imageName;
+  if (typeof newCabin.image === 'object') {
+     imageName = newCabin.image ? `${Math.random()}-${newCabin.image.name.replace('/','')}` : null;
+     imageUrl = imageName ? 'https://axudhzlpgiteizotiimm.supabase.co/storage/v1/object/public/cabin-images/'+imageName : null;
+   }else {
+     imageUrl = newCabin.image;
+     let ar = newCabin.image.split('/');
+     imageName = ar[ar.length-1]
+   }
+
+    //submit the cabin data to the bd
+    const {data:newdata, error: newdataError} = editting ? updateCabinRecord(newCabin.id, {...newCabin, image:imageUrl}) : createCabinRecord({...newCabin, image:imageUrl})
+    if (newdataError) {
+      throw new Error("can't create new cabin record data");
+      return null;
+    };
+    console.log(newCabin.image,imageName , oldImage);
+    if (imageName && imageUrl !== oldImage) {
+      // upload the cabin image
+      const {error: storageError} = editting ? updateStoredImage(imageName, newCabin.image) : uploadImage(imageName, newCabin.image);
+
+      //Rollback the cabin data insertion if any error occures in the storing proccess
+      if (storageError) {
+        rollBackOperation(newdata[0].id)
+    }
+  }else if (editting && !imageName) {
+    console.log('delryr old');
+    let ar = oldImage.split('/');
+    const {error: storageError} = deleteStoredImage(ar[ar.length-1]);
+  } // finIf ImageName
+
+}
+
+//Rollback the any DB operation if any error occures in the storing proccess
+async function rollBackOperation(id) {
 
   const { error } = await supabase
     .from('cabins')
@@ -23,53 +83,60 @@ export async function deleteCabin(id) {
 
     if (error) {
       console.log(error);
-      throw new Error("Oops! Something went wrong, can't fetch cabins");
+      throw new Error("RollBack :: Oops! Something went wrong, can't fetch cabins");
+      return null
     }
-  }
+}
 
-// function that creating a cabin with the passed object data
-export async function createCabin(newCabin) {
+// create a new cabin record
+async function createCabinRecord(cabin) {
+  const { data, error } = await supabase
+    .from('cabins')
+    .insert([cabin])
+    .select();
 
-  let imageName = newCabin.image ? `${Math.random()}-${newCabin.image.name.replace('/','')}` : null;
+  if (error) throw new Error("can't create new cabin record");
+  return {data,error}
+}
 
+// update a cabin record
+async function updateCabinRecord(id,cabin) {
+  const { data, error } = await supabase
+    .from('cabins')
+    .update(cabin)
+    .eq('id', id)
+    .select();
 
+  if (error) throw new Error("can't update cabin record");
+  return {data,error}
+}
 
-    //submit the cabin data to the bd
-    let imageUrl = imageName ? 'https://axudhzlpgiteizotiimm.supabase.co/storage/v1/object/public/cabin-images/'+imageName : null;
-    const { data: newdata, error } = await supabase
-      .from('cabins')
-      .insert([
-        {...newCabin, image:imageUrl}
-      ])
-      .select();
-      console.log("newdata",newdata[0].id);
-    if (error) {
-      throw new Error("can't create new cabin record data");
-      return null;
-    };
+// upload images
+async function uploadImage(imageName, image) {
+  const { data, error } = await supabase
+    .storage
+    .from('cabin-images')
+    .upload(imageName, image);
 
-    console.log("a new cabin record created Successfully");
+  if (error) throw new Error("can't upload cabin image");
+  return error
+}
 
-    if (imageName) {
-    // upload the cabin image
-    const { data: newImage, error:storageError } = await supabase
-      .storage
-      .from('cabin-images')
-      .upload(imageName, newCabin.image);
+// update a stored image
+async function updateStoredImage(imageName, image) {
+  const { data, error} = await supabase
+    .storage
+    .from('cabin-images')
+    .update(imageName, image);
 
-    //Rollback the cabin data insertion if any error occures in the storing proccess
-    if (storageError) {
-      console.log("rolling back...", storageError);
-      const { error } = await supabase
-        .from('cabins')
-        .delete()
-        .eq('id', newdata[0].id)
+  if (error) throw new Error("can't replace cabin image");
+  return console.error();
+}
 
-        if (error) {
-          console.log(error);
-          throw new Error("Oops! Something went wrong, can't fetch cabins");
-          return null
-        }
-    }
-  } // finIf ImageName
+// DELETE  STORED FILE
+async function deleteStoredImage(imageName) {
+  const { data, error } = await supabase
+  .storage
+  .from('cabin-images')
+  .remove([imageName])
 }

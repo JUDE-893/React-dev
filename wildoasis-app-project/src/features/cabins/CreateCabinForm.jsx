@@ -11,10 +11,16 @@ import FormRow from './FormRow';
 
 
 
-function CreateCabinForm() {
+function CreateCabinForm({cabinToEdit = {}}) {
+
+  const {id, ...editValues} = cabinToEdit;
+
+  const editting = Boolean(cabinToEdit.id)
 
   // initialisating the register (update the value of entries each)  and the handleSubmit (stores and pass the form data to the function handler) functions
-  const {handleSubmit, register,formState:{errors},getValues,reset} = useForm();
+  const {handleSubmit, register,formState:{errors},getValues,reset} = useForm({
+    defaultValues: cabinToEdit
+  });
 
   // getting the query client
   const queryClient = useQueryClient();
@@ -23,8 +29,8 @@ function CreateCabinForm() {
     mutationFn: createCabin,
     onSuccess: () => {
       toast.success('Cabin has been created Successfully');
-      queryClient.invalidateQueries({queryKey: ['cabins']});
-      reset()
+      queryClient.invalidateQueries();
+      //reset()
     } ,
     onError: (errs) => toast.error(/*'Oops! Somthing went wrong.. try again.'*/errs.meassage),
   })
@@ -32,11 +38,21 @@ function CreateCabinForm() {
 
   // function handler : validate & submit the data to the server
   const submitCabin = (data) => {
-    data = {...data, image: data.image[0]};
-    console.log('d',data);
-    mutate(data)
+
+    let img = null,
+    oldImage = cabinToEdit?.image;
+    if (editting) {
+      if (typeof data.image === 'object' && data.image.length > 0) img = data.image[0]
+      else if (typeof data.image === 'object' && data.image.length === 0) img = null
+      else img = editValues.image
+    }else{
+      if (typeof data.image === 'object' && data.image.length > 0) img = data.image[0]
+    }
+    data = {...data, image: img};
+    mutate({editting: editting,data:data,oldImage: oldImage})
   }
 
+  console.log('called');
   return (
     <Form onSubmit={handleSubmit(submitCabin,() =>{return null})}>
       <FormRow message={errors?.name?.message} label='Cabin Name'>
@@ -74,9 +90,9 @@ function CreateCabinForm() {
       <FormRow>
         {/* type is an HTML attribute! */}
         <Button size='medium' variation="secondary" type="reset">
-          Cancel
+          CANCEL
         </Button>
-        <Button size='medium' variation='primary' type="submit">Create cabin</Button>
+        <Button size='medium' variation='primary' type="submit">{editting ? 'MODIFY' : 'CREATE'} CABIN</Button>
       </FormRow>
     </Form>
   );

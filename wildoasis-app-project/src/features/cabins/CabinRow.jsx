@@ -1,7 +1,10 @@
+import {useState} from 'react';
 import styled from "styled-components";
 import toast from 'react-hot-toast';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {deleteCabin} from '../../services/apiCabins';
+import CreateCabinForm from './CreateCabinForm';
+
 
 const TableRow = styled.div`
   display: grid;
@@ -47,23 +50,32 @@ export default function CabinRow({cabin}) {
   const queryClient = useQueryClient();
 
   const {isPending, error,mutate} = useMutation({
-    mutationFn: (id) => deleteCabin(id),
+    mutationFn: (toDelete) => deleteCabin(toDelete),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['cabins']});
       toast.success('Deleted Successfully!');
     },
-    onError: () => {
-      toast.error('Oops! Something went wrong..');
+    onError: (e) => {
+      toast.error(e.message);
     }
   })
 
+  const [editting, setEditting] = useState(false)
+
   return (
-    <TableRow id={cabin.id} key={cabin.id} >
-      <Img src={cabin.image}/>
-      <Cabin>{cabin.name}</Cabin>
-      <Cabin>{cabin.max_capacity}</Cabin>
-      <Price>{cabin.regular_price}</Price>
-      <Discount>{cabin.discount}</Discount>
-      <button onClick={() => mutate(cabin.id)} disabled={isPending}>Show</button>
-    </TableRow>)
+    <>
+      <TableRow id={cabin.id} key={cabin.id} >
+        <Img src={cabin.image}/>
+        <Cabin>{cabin.name}</Cabin>
+        <Cabin>{cabin.max_capacity}</Cabin>
+        <Price>{cabin.regular_price}</Price>
+        <Discount>{cabin.discount}</Discount>
+        <div style={{display:'flex',flexWrap: "nowrap"}}>
+          <button onClick={() => setEditting((v) => !v)} disabled={isPending}>{editting ? 'cancel' : 'Edit'}</button>
+          <button onClick={() => mutate({id:cabin.id,imageName: cabin.image})} disabled={isPending}>Delete</button>
+        </div>
+      </TableRow>
+      {editting && <CreateCabinForm cabinToEdit={cabin}/>}
+    </>
+  )
 }
