@@ -1,39 +1,28 @@
 import toast from 'react-hot-toast';
-import {useQueryClient,useMutation} from '@tanstack/react-query';
+import {useQueryClient} from '@tanstack/react-query';
 import {useForm} from 'react-hook-form';
-import {createCabin} from '../../services/apiCabins';
+import {useCreateEditCabin} from './useCreateEditCabin';
 import Input from "../../ui/Input";
 import Form from "../../ui/Form";
 import Button from "../../ui/Button";
+import ButtonGroup from "../../ui/ButtonGroup";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import FormRow from './FormRow';
 
 
-
-function CreateCabinForm({cabinToEdit = {}}) {
-
-  const {id, ...editValues} = cabinToEdit;
-
-  const editting = Boolean(cabinToEdit.id)
+function CreateCabinForm({cancel, cabinToEdit = {}}) {
 
   // initialisating the register (update the value of entries each)  and the handleSubmit (stores and pass the form data to the function handler) functions
   const {handleSubmit, register,formState:{errors},getValues,reset} = useForm({
     defaultValues: cabinToEdit
   });
-
   // getting the query client
   const queryClient = useQueryClient();
 
-  const {error,isPending,mutate} = useMutation({
-    mutationFn: createCabin,
-    onSuccess: () => {
-      toast.success('Cabin has been created Successfully');
-      queryClient.invalidateQueries();
-      //reset()
-    } ,
-    onError: (errs) => toast.error(/*'Oops! Somthing went wrong.. try again.'*/errs.meassage),
-  })
+  const {error,mutate,isPending} = useCreateEditCabin()
+  const {id, ...editValues} = cabinToEdit;
+  const editting = Boolean(cabinToEdit.id)
 
 
   // function handler : validate & submit the data to the server
@@ -42,17 +31,23 @@ function CreateCabinForm({cabinToEdit = {}}) {
     let img = null,
     oldImage = cabinToEdit?.image;
     if (editting) {
-      if (typeof data.image === 'object' && data.image.length > 0) img = data.image[0]
-      else if (typeof data.image === 'object' && data.image.length === 0) img = null
+      if (typeof data.image === 'object' && data.image?.length > 0) img = data.image[0]
+      else if (typeof data.image === 'object' && data?.image?.length === 0) img = null
       else img = editValues.image
     }else{
-      if (typeof data.image === 'object' && data.image.length > 0) img = data.image[0]
+      if (typeof data.image === 'object' && data.image?.length > 0) img = data.image[0]
     }
     data = {...data, image: img};
-    mutate({editting: editting,data:data,oldImage: oldImage})
+    mutate({editting: editting,data:data,oldImage: oldImage},{
+      onSuccess: () => {
+        toast.success(`Cabin has been ${editting ? 'Modified' : 'created'} Successfully`);
+        queryClient.invalidateQueries();
+        cancel(false);
+      },
+      onError: (errs) => {toast.error(errs.message);console.log("erre",errs);},
+    });
   }
 
-  console.log('called');
   return (
     <Form onSubmit={handleSubmit(submitCabin,() =>{return null})}>
       <FormRow message={errors?.name?.message} label='Cabin Name'>
@@ -89,10 +84,10 @@ function CreateCabinForm({cabinToEdit = {}}) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button size='medium' variation="secondary" type="reset">
-          CANCEL
-        </Button>
-        <Button size='medium' variation='primary' type="submit">{editting ? 'MODIFY' : 'CREATE'} CABIN</Button>
+        <ButtonGroup>
+          <Button size='medium' variation='primary' type="submit">{editting ? 'MODIFY' : 'CREATE'} CABIN</Button>
+          <Button size='medium' variation="secondary" onClick={() => cancel(false)}>CANCEL</Button>
+        </ButtonGroup>
       </FormRow>
     </Form>
   );

@@ -15,7 +15,7 @@ export async function getCabins() {
 
 // function that deleting a cabin row that is referenced by id
 export async function deleteCabin(toDelete) {
-  const {id,imageName} = toDelete;
+  const {id,imageName,cabinName} = toDelete;
   console.log(id,imageName);
   // delete the record
   const { error } = await supabase
@@ -31,44 +31,52 @@ export async function deleteCabin(toDelete) {
 
     if (imageName !== null){
       //delete the image
-      console.log("imageName",imageName);
-      let ar = imageName.split('/');
-      deleteStoredImage(ar[ar.length-1])}
+       if (!(/^\w+\s*\(copy\)$/).test(cabinName)){
+         let ar = imageName.split('/');
+         deleteStoredImage(ar[ar.length-1])}
+       }
     }
 
 // function that creating a cabin with the passed object data
-export async function createCabin({editting,data:newCabin,oldImage}) {
-
+export async function createCabin({editting,data:newCabin,oldImage,hasImage}) {
+    console.log(newCabin);
   // determin the image name and url
   let imageUrl,imageName;
-  if (typeof newCabin.image === 'object') {
-     imageName = newCabin.image ? `${Math.random()}-${newCabin.image.name.replace('/','')}` : null;
-     imageUrl = imageName ? 'https://axudhzlpgiteizotiimm.supabase.co/storage/v1/object/public/cabin-images/'+imageName : null;
-   }else {
-     imageUrl = newCabin.image;
-     let ar = newCabin.image.split('/');
-     imageName = ar[ar.length-1]
-   }
+  if (!hasImage) {
+    if (typeof newCabin.image === 'object') {
+       imageName = newCabin.image ? `${Math.random()}-${newCabin.image.name.replace('/','')}` : null;
+       imageUrl = imageName ? 'https://axudhzlpgiteizotiimm.supabase.co/storage/v1/object/public/cabin-images/'+imageName : null;
+     }else {
+       imageUrl = newCabin.image;
+       let ar = newCabin.image.split('/');
+       imageName = ar[ar.length-1]
+     }
+  }else{imageUrl = newCabin.image}
 
     //submit the cabin data to the bd
-    const {data:newdata, error: newdataError} = editting ? updateCabinRecord(newCabin.id, {...newCabin, image:imageUrl}) : createCabinRecord({...newCabin, image:imageUrl})
+    const {data:newdata, error: newdataError} = editting ? updateCabinRecord(newCabin.id, {...newCabin, image: newCabin.image && oldImage ? oldImage : imageUrl}) : createCabinRecord({...newCabin, image:imageUrl})
     if (newdataError) {
       throw new Error("can't create new cabin record data");
       return null;
     };
     console.log(newCabin.image,imageName , oldImage);
+    // FORMAT THE OLD IMAGE Name
+    let ar = oldImage ? oldImage.split('/') : null;
+    let oldImageName = ar ? ar[ar.length-1] : imageName;
+
     if (imageName && imageUrl !== oldImage) {
       // upload the cabin image
-      const {error: storageError} = editting ? updateStoredImage(imageName, newCabin.image) : uploadImage(imageName, newCabin.image);
+      const {error: storageError} = oldImage !== null && editting ? updateStoredImage(oldImageName, newCabin.image) : uploadImage(imageName, newCabin.image);
 
       //Rollback the cabin data insertion if any error occures in the storing proccess
       if (storageError) {
-        rollBackOperation(newdata[0].id)
+        rollBackOperation(newdata[0].id);
+        throw new Error(storageError.message);
+        console.log(storageError.message);
     }
-  }else if (editting && !imageName) {
+  }else if (editting && !imageName && oldImageName) {
     console.log('delryr old');
-    let ar = oldImage.split('/');
-    const {error: storageError} = deleteStoredImage(ar[ar.length-1]);
+    const {error: storageError} = deleteStoredImage(oldImageName);
   } // finIf ImageName
 
 }
@@ -113,6 +121,7 @@ async function updateCabinRecord(id,cabin) {
 
 // upload images
 async function uploadImage(imageName, image) {
+  console.log('upload image');
   const { data, error } = await supabase
     .storage
     .from('cabin-images')
@@ -124,6 +133,7 @@ async function uploadImage(imageName, image) {
 
 // update a stored image
 async function updateStoredImage(imageName, image) {
+  console.log('update image');
   const { data, error} = await supabase
     .storage
     .from('cabin-images')

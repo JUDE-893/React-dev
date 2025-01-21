@@ -1,10 +1,11 @@
 import {useState} from 'react';
 import styled from "styled-components";
+import {HiPencil, HiTrash, HiSquare2Stack} from 'react-icons/hi2';
+import {useQueryClient} from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {deleteCabin} from '../../services/apiCabins';
 import CreateCabinForm from './CreateCabinForm';
-
+import {useDeleteCabin} from './useDeleteCabin';
+import {useCreateEditCabin} from './useCreateEditCabin';
 
 const TableRow = styled.div`
   display: grid;
@@ -12,7 +13,7 @@ const TableRow = styled.div`
   column-gap: 2.4rem;
   align-items: center;
   padding: 1.4rem 2.4rem;
-
+  background-color: ${props => props.active && 'var(--color-grey-50)'};
   &:not(:last-child) {
     border-bottom: 1px solid var(--color-grey-100);
   }
@@ -48,34 +49,39 @@ const Discount = styled.div`
 export default function CabinRow({cabin}) {
 
   const queryClient = useQueryClient();
+  const {mutate,isPending} = useDeleteCabin();
+  const {error,mutate:duplicate,isPending:duplicating} = useCreateEditCabin();
+  const [editting, setEditting] = useState(false);
 
-  const {isPending, error,mutate} = useMutation({
-    mutationFn: (toDelete) => deleteCabin(toDelete),
-    onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ['cabins']});
-      toast.success('Deleted Successfully!');
-    },
-    onError: (e) => {
-      toast.error(e.message);
-    }
-  })
-
-  const [editting, setEditting] = useState(false)
+  // function that handles duplicating a cabin
+  const handleDuplicate = () => {
+    let suffix = (/^\w+\s*\(copy\)$/).test(cabin.name) ? '' : '(copy)' ;
+    let {id, ...data} = {...cabin, name: `${cabin.name} ${suffix}`};
+    console.log(data);
+    duplicate({data:data,hasImage: true},{
+      onSuccess: () => {
+        toast.success(`Cabin has been duplicated Successfully`);
+        queryClient.invalidateQueries();
+      },
+      onError: (errs) => {toast.error(errs.message);console.log("erre",errs);},
+    });
+  }
 
   return (
     <>
-      <TableRow id={cabin.id} key={cabin.id} >
+      <TableRow active={editting} id={cabin.id} key={cabin.id} >
         <Img src={cabin.image}/>
         <Cabin>{cabin.name}</Cabin>
         <Cabin>{cabin.max_capacity}</Cabin>
         <Price>{cabin.regular_price}</Price>
         <Discount>{cabin.discount}</Discount>
         <div style={{display:'flex',flexWrap: "nowrap"}}>
-          <button onClick={() => setEditting((v) => !v)} disabled={isPending}>{editting ? 'cancel' : 'Edit'}</button>
-          <button onClick={() => mutate({id:cabin.id,imageName: cabin.image})} disabled={isPending}>Delete</button>
+          <button onClick={handleDuplicate} disabled={duplicating}><HiSquare2Stack /></button>
+          <button onClick={() => setEditting((v) => !v)} disabled={isPending}>{editting ? 'cancel' : <HiPencil />}</button>
+          <button onClick={() => mutate({id:cabin.id,imageName: cabin.image,cabinName:cabin.name})} disabled={isPending}><HiTrash /></button>
         </div>
       </TableRow>
-      {editting && <CreateCabinForm cabinToEdit={cabin}/>}
+      {editting && <CreateCabinForm cancel={setEditting} cabinToEdit={cabin}/>}
     </>
   )
 }

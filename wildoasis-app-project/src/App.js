@@ -21,7 +21,7 @@ function App() {
 
   // Setting a Query Client
   const client = new QueryClient({
-    defaultOption: {
+    defaultOptions: {
       queries: {
         staleTime: 60*1000
       }

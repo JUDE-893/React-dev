@@ -17,7 +17,7 @@ function Cabins() {
       </Row>
       <CabinsTable/>
       <Button variation='primary' size='medium' onClick={() => setClicked((clk) => !clk)}>Create Cabin</Button>
-      {clicked && <CreateCabinForm/>}
+      {clicked && <CreateCabinForm cancel={setClicked} />}
     </>
   );
 }
