@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Row from "../../ui/Row";
+import Row from "./Row";
 
 const StyledFormRow = styled.div`
   display: grid;

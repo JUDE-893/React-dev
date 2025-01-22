@@ -8,7 +8,7 @@ import Button from "../../ui/Button";
 import ButtonGroup from "../../ui/ButtonGroup";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
-import FormRow from './FormRow';
+import FormRow from '../../ui/FormRow';
 
 
 function CreateCabinForm({cancel, cabinToEdit = {}}) {
