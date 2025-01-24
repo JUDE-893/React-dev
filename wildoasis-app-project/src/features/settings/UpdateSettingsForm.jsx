@@ -30,11 +30,10 @@ function UpdateSettingsForm() {
 
   // function that get executed in submit
   function submitSettings(e,field) {
-    console.log(data[field] !== e.target.value, data[field], e.target.value );
     data[field] !== +e.target.value && mutate({[field]: +e.target.value})
   }
 
-  console.log('vdvdfffffffffffffffffffffffffffffff');
+
   return (
     <>
     {!isPending ? <Form>

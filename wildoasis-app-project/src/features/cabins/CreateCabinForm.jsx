@@ -42,14 +42,14 @@ function CreateCabinForm({cancel, cabinToEdit = {}}) {
       onSuccess: () => {
         toast.success(`Cabin has been ${editting ? 'Modified' : 'created'} Successfully`);
         queryClient.invalidateQueries();
-        cancel(false);
+        cancel?.();
       },
       onError: (errs) => {toast.error(errs.message);console.log("erre",errs);},
     });
   }
 
   return (
-    <Form onSubmit={handleSubmit(submitCabin,() =>{return null})}>
+    <Form onSubmit={handleSubmit(submitCabin,() =>{return null})} type={cancel ? 'modal' : 'regular'}>
       <FormRow message={errors?.name?.message} label='Cabin Name'>
           <Input type="text" id="name" {...register('name',{
             required: 'The name field is required!'
@@ -86,7 +86,7 @@ function CreateCabinForm({cancel, cabinToEdit = {}}) {
         {/* type is an HTML attribute! */}
         <ButtonGroup>
           <Button size='medium' variation='primary' type="submit">{editting ? 'MODIFY' : 'CREATE'} CABIN</Button>
-          <Button size='medium' variation="secondary" onClick={() => cancel(false)}>CANCEL</Button>
+          <Button size='medium' variation="secondary" onClick={() => cancel?.()}>CANCEL</Button>
         </ButtonGroup>
       </FormRow>
     </Form>

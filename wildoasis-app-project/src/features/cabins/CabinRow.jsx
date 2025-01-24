@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {HiPencil, HiTrash, HiSquare2Stack} from 'react-icons/hi2';
 import {useQueryClient} from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import CreateCabinForm from './CreateCabinForm';
+import CreateEditCabin from './CreateEditCabin';
 import {useDeleteCabin} from './useDeleteCabin';
 import {useCreateEditCabin} from './useCreateEditCabin';
 
@@ -77,11 +77,11 @@ export default function CabinRow({cabin}) {
         <Discount>{cabin.discount}</Discount>
         <div style={{display:'flex',flexWrap: "nowrap"}}>
           <button onClick={handleDuplicate} disabled={duplicating}><HiSquare2Stack /></button>
-          <button onClick={() => setEditting((v) => !v)} disabled={isPending}>{editting ? 'cancel' : <HiPencil />}</button>
+          <button onClick={() => setEditting((v) => !v)} disabled={isPending}><HiPencil /></button>
           <button onClick={() => mutate({id:cabin.id,imageName: cabin.image,cabinName:cabin.name})} disabled={isPending}><HiTrash /></button>
         </div>
       </TableRow>
-      {editting && <CreateCabinForm cancel={setEditting} cabinToEdit={cabin}/>}
+      <CreateEditCabin withButton={false} initialState={editting} cabinToEdit={cabin}/>
     </>
   )
 }
