@@ -97,9 +97,19 @@ function Row({children}) {
   )
 }
 
+// table body
+function Body({render,data}) {
+  return (
+    <StyledBody>
+      {data.map(render)}
+    </StyledBody>
+  )
+}
+
 // attaching the table layout component to the table Provider-component
 Table.Row = Row;
 Table.Header = Header;
+Table.Body = Body;
 
 // exporting the table Provider-component
 export default Table;

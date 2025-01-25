@@ -51,7 +51,8 @@ export default function CabinsTable({children}) {
           <div>Discount</div>
           <div></div>
         </Table.Header>
-        {data.map( (cabin) =>{ return <CabinRow key={cabin.id} cabin={cabin} /> })}
+        <Table.Body data={data} render={(cabin) => {
+          return <CabinRow key={cabin.id} cabin={cabin} /> }} />
       </Table>
       :<Spinner/>}
     </>
