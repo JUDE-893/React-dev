@@ -2,10 +2,12 @@ import styled from "styled-components";
 import {HiPencil, HiTrash, HiSquare2Stack} from 'react-icons/hi2';
 import {useQueryClient} from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import CreateEditCabin from './CreateEditCabin';
-import CreateCabinForm from './CreateCabinForm';
 import {useDeleteCabin} from './useDeleteCabin';
 import {useCreateEditCabin} from './useCreateEditCabin';
+import CreateEditCabin from './CreateEditCabin';
+import CreateCabinForm from './CreateCabinForm';
+import ConfirmDelete from '../../ui/ConfirmDelete';
+
 
 const TableRow = styled.div`
   display: grid;
@@ -87,7 +89,14 @@ export default function CabinRow({cabin}) {
               <CreateCabinForm cabinToEdit={cabin}/>
             </CreateEditCabin.Window>
           </CreateEditCabin>
-          <button onClick={() => mutate({id:cabin.id,imageName: cabin.image,cabinName:cabin.name})} disabled={isPending}><HiTrash /></button>
+          <CreateEditCabin>
+            <CreateEditCabin.OpenModal windowName='cabin/delete'>
+              <button><HiTrash /></button>
+            </CreateEditCabin.OpenModal>
+            <CreateEditCabin.Window name='cabin/delete'>
+              <ConfirmDelete disabled={isPending} onConfirm={() => mutate({id:cabin.id,imageName: cabin.image,cabinName:cabin.name})}/>
+            </CreateEditCabin.Window>
+          </CreateEditCabin>
         </div>
       </TableRow>
     </>
