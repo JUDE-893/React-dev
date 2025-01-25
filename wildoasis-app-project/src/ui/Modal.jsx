@@ -1,3 +1,4 @@
+import {forwardRef} from 'react';
 import styled from "styled-components";
 
 const StyledModal = styled.div`
@@ -12,7 +13,20 @@ const StyledModal = styled.div`
   transition: all 0.5s;
 `;
 
-const Overlay = styled.div`
+const Modal = forwardRef( ({children},ref) => {
+  return (
+    <StyledModal>
+      <div ref={ref}>
+        {children}
+      </div>
+    </StyledModal>
+  )
+})
+
+// Modal.Overlay = Overlay;
+// Modal.Button = Button;
+
+Modal.Overlay  = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -24,7 +38,7 @@ const Overlay = styled.div`
   transition: all 0.5s;
 `;
 
-const Button = styled.button`
+Modal.Button = styled.button`
   background: none;
   border: none;
   padding: 0.4rem;
@@ -48,18 +62,5 @@ const Button = styled.button`
     color: var(--color-grey-500);
   }
 `;
-
-function Modal({children}) {
-  return (
-    <StyledModal>
-      <div>
-        {children}
-      </div>
-    </StyledModal>
-  )
-}
-
-Modal.Overlay = Overlay;
-Modal.Button = Button;
 
 export default Modal;

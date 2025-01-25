@@ -1,9 +1,9 @@
-import {useState} from 'react';
 import styled from "styled-components";
 import {HiPencil, HiTrash, HiSquare2Stack} from 'react-icons/hi2';
 import {useQueryClient} from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import CreateEditCabin from './CreateEditCabin';
+import CreateCabinForm from './CreateCabinForm';
 import {useDeleteCabin} from './useDeleteCabin';
 import {useCreateEditCabin} from './useCreateEditCabin';
 
@@ -21,7 +21,9 @@ const TableRow = styled.div`
 
 const Img = styled.img`
   display: block;
-  width: 6.4rem;
+  max-width: 100%;
+  min-width: 4.4rem;
+  max-height: 100%;
   aspect-ratio: 3 / 2;
   object-fit: cover;
   object-position: center;
@@ -51,7 +53,7 @@ export default function CabinRow({cabin}) {
   const queryClient = useQueryClient();
   const {mutate,isPending} = useDeleteCabin();
   const {error,mutate:duplicate,isPending:duplicating} = useCreateEditCabin();
-  const [editting, setEditting] = useState(false);
+
 
   // function that handles duplicating a cabin
   const handleDuplicate = () => {
@@ -69,7 +71,7 @@ export default function CabinRow({cabin}) {
 
   return (
     <>
-      <TableRow active={editting} id={cabin.id} key={cabin.id} >
+      <TableRow id={cabin.id} key={cabin.id} >
         <Img src={cabin.image}/>
         <Cabin>{cabin.name}</Cabin>
         <Cabin>{cabin.max_capacity}</Cabin>
@@ -77,11 +79,17 @@ export default function CabinRow({cabin}) {
         <Discount>{cabin.discount}</Discount>
         <div style={{display:'flex',flexWrap: "nowrap"}}>
           <button onClick={handleDuplicate} disabled={duplicating}><HiSquare2Stack /></button>
-          <button onClick={() => setEditting((v) => !v)} disabled={isPending}><HiPencil /></button>
+          <CreateEditCabin>
+            <CreateEditCabin.OpenModal windowName="cabin/edit">
+              <button><HiPencil /></button>
+            </CreateEditCabin.OpenModal>
+            <CreateEditCabin.Window name='cabin/edit'>
+              <CreateCabinForm cabinToEdit={cabin}/>
+            </CreateEditCabin.Window>
+          </CreateEditCabin>
           <button onClick={() => mutate({id:cabin.id,imageName: cabin.image,cabinName:cabin.name})} disabled={isPending}><HiTrash /></button>
         </div>
       </TableRow>
-      <CreateEditCabin withButton={false} initialState={editting} cabinToEdit={cabin}/>
     </>
   )
 }

@@ -38,7 +38,6 @@ export default function CabinsTable({children}) {
     queryFn: getCabins
   })
 
-  console.log(data);
 
   return (
     <>
@@ -51,7 +50,7 @@ export default function CabinsTable({children}) {
           <div>Discount</div>
           <div></div>
         </TableHeader>
-        {data.map( (cabin) =>{ return <CabinRow cabin={cabin} /> })}
+        {data.map( (cabin) =>{ return <CabinRow key={cabin.id} cabin={cabin} /> })}
       </Table>
       :<Spinner/>}
     </>
