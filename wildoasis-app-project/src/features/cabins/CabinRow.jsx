@@ -7,25 +7,26 @@ import {useCreateEditCabin} from './useCreateEditCabin';
 import CreateEditCabin from './CreateEditCabin';
 import CreateCabinForm from './CreateCabinForm';
 import ConfirmDelete from '../../ui/ConfirmDelete';
+import Table from '../../ui/Table';
 
 
-const TableRow = styled.div`
-  display: grid;
-  grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
-  column-gap: 2.4rem;
-  align-items: center;
-  padding: 1.4rem 2.4rem;
-  background-color: ${props => props.active && 'var(--color-grey-50)'};
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--color-grey-100);
-  }
-`;
+// const TableRow = styled.div`
+//   display: grid;
+//   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
+//   column-gap: 2.4rem;
+//   align-items: center;
+//   padding: 1.4rem 2.4rem;
+//   background-color: ${props => props.active && 'var(--color-grey-50)'};
+//   &:not(:last-child) {
+//     border-bottom: 1px solid var(--color-grey-100);
+//   }
+// `;
 
 const Img = styled.img`
   display: block;
-  max-width: 100%;
+  max-width: 70%;
   min-width: 4.4rem;
-  max-height: 100%;
+  max-height: 90%;
   aspect-ratio: 3 / 2;
   object-fit: cover;
   object-position: center;
@@ -42,12 +43,14 @@ const Cabin = styled.div`
 const Price = styled.div`
   font-family: "Sono";
   font-weight: 600;
+  margin-left : 2.5rem ;
 `;
 
 const Discount = styled.div`
   font-family: "Sono";
   font-weight: 500;
   color: var(--color-green-700);
+  margin-left : 5rem ;
 `;
 
 export default function CabinRow({cabin}) {
@@ -73,10 +76,10 @@ export default function CabinRow({cabin}) {
 
   return (
     <>
-      <TableRow id={cabin.id} key={cabin.id} >
+      <Table.Row id={cabin.id} key={cabin.id} >
         <Img src={cabin.image}/>
         <Cabin>{cabin.name}</Cabin>
-        <Cabin>{cabin.max_capacity}</Cabin>
+        <Price>{cabin.max_capacity}</Price>
         <Price>{cabin.regular_price}</Price>
         <Discount>{cabin.discount}</Discount>
         <div style={{display:'flex',flexWrap: "nowrap"}}>
@@ -98,7 +101,7 @@ export default function CabinRow({cabin}) {
             </CreateEditCabin.Window>
           </CreateEditCabin>
         </div>
-      </TableRow>
+      </Table.Row>
     </>
   )
 }

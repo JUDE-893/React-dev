@@ -1,3 +1,4 @@
+import {useContext,createContext} from 'react';
 import styled from "styled-components";
 
 const StyledTable = styled.div`
@@ -15,6 +16,7 @@ const CommonRow = styled.div`
   column-gap: 2.4rem;
   align-items: center;
   transition: none;
+  text-align:start;
 `;
 
 const StyledHeader = styled(CommonRow)`
@@ -29,7 +31,7 @@ const StyledHeader = styled(CommonRow)`
 `;
 
 const StyledRow = styled(CommonRow)`
-  padding: 1.2rem 2.4rem;
+  padding: 1.37rem 2.4rem;
 
   &:not(:last-child) {
     border-bottom: 1px solid var(--color-grey-100);
@@ -58,3 +60,46 @@ const Empty = styled.p`
   text-align: center;
   margin: 2.4rem;
 `;
+
+//create table Context
+const TableContext = createContext();
+
+// create the table Provider-component
+function Table({children,columns}) {
+  return (
+    <TableContext.Provider value={{columns}}>
+      <StyledTable role='table'>
+        {children}
+      </StyledTable>
+    </TableContext.Provider>
+  )
+}
+
+// Table Header
+function Header({children}) {
+  const {columns} = useContext(TableContext);
+
+  return (
+    <StyledHeader  columns={columns}>
+      {children}
+    </StyledHeader>
+  )
+}
+
+// Table Header
+function Row({children}) {
+  const {columns} = useContext(TableContext);
+
+  return (
+    <StyledRow columns={columns}>
+      {children}
+    </StyledRow>
+  )
+}
+
+// attaching the table layout component to the table Provider-component
+Table.Row = Row;
+Table.Header = Header;
+
+// exporting the table Provider-component
+export default Table;
