@@ -3,6 +3,7 @@ import BookingRow from "./BookingRow";
 import Table from "../../ui/Table";
 import Menu from "../../ui/Menus";
 import Spinner from "../../ui/Spinner";
+import Pagination from "../../ui/Pagination";
 
 function BookingTable() {
 
@@ -11,7 +12,7 @@ function BookingTable() {
   // no data yet ?
   if (isPending) return <Spinner/>;
 
-  // // filtering & sort bookings data
+  // // client-side filtering & sort bookings data
   // const filterVal = searchParams.get('status') ?? "all";
   // const sortKeys = searchParams.get('sortBy')?.split('-') ?? ['num_nights','asc'];
   //
@@ -51,6 +52,9 @@ function BookingTable() {
             <BookingRow key={booking.id} booking={booking} />
           )}
         />
+        <Table.Footer>
+          <Pagination count={30}/>
+        </Table.Footer>
       </Table>
     </Menu>
   );

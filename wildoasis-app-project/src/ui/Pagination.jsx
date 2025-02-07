@@ -1,3 +1,4 @@
+import {useSearchParams} from 'react-router-dom';
 import styled from "styled-components";
 
 const StyledPagination = styled.div`
@@ -55,3 +56,29 @@ const PaginationButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
+
+
+export default function Pagination({count}) {
+
+  const [searchParams,setSearchParams] = useSearchParams();
+  const page = searchParams.get('page') ?? 1;
+
+  const handleClick = (ind) => {
+    searchParams.set('page', ind+1);
+    setSearchParams(searchParams);
+  }
+
+  return (
+    <StyledPagination>
+      <P>Page {page} / {count/10}</P>
+      <Buttons>
+        {Array.from({length:count/10}, (_,ind) => ind).map( (ind) =>
+          <PaginationButton active={ind+1==page} onClick={() => handleClick(ind)}>
+            {ind+1}
+          </PaginationButton>
+      )}
+
+      </Buttons>
+    </StyledPagination>
+  )
+}

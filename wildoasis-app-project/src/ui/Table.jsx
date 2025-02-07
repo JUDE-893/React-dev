@@ -86,7 +86,7 @@ function Header({children}) {
   )
 }
 
-// Table Header
+// Table Row
 function Row({children}) {
   const {columns} = useContext(TableContext);
 
@@ -106,10 +106,21 @@ function Body({render,data}) {
   )
 }
 
+// // table footer
+// function Footer({children}) {
+//   return (
+//     <StyledFooter>
+//       {children}
+//     </StyledFooter>
+//   )
+// }
+
 // attaching the table layout component to the table Provider-component
 Table.Row = Row;
 Table.Header = Header;
 Table.Body = Body;
+Table.Footer = Footer;
+Table.Empty = Empty;
 
 // exporting the table Provider-component
 export default Table;
