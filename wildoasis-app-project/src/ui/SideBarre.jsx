@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { HiOutlineHome,HiOutlineCog6Tooth,HiOutlineHomeModern,HiOutlineUsers,HiOutlineCalendarDateRange   } from "react-icons/hi2";
+import Uploader from "./../data/Uploader";
 import Logo from "./Logo";
 import {NavList,StyledNavLink} from "./MainNav";
 import Heading from "./Heading";
@@ -48,6 +49,7 @@ function SideBarre() {
 
 
         </NavList>
+        <Uploader />
       </Row>
     </StyledsideBarre>
     </>
