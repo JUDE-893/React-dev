@@ -1,5 +1,4 @@
 import {useState, useContext, createContext,cloneElement,useEffect,useRef} from 'react';
-import {createPortal} from 'react-dom';
 import {HiXMark} from 'react-icons/hi2'
 import CreateCabinForm from './CreateCabinForm';
 import Modal from '../../ui/Modal';
@@ -16,7 +15,7 @@ function CreateEditCabin({children}){
 
   //state Mutator functions
   const close = () => setOpenWindowName('');
-  const open = (name) => setOpenWindowName(name);
+  const open = (name) => {setOpenWindowName(name)};
 
   return (
     <CreateEditContext.Provider value={{open,close,openWindowName}} >
@@ -26,7 +25,7 @@ function CreateEditCabin({children}){
 }
 
 // modal window
-function Window({children, name}){
+function Window({children, name,closeParentMenu}){
 
   const modalRef = useRef();
   const {openWindowName,close} = useContext(CreateEditContext);
@@ -37,6 +36,7 @@ function Window({children, name}){
     function handleClick(e) {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
         close();
+        closeParentMenu();
       }
     }
 
@@ -46,20 +46,19 @@ function Window({children, name}){
     // remove the event listener
     return () => document.removeEventListener('click',handleClick,true);
 
-  },[close])
-
+  },[close,closeParentMenu])
 
   if (name !== openWindowName ) return null;
 
-  return createPortal(
+  return (
       <Modal.Overlay >
         <Modal ref={modalRef}>
           <Modal.Button onClick={close}><HiXMark /></Modal.Button>
-            {cloneElement(children,{cancel:close})}
+            {cloneElement(children,{cancel: () => {close();closeParentMenu()}})}
         </Modal>
       </Modal.Overlay>
 
-  ,document.body)
+  )
 }
 //<CreateCabinForm cancel={() => setClicked(false)} cabinToEdit={cabinToEdit} />
 

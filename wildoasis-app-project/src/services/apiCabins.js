@@ -16,7 +16,6 @@ export async function getCabins() {
 // function that deleting a cabin row that is referenced by id
 export async function deleteCabin(toDelete) {
   const {id,imageName,cabinName} = toDelete;
-  console.log(id,imageName);
   // delete the record
   const { error } = await supabase
     .from('cabins')
@@ -39,7 +38,6 @@ export async function deleteCabin(toDelete) {
 
 // function that creating a cabin with the passed object data
 export async function createCabin({editting,data:newCabin,oldImage,hasImage}) {
-    console.log(newCabin);
   // determin the image name and url
   let imageUrl,imageName;
   if (!hasImage) {
@@ -59,7 +57,6 @@ export async function createCabin({editting,data:newCabin,oldImage,hasImage}) {
       throw new Error("can't create new cabin record data");
       return null;
     };
-    console.log(newCabin.image,imageName , oldImage);
     // FORMAT THE OLD IMAGE Name
     let ar = oldImage ? oldImage.split('/') : null;
     let oldImageName = ar ? ar[ar.length-1] : imageName;
@@ -75,7 +72,6 @@ export async function createCabin({editting,data:newCabin,oldImage,hasImage}) {
         console.log(storageError.message);
     }
   }else if (editting && !imageName && oldImageName) {
-    console.log('delryr old');
     const {error: storageError} = deleteStoredImage(oldImageName);
   } // finIf ImageName
 
@@ -121,7 +117,6 @@ async function updateCabinRecord(id,cabin) {
 
 // upload images
 async function uploadImage(imageName, image) {
-  console.log('upload image');
   const { data, error } = await supabase
     .storage
     .from('cabin-images')
@@ -133,7 +128,6 @@ async function uploadImage(imageName, image) {
 
 // update a stored image
 async function updateStoredImage(imageName, image) {
-  console.log('update image');
   const { data, error} = await supabase
     .storage
     .from('cabin-images')

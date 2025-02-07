@@ -1,13 +1,16 @@
+import {useContext} from 'react';
 import styled from "styled-components";
-import {HiPencil, HiTrash, HiSquare2Stack} from 'react-icons/hi2';
+import {HiPencil, HiTrash, HiSquare2Stack, HiEllipsisVertical} from 'react-icons/hi2';
 import {useQueryClient} from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import {useDeleteCabin} from './useDeleteCabin';
 import {useCreateEditCabin} from './useCreateEditCabin';
+import{MenuContext} from "../../ui/Menus"
 import CreateEditCabin from './CreateEditCabin';
 import CreateCabinForm from './CreateCabinForm';
 import ConfirmDelete from '../../ui/ConfirmDelete';
 import Table from '../../ui/Table';
+import Menu from '../../ui/Menus';
 
 
 // const TableRow = styled.div`
@@ -55,16 +58,17 @@ const Discount = styled.div`
 
 export default function CabinRow({cabin}) {
 
+  const {menuId,handleToggle} = useContext(MenuContext);
   const queryClient = useQueryClient();
   const {mutate,isPending} = useDeleteCabin();
   const {error,mutate:duplicate,isPending:duplicating} = useCreateEditCabin();
+
 
 
   // function that handles duplicating a cabin
   const handleDuplicate = () => {
     let suffix = (/^\w+\s*\(copy\)$/).test(cabin.name) ? '' : '(copy)' ;
     let {id, ...data} = {...cabin, name: `${cabin.name} ${suffix}`};
-    console.log(data);
     duplicate({data:data,hasImage: true},{
       onSuccess: () => {
         toast.success(`Cabin has been duplicated Successfully`);
@@ -82,26 +86,29 @@ export default function CabinRow({cabin}) {
         <Price>{cabin.max_capacity}</Price>
         <Price>{cabin.regular_price}</Price>
         <Discount>{cabin.discount}</Discount>
-        <div style={{display:'flex',flexWrap: "nowrap"}}>
-          <button onClick={handleDuplicate} disabled={duplicating}><HiSquare2Stack /></button>
+        <Menu.Toggle mid={cabin.id}><HiEllipsisVertical/></Menu.Toggle>
+        <Menu.List position={{x:200,y:200}} idn={cabin.id} >
+
+          <Menu.Button render={handleDuplicate} disabled={duplicating} icon={<HiSquare2Stack />}><HiSquare2Stack /> Duplicate cabin</Menu.Button>
           <CreateEditCabin>
             <CreateEditCabin.OpenModal windowName="cabin/edit">
-              <button><HiPencil /></button>
+              <Menu.Button icon={<HiPencil />}><HiPencil />Edit cabin</Menu.Button>
             </CreateEditCabin.OpenModal>
-            <CreateEditCabin.Window name='cabin/edit'>
-              <CreateCabinForm cabinToEdit={cabin}/>
+            <CreateEditCabin.Window closeParentMenu={() => handleToggle(menuId)} name='cabin/edit'>
+              <CreateCabinForm  cabinToEdit={cabin}/>
             </CreateEditCabin.Window>
           </CreateEditCabin>
           <CreateEditCabin>
             <CreateEditCabin.OpenModal windowName='cabin/delete'>
-              <button><HiTrash /></button>
+              <Menu.Button disabled={isPending} icon={<HiTrash />}><HiTrash />Delete cabin</Menu.Button>
             </CreateEditCabin.OpenModal>
             <CreateEditCabin.Window name='cabin/delete'>
               <ConfirmDelete disabled={isPending} onConfirm={() => mutate({id:cabin.id,imageName: cabin.image,cabinName:cabin.name})}/>
             </CreateEditCabin.Window>
           </CreateEditCabin>
-        </div>
+
+        </Menu.List>
       </Table.Row>
     </>
-  )
+  );
 }

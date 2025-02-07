@@ -1,9 +1,11 @@
+import {useSearchParams} from 'react-router-dom';
 import {useQuery} from '@tanstack/react-query';
 import styled from "styled-components";
 import {getCabins} from '../../services/apiCabins';
 import CabinRow from './CabinRow';
 import Spinner from '../../ui/Spinner';
 import Table from '../../ui/Table';
+import Menu from '../../ui/Menus';
 
 // const Table = styled.div`
 //   border: 1px solid var(--color-grey-200);
@@ -39,22 +41,44 @@ export default function CabinsTable({children}) {
     queryFn: getCabins
   })
 
+  const [searchParams] = useSearchParams();
+
+  if (isPending) return <Spinner/>;
+
+  const discountFilterVal = searchParams.get("discount");
+  const sortKeys = searchParams.get("sortBy")?.split('-') ?? ['name','asc'];
+  // client-side data filtering
+  let filteredData;
+  if (discountFilterVal === "with-discount") {
+    filteredData = data.filter( (cabin) => cabin.discount > 0 )
+  }else if (discountFilterVal === "no-discount") {
+    filteredData = data.filter( (cabin) => cabin.discount === 0 )
+  }else{
+    filteredData = data;
+  }
+
+  //client-side cabin data sorting
+  let mod = sortKeys[1] === "asc" ? 1 : -1 ;
+  const sortNum = (ca,bin) => (ca[sortKeys[0]]-bin[sortKeys[0]])*mod;
+  const sortStr = (ca,bin) => (ca[sortKeys[0]].localeCompare(bin[sortKeys[0]]))*mod;
+  const sortFunc = sortKeys[0] === 'name' ? sortStr : sortNum;
+
+  filteredData.sort(sortFunc)
 
   return (
-    <>
-      {!isPending ?<Table columns="1.1fr 1.8fr 1.5fr 1.5fr 1.5fr 0.2fr">
-        <Table.Header>
-          <div></div>
-          <div>Name</div>
-          <div>Capacity</div>
-          <div>Price</div>
-          <div>Discount</div>
-          <div></div>
-        </Table.Header>
-        <Table.Body data={data} render={(cabin) => {
-          return <CabinRow key={cabin.id} cabin={cabin} /> }} />
-      </Table>
-      :<Spinner/>}
-    </>
+      <Menu>
+        <Table columns="1.1fr 1.8fr 1.5fr 1.5fr 1.5fr 0.2fr">
+          <Table.Header>
+            <div></div>
+            <div>Name</div>
+            <div>Capacity</div>
+            <div>Price</div>
+            <div>Discount</div>
+            <div></div>
+          </Table.Header>
+            <Table.Body data={filteredData} render={(cabin) => {
+              return <CabinRow key={cabin.id} cabin={cabin} /> }} />
+        </Table>
+      </Menu>
   )
 }
