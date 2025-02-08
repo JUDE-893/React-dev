@@ -2,7 +2,7 @@ import { getToday } from "../utils/helpers";
 import {supabase} from "./supabase";
 
 // returns all bookings records
-export async function getBookings({filters,sortBy}) {
+export async function getBookings({filters,sortBy,page}) {
 
   //query
   let query = supabase
@@ -17,16 +17,18 @@ export async function getBookings({filters,sortBy}) {
   }
 
   //sortBy
-  query = query.order(sortBy.field, {ascending: (sortBy.order === 'asc')})
-
-  const { data, error } = await query;
+  query = query.order(sortBy.field, {ascending: (sortBy.order === 'asc')}).range(page*10,(page+1)*10-1)
+  console.log(page*10,(page+1)*9);
+  const { data, error,count } = await query;
   // error handling
   if (error) {
     console.error(error);
     throw new Error("Can't retrieve bookings data");
   }
+  const bookingsData = {data,count};
+  console.log(bookingsData,count);
 
-  return data;
+  return bookingsData;
 }
 
 // returns a single booking record by id

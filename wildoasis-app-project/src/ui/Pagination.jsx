@@ -58,7 +58,7 @@ const PaginationButton = styled.button`
 `;
 
 
-export default function Pagination({count}) {
+export default function Pagination({count,step}) {
 
   const [searchParams,setSearchParams] = useSearchParams();
   const page = searchParams.get('page') ?? 1;
@@ -70,9 +70,9 @@ export default function Pagination({count}) {
 
   return (
     <StyledPagination>
-      <P>Page {page} / {count/10}</P>
+      <P>Page {page} / {Math.ceil(count/step)}</P>
       <Buttons>
-        {Array.from({length:count/10}, (_,ind) => ind).map( (ind) =>
+        {Array.from({length:Math.ceil(count/step)}, (_,ind) => ind).map( (ind) =>
           <PaginationButton active={ind+1==page} onClick={() => handleClick(ind)}>
             {ind+1}
           </PaginationButton>

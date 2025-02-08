@@ -101,7 +101,7 @@ function Row({children}) {
 function Body({render,data}) {
   return (
     <StyledBody>
-      {data.map(render)}
+      {data ? data.map(render) : <Empty/>}
     </StyledBody>
   )
 }

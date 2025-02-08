@@ -9,6 +9,7 @@ function BookingTable() {
 
   const {bookings,isPending,error} = useBookings();
 
+
   // no data yet ?
   if (isPending) return <Spinner/>;
 
@@ -47,13 +48,13 @@ function BookingTable() {
         </Table.Header>
 
         <Table.Body
-          data={bookings}
+          data={bookings.data}
           render={(booking) => (
             <BookingRow key={booking.id} booking={booking} />
           )}
         />
         <Table.Footer>
-          <Pagination count={30}/>
+          <Pagination count={bookings.count} step={10}/>
         </Table.Footer>
       </Table>
     </Menu>
