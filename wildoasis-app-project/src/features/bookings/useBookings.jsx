@@ -8,7 +8,7 @@ export default function useBookings() {
   const filterVal = searchParams.get('status') ?? 'all';
   const sortVal = searchParams.get('sortBy') ?? null;
   const page = searchParams.get('page') ? searchParams.get('page')-1 : 0;
-  
+
 
   const filter = filterVal !== "all" ? {field:'status',value:filterVal,method:'eq'}:null;
   const filters = filter ? [filter] : filter;
@@ -18,13 +18,26 @@ export default function useBookings() {
 
   const queryClient = useQueryClient();
 
-
+  // Quering
   const {data,isPending,error} =  useQuery({
     queryKey: ['bookings',filter,sortBy,page],
     queryFn: () => getBookings({filters,sortBy,page})
   });
 
+  // Prefetching
+  /*next*/
+  if(page < Math.ceil((data?.count ?? 10)/10))
+  queryClient.prefetchQuery({
+    queryKey: ['bookings',filter,sortBy,page+1],
+    queryFn: () => getBookings({filters,sortBy,page: page+1})
+  });
 
+  /*prev*/
+  if(page > 0)
+  queryClient.prefetchQuery({
+    queryKey: ['bookings',filter,sortBy,page-1],
+    queryFn: () => getBookings({filters,sortBy,page: page-1})
+  });
 
   // console.log(data.count);
   return {bookings:data,isPending,error}
