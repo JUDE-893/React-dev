@@ -1,12 +1,14 @@
 import styled from "styled-components";
+import useBooking from './useBooking';
 
 import BookingDataBox from "./BookingDataBox";
-import Row from "../../ui/Row";
-import Heading from "../../ui/Heading";
-import Tag from "../../ui/Tag";
 import ButtonGroup from "../../ui/ButtonGroup";
-import Button from "../../ui/Button";
 import ButtonText from "../../ui/ButtonText";
+import Heading from "../../ui/Heading";
+import Spinner from "../../ui/Spinner";
+import Button from "../../ui/Button";
+import Row from "../../ui/Row";
+import Tag from "../../ui/Tag";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
 
@@ -16,29 +18,31 @@ const HeadingGroup = styled.div`
   align-items: center;
 `;
 
-function BookingDetail() {
-  const booking = {};
-  const status = "checked-in";
 
+function BookingDetail() {
+
+  const {data,isPending,error} = useBooking();
   const moveBack = useMoveBack();
+
+  if (isPending) return <Spinner />
 
   const statusToTagName = {
     unconfirmed: "blue",
     "checked-in": "green",
     "checked-out": "silver",
   };
-
+  console.log(data);
   return (
     <>
       <Row type="horizontal">
         <HeadingGroup>
-          <Heading as="h1">Booking #X</Heading>
-          <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
+          <Heading as="h1">Booking #{data.id}</Heading>
+          <Tag type={statusToTagName[data.status]}>{data.status.replace("-", " ")}</Tag>
         </HeadingGroup>
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
       </Row>
 
-      <BookingDataBox booking={booking} />
+      <BookingDataBox booking={data} />
 
       <ButtonGroup>
         <Button variation="secondary" onClick={moveBack}>

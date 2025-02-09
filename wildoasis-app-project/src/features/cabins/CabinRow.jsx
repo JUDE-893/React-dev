@@ -87,7 +87,7 @@ export default function CabinRow({cabin}) {
         <Price>{cabin.regular_price}</Price>
         <Discount>{cabin.discount}</Discount>
         <Menu.Toggle mid={cabin.id}><HiEllipsisVertical/></Menu.Toggle>
-        <Menu.List position={{x:200,y:200}} idn={cabin.id} >
+        <Menu.List idn={cabin.id} >
 
           <Menu.Button render={handleDuplicate} disabled={duplicating} icon={<HiSquare2Stack />}><HiSquare2Stack /> Duplicate cabin</Menu.Button>
           <CreateEditCabin>

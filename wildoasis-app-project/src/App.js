@@ -7,6 +7,8 @@ import {Toaster} from 'react-hot-toast'
 import AppLayout from './ui/AppLayout.jsx';
 import Account from './pages/Account.jsx';
 import Bookings from './pages/Bookings.jsx';
+import Booking from './pages/Booking.jsx';
+import CheckIn from './pages/CheckIn.jsx';
 import Cabins from './pages/Cabins.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import Login from './pages/Login.jsx';
@@ -40,6 +42,8 @@ function App() {
               <Route path="/" element={<Dashboard/>}/>
               <Route path="/Account" element={<Account/>}/>
               <Route path="/bookings" element={<Bookings/>}/>
+              <Route path="/booking/:bookingId" element={<Booking/>}/>
+              <Route path="/check-in/:bookingId" element={<CheckIn/>}/>
               <Route path="/cabins" element={<Cabins/>}/>
               <Route path="/login" element={<Login/>}/>
               <Route path="/users" element={<Users/>}/>

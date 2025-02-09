@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { format, isToday } from "date-fns";
+import { format, isToday,parseISO } from "date-fns";
 import {
   HiOutlineChatBubbleBottomCenterText,
   HiOutlineCheckCircle,
@@ -105,17 +105,17 @@ const Footer = styled.footer`
 function BookingDataBox({ booking }) {
   const {
     created_at,
-    startDate,
-    endDate,
-    numNights,
-    numGuests,
-    cabinPrice,
-    extrasPrice,
-    totalPrice,
-    hasBreakfast,
+    start_date: startDate,
+    end_date: endDate,
+    num_nights: numNights,
+    num_guests: numGuests,
+    cabin_price: cabinPrice,
+    extra_price: extrasPrice,
+    total_price: totalPrice,
+    has_breakfast: hasBreakfast,
     observations,
-    isPaid,
-    guests: { fullName: guestName, email, country, countryFlag, nationalID },
+    is_paid: isPaid,
+    guests: { full_name: guestName, email, country, country_flag:countryFlag, national_id: nationalID },
     cabins: { name: cabinName },
   } = booking;
 
@@ -130,11 +130,11 @@ function BookingDataBox({ booking }) {
         </div>
 
         <p>
-          {format(new Date(startDate), "EEE, MMM dd yyyy")} (
-          {isToday(new Date(startDate))
+          {format(parseISO(startDate), "EEE, MMM dd yyyy")} (
+          {isToday(parseISO(startDate))
             ? "Today"
             : formatDistanceFromNow(startDate)}
-          ) &mdash; {format(new Date(endDate), "EEE, MMM dd yyyy")}
+          ) &mdash; {format(parseISO(endDate), "EEE, MMM dd yyyy")}
         </p>
       </Header>
 
@@ -178,7 +178,7 @@ function BookingDataBox({ booking }) {
       </Section>
 
       <Footer>
-        <p>Booked {format(new Date(created_at), "EEE, MMM dd yyyy, p")}</p>
+        <p>Booked {format(parseISO(created_at), "EEE, MMM dd yyyy, p")}</p>
       </Footer>
     </StyledBookingDataBox>
   );

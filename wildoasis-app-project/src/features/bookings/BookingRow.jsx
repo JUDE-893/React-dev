@@ -1,5 +1,9 @@
+import {useNavigate} from 'react-router-dom';
 import styled from "styled-components";
 import { format, isToday } from "date-fns";
+import {HiEye,HiEllipsisVertical,HiArrowDownOnSquare } from 'react-icons/hi2'
+import Menu from '../../ui/Menus';
+
 
 import Tag from "../../ui/Tag";
 import Table from "../../ui/Table";
@@ -48,6 +52,8 @@ function BookingRow({
     cabins: { name: cabin_name },
   },
 }) {
+
+  const navigate = useNavigate();
   const statusToTagName = {
     unconfirmed: "blue",
     "checked-in": "green",
@@ -79,6 +85,13 @@ function BookingRow({
       <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
 
       <Amount>{formatCurrency(total_price)}</Amount>
+
+      <Menu.Toggle mid={bookingId}><HiEllipsisVertical/></Menu.Toggle>
+      <Menu.List idn={bookingId}>
+        <Menu.Button render={() => navigate('/booking/'+bookingId)} icon={<HiEye />}><HiEye /> See details</Menu.Button>
+        <Menu.Button render={() => navigate('/check-in/'+bookingId)} icon={<HiArrowDownOnSquare />}><HiArrowDownOnSquare /> Check-in</Menu.Button>
+      </Menu.List>
+
     </Table.Row>
   );
 }
