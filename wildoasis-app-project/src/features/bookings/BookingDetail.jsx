@@ -1,7 +1,8 @@
 import {useNavigate} from 'react-router-dom';
 import styled from "styled-components";
-import useBooking from './useBooking';
 import useCheckout from "../../features/check-in-out/useCheckIn";
+import useDeleteBooking from "./useDeleteBooking";
+import useBooking from './useBooking';
 
 import BookingDataBox from "./BookingDataBox";
 import ButtonGroup from "../../ui/ButtonGroup";
@@ -26,6 +27,7 @@ function BookingDetail() {
   const navigate = useNavigate();
   const {data,isPending,error} = useBooking();
   const {checkin:checkout,isPending: checkingOut,error:checkoutError} = useCheckout('out');
+  const {mutate: deleteBooking,isPending: isDeleting,error: deteteError} = useDeleteBooking();
   const moveBack = useMoveBack();
 
   if (isPending) return <Spinner />
@@ -54,6 +56,10 @@ function BookingDetail() {
       <BookingDataBox booking={data} />
 
       <ButtonGroup>
+        <Button variation="primary" size="medium" onClick={() => deleteBooking(data.id)} >
+          delete booking #{data.id}
+        </Button>
+
         {data.status === "unconfirmed" && <Button variation="primary" size="medium" onClick={() => navigate('/check-in/'+data.id)} >
           Check in booking #{data.id}
         </Button>}
