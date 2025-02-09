@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import styled from "styled-components";
 import useBooking from "../../features/bookings/useBooking";
+import useSettings from "../../features/settings/useSettings";
 import useCheckIn from "./useCheckIn";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { formatCurrency } from "../../utils/helpers";
@@ -26,19 +27,22 @@ const Box = styled.div`
 function CheckinBooking() {
 
   const [paidConfirmed, setPaidConfirmed] = useState(false)
+  const [wantBreakfast, setWantBreakfast] = useState(false)
 
   const moveBack = useMoveBack();
   const {data,isPending,error} = useBooking()
   const {checkin,isPending:isCheckingIn,error: checkInError} = useCheckIn();
+  const {isPending: gettingSetting,data:settings,error:seetingError} = useSettings();
 
   // update the confirmed state with remote booting paid state
   useEffect( () => {
     setPaidConfirmed(data?.is_paid ?? false)
+    setWantBreakfast(data?.has_breakfast ?? false)
   },[data])
 
 
   // data did not arrived yet ?
-  if (isPending) return <Spinner />
+  if (isPending || gettingSetting) return <Spinner />
 
   const {
     id: bookingId,
@@ -49,9 +53,14 @@ function CheckinBooking() {
     num_nights: numNights,
   } = data;
 
+  const extraPrice = settings.breakfast_price * numNights * numGuests;
+
   function handleCheckin() {
-    let payload = {id:bookingId, obj: {is_paid: true, status: 'checked-in'}}
-    checkin(payload)
+    let payload = {is_paid: true, status: 'checked-in'}
+    if (wantBreakfast) {
+      payload = {...payload, extra_price: extraPrice, total_price: extraPrice+totalPrice, has_breakfast: true}
+    }
+    checkin({id:bookingId, obj:payload})
   }
 
   return (
@@ -62,11 +71,19 @@ function CheckinBooking() {
       </Row>
 
       <BookingDataBox booking={data} />
+
       <Box>
-        <Checkbox id={bookingId} checked={paidConfirmed} onChange={() => setPaidConfirmed((prev) => !prev)} disabled={data.is_paid} >
-          I Confirme that the guest {guests.full_name} has paid the full amount of {formatCurrency(totalPrice)}
+        <Checkbox id={bookingId} checked={wantBreakfast} onChange={() => {setWantBreakfast((prev) => !prev); setPaidConfirmed((prev) => prev ? false : data.is_paid) }} disabled={data.has_breakfast} >
+          Want to add breakfast for {formatCurrency(extraPrice)}
         </Checkbox>
       </Box>
+
+      <Box>
+        <Checkbox id={bookingId} checked={paidConfirmed} onChange={() => setPaidConfirmed((prev) => !prev)} disabled={data.is_paid && paidConfirmed} >
+          I Confirme that the guest {guests.full_name} has paid the full amount of {!wantBreakfast ? formatCurrency(totalPrice): `${formatCurrency(totalPrice+extraPrice)} (${formatCurrency(totalPrice)} + ${formatCurrency(extraPrice)})`}
+        </Checkbox>
+      </Box>
+
 
       <ButtonGroup>
         <Button variation='primary' size="medium" onClick={handleCheckin} disabled={!paidConfirmed || isCheckingIn}>Check in booking #{bookingId}</Button>

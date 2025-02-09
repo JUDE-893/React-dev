@@ -1,32 +1,17 @@
-import {useEffect} from 'react';
-import {useQuery, useMutation,useQueryClient} from '@tanstack/react-query';
 import {useForm} from 'react-hook-form';
-import toast from 'react-hot-toast';
-import {getSettings,updateSetting} from '../../services/apiSettings';
-import Form from '../../ui/Form';
+import useSettings from './useSettings';
+
 import FormRow from '../../ui/FormRow';
-import Input from '../../ui/Input';
 import Spinner from '../../ui/Spinner';
+import Input from '../../ui/Input';
+import Form from '../../ui/Form';
 
 function UpdateSettingsForm() {
 
-  // permanantly fetch and cach the settings data
-  const {isPending,data,error} = useQuery({
-    queryKey: ['settings'],
-    queryFn: getSettings
-  });
 
-  // set Query client
-  const queryClient = useQueryClient();
+  const {updateError,updatedSettings,isUpdating,mutate, isPending,data,error} = useSettings();
 
-  // set query mutation
-  const {error:updateError,data:updatedSettings,isPending:isUpdating,mutate} = useMutation({
-    mutationFn: updateSetting,
-    onSuccess: () =>{toast.success('updated successfuly!');
-                     queryClient.invalidateQueries({queryKey: ['settings']})
-  },
-    onError: (e) => toast.error(/*"Oops! can't update setting. Try again.."*/e.message)
-  })
+  if (isPending) return <Spinner />
 
   // function that get executed in submit
   function submitSettings(e,field) {
@@ -35,8 +20,8 @@ function UpdateSettingsForm() {
 
 
   return (
-    <>
-    {!isPending ? <Form>
+
+    <Form>
       <FormRow label='Minimum nights/booking'>
         <Input type='number' id='min-nights' disabled={isUpdating} defaultValue={data.min_booking_length} name={/*...register ('min_booking_length')*/"sd"} onBlur={(e) => submitSettings(e,'min_booking_length')}/>
       </FormRow>
@@ -50,8 +35,6 @@ function UpdateSettingsForm() {
         <Input type='number' id='breakfast-price' disabled={isUpdating} defaultValue={data.breakfast_price} onBlur={(e) => submitSettings(e,'breakfast_price')}/>
       </FormRow>
     </Form>
-    :<Spinner/>}
-    </>
   );
 }
 

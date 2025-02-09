@@ -43,6 +43,7 @@ export default function Filter({options,name}) {
   // handle select filter option
   const handleSelect = (val) => {
     searchParams.set(name,val);
+    if (searchParams.get("page")) searchParams.set('page',1);
     setSearchParams(searchParams);
   }
 

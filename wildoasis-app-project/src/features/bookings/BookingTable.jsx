@@ -54,7 +54,7 @@ function BookingTable() {
           )}
         />
         <Table.Footer>
-          <Pagination count={bookings.count} step={10}/>
+          {bookings.count > 10 && <Pagination count={bookings.count} step={10}/>}
         </Table.Footer>
       </Table>
     </Menu>

@@ -1,5 +1,7 @@
+import {useNavigate} from 'react-router-dom';
 import styled from "styled-components";
 import useBooking from './useBooking';
+import useCheckout from "../../features/check-in-out/useCheckIn";
 
 import BookingDataBox from "./BookingDataBox";
 import ButtonGroup from "../../ui/ButtonGroup";
@@ -21,7 +23,9 @@ const HeadingGroup = styled.div`
 
 function BookingDetail() {
 
+  const navigate = useNavigate();
   const {data,isPending,error} = useBooking();
+  const {checkin:checkout,isPending: checkingOut,error:checkoutError} = useCheckout('out');
   const moveBack = useMoveBack();
 
   if (isPending) return <Spinner />
@@ -31,7 +35,12 @@ function BookingDetail() {
     "checked-in": "green",
     "checked-out": "silver",
   };
-  console.log(data);
+
+  // function that checks out a bookings
+  const handleCheckout = () => {
+    checkout({id:data.id,obj:{status: "checked-out"}})
+  }
+
   return (
     <>
       <Row type="horizontal">
@@ -45,7 +54,15 @@ function BookingDetail() {
       <BookingDataBox booking={data} />
 
       <ButtonGroup>
-        <Button variation="secondary" onClick={moveBack}>
+        {data.status === "unconfirmed" && <Button variation="primary" size="medium" onClick={() => navigate('/check-in/'+data.id)} >
+          Check in booking #{data.id}
+        </Button>}
+
+        {data.status === "checked-in" && <Button variation="primary" size="medium" onClick={handleCheckout} disabled={checkingOut}>
+          Check out booking #{data.id}
+        </Button>}
+
+        <Button variation="secondary" size="medium" onClick={moveBack}>
           Back
         </Button>
       </ButtonGroup>

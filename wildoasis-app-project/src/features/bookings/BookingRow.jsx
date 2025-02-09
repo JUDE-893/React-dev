@@ -1,10 +1,10 @@
 import {useNavigate} from 'react-router-dom';
 import styled from "styled-components";
 import { format, isToday } from "date-fns";
-import {HiEye,HiEllipsisVertical,HiArrowDownOnSquare } from 'react-icons/hi2'
+import {HiEye,HiEllipsisVertical,HiArrowDownOnSquare,HiArrowUpOnSquare } from 'react-icons/hi2'
+import useCheckout from "../../features/check-in-out/useCheckIn";
+
 import Menu from '../../ui/Menus';
-
-
 import Tag from "../../ui/Tag";
 import Table from "../../ui/Table";
 
@@ -54,6 +54,8 @@ function BookingRow({
 }) {
 
   const navigate = useNavigate();
+  const {checkin:checkout,isPending: checkingOut,error:checkoutError} = useCheckout('out');
+
   const statusToTagName = {
     unconfirmed: "blue",
     "checked-in": "green",
@@ -89,7 +91,8 @@ function BookingRow({
       <Menu.Toggle mid={bookingId}><HiEllipsisVertical/></Menu.Toggle>
       <Menu.List idn={bookingId}>
         <Menu.Button render={() => navigate('/booking/'+bookingId)} icon={<HiEye />}><HiEye /> See details</Menu.Button>
-        <Menu.Button render={() => navigate('/check-in/'+bookingId)} icon={<HiArrowDownOnSquare />}><HiArrowDownOnSquare /> Check-in</Menu.Button>
+        {status === "unconfirmed" && <Menu.Button render={() => navigate('/check-in/'+bookingId)} icon={<HiArrowDownOnSquare />}><HiArrowDownOnSquare /> Check in</Menu.Button>}
+        {status === "checked-in" && <Menu.Button render={() => checkout({id:bookingId, obj:{status:'checked-out'}})} icon={<HiArrowUpOnSquare />}><HiArrowUpOnSquare /> Check out</Menu.Button>}
       </Menu.List>
 
     </Table.Row>
