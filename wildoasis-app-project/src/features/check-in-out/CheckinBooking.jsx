@@ -1,13 +1,19 @@
+import {useState, useEffect} from 'react';
 import styled from "styled-components";
-import BookingDataBox from "../../features/bookings/BookingDataBox";
-
-import Row from "../../ui/Row";
-import Heading from "../../ui/Heading";
-import ButtonGroup from "../../ui/ButtonGroup";
-import Button from "../../ui/Button";
-import ButtonText from "../../ui/ButtonText";
-
+import useBooking from "../../features/bookings/useBooking";
+import useCheckIn from "./useCheckIn";
 import { useMoveBack } from "../../hooks/useMoveBack";
+import { formatCurrency } from "../../utils/helpers";
+
+import BookingDataBox from "../../features/bookings/BookingDataBox";
+import ButtonGroup from "../../ui/ButtonGroup";
+import ButtonText from "../../ui/ButtonText";
+import Checkbox from "../../ui/Checkbox";
+import Spinner from "../../ui/Spinner";
+import Heading from "../../ui/Heading";
+import Button from "../../ui/Button";
+import Row from "../../ui/Row";
+
 
 const Box = styled.div`
   /* Box */
@@ -18,20 +24,35 @@ const Box = styled.div`
 `;
 
 function CheckinBooking() {
-  const moveBack = useMoveBack();
 
-  const booking = {};
+  const [paidConfirmed, setPaidConfirmed] = useState(false)
+
+  const moveBack = useMoveBack();
+  const {data,isPending,error} = useBooking()
+  const {checkin,isPending:isCheckingIn,error: checkInError} = useCheckIn();
+
+  // update the confirmed state with remote booting paid state
+  useEffect( () => {
+    setPaidConfirmed(data?.is_paid ?? false)
+  },[data])
+
+
+  // data did not arrived yet ?
+  if (isPending) return <Spinner />
 
   const {
     id: bookingId,
     guests,
-    totalPrice,
-    numGuests,
-    hasBreakfast,
-    numNights,
-  } = booking;
+    total_price: totalPrice,
+    num_guests: numGuests,
+    has_breakfast: hasBreakfast,
+    num_nights: numNights,
+  } = data;
 
-  function handleCheckin() {}
+  function handleCheckin() {
+    let payload = {id:bookingId, obj: {is_paid: true, status: 'checked-in'}}
+    checkin(payload)
+  }
 
   return (
     <>
@@ -40,11 +61,16 @@ function CheckinBooking() {
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
       </Row>
 
-      <BookingDataBox booking={booking} />
+      <BookingDataBox booking={data} />
+      <Box>
+        <Checkbox id={bookingId} checked={paidConfirmed} onChange={() => setPaidConfirmed((prev) => !prev)} disabled={data.is_paid} >
+          I Confirme that the guest {guests.full_name} has paid the full amount of {formatCurrency(totalPrice)}
+        </Checkbox>
+      </Box>
 
       <ButtonGroup>
-        <Button onClick={handleCheckin}>Check in booking #{bookingId}</Button>
-        <Button variation="secondary" onClick={moveBack}>
+        <Button variation='primary' size="medium" onClick={handleCheckin} disabled={!paidConfirmed || isCheckingIn}>Check in booking #{bookingId}</Button>
+        <Button variation="secondary" size="medium" onClick={moveBack}>
           Back
         </Button>
       </ButtonGroup>
