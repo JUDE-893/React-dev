@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Heading from "./Heading";
 import Row from "./Row";
+import Logout from './../features/authentication/Logout';
 
 const StyledHeader = styled.div`
   color:red;
@@ -13,7 +14,9 @@ const StyledHeader = styled.div`
 function Header() {
   return (
     <div>
-      <StyledHeader>Header</StyledHeader>
+      <StyledHeader>
+        <Logout />
+      </StyledHeader>
     </div>
   );
 }
