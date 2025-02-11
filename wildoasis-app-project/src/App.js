@@ -15,6 +15,7 @@ import Login from './pages/Login.jsx';
 import PageNotFound from './pages/PageNotFound.jsx';
 import Settings from './pages/Settings.jsx';
 import Users from './pages/Users.jsx';
+import ProtectedRoutes from './ui/ProtectedRoutes.jsx';
 
 
 
@@ -38,18 +39,19 @@ function App() {
         {/*<ReactQueryDevtoolsPanel default={false} />*/}
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<AppLayout/>}>
+
+            <Route path="/" element={<ProtectedRoutes><AppLayout/></ProtectedRoutes>}>
               <Route path="/" element={<Dashboard/>}/>
               <Route path="/Account" element={<Account/>}/>
               <Route path="/bookings" element={<Bookings/>}/>
               <Route path="/booking/:bookingId" element={<Booking/>}/>
               <Route path="/check-in/:bookingId" element={<CheckIn/>}/>
               <Route path="/cabins" element={<Cabins/>}/>
-              <Route path="/login" element={<Login/>}/>
               <Route path="/users" element={<Users/>}/>
               <Route path="/settings" element={<Settings/>}/>
               <Route path="/pageNotFound" element={<PageNotFound/>}/>
             </Route>
+            <Route path="/login" element={<Login/>}/>
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>
