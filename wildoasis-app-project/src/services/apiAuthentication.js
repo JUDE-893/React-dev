@@ -6,10 +6,14 @@ export async function apiLogin({email,password}) {
   email: email,
   password: password
 })
-  if (error) {
+  if (!data?.user?.email_confirmed_at) {
+    console.log("Please confirm your email before logging in.");
+  }
+  else if (error) {
     throw new Error(error);
     console.log('error while login',error);
   }
+
   console.log(data);
   return data;
 }
@@ -41,4 +45,26 @@ export async function apiLogout({email,password}) {
   }
 
   return true;
+}
+
+// function that allow to create a user and SignUp
+export async function apiSignUp({email,password,full_name}) {
+
+  let { data, error } = await supabase.auth.signUp({
+    email: email,
+    password: password,
+    options: {
+      data:{
+        full_name: full_name,
+        avatar: ""
+      }
+    }
+  })
+
+  if (error) {
+    throw new Error(error.message);
+    return null;
+  }
+
+  return data;
 }
