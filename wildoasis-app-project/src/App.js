@@ -12,6 +12,7 @@ import CheckIn from './pages/CheckIn.jsx';
 import Cabins from './pages/Cabins.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import Login from './pages/Login.jsx';
+import Signup from './pages/Signup.jsx';
 import PageNotFound from './pages/PageNotFound.jsx';
 import Settings from './pages/Settings.jsx';
 import Users from './pages/Users.jsx';
@@ -52,6 +53,7 @@ function App() {
               <Route path="/pageNotFound" element={<PageNotFound/>}/>
             </Route>
             <Route path="/login" element={<Login/>}/>
+            <Route path="/signup" element={<Signup/>}/>
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>

@@ -70,7 +70,7 @@ function CreateCabinForm({cancel, cabinToEdit = {}}) {
       <FormRow message={errors?.discount?.message} label='Discount'>
         <Input type="number" id="discount" defaultValue={0}  {...register('discount',{
           min: {value:0,message:'the discount must be a positive amount!'},
-          validate: v => v <= getValues().regular_price || "the discount must be less than the price"}
+          validate: v => +(v) <= +(getValues().regular_price) || "the discount must be less than the price"}
         )} />
       </FormRow>
 

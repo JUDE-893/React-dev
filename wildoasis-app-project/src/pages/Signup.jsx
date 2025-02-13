@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Logo from './../ui/Logo';
 import Heading from './../ui/Heading';
-import LoginForm from './../features/authentication/LoginForm';
+import SignupForm from './../features/authentication/SignupForm';
 
 const LoginLayout = styled.main`
   min-height: 100vh;
@@ -18,7 +18,7 @@ function Login() {
     <LoginLayout>
       <Logo />
       <Heading as="h2" style={{textAlign: "center"}}>Create new account</Heading>
-      <LoginForm />
+      <SignupForm />
     </LoginLayout>
   )
 }
