@@ -1,26 +1,32 @@
 import { useForm } from "react-hook-form";
-import Button from "../../ui/Button";
-import Form from "../../ui/Form";
-import FormRow from "../../ui/FormRow";
-import Input from "../../ui/Input";
+import useUpdateUser from './useUpdateUser';
+import useLogout from './useLogout';
 
-import { useUpdateUser } from "./useUpdateUser";
+import ButtonGroup from "../../ui/ButtonGroup";
+import SpinnerMini from "../../ui/SpinnerMini";
+import FormRow from "../../ui/FormRow";
+import Button from "../../ui/Button";
+import Input from "../../ui/Input";
+import Form from "../../ui/Form";
+
+
 
 function UpdatePasswordForm() {
   const { register, handleSubmit, formState, getValues, reset } = useForm();
   const { errors } = formState;
 
-  const { updateUser, isUpdating } = useUpdateUser();
+  const { updateUser, isPending: isUpdating } = useUpdateUser();
+  const {logout,loggingOut} = useLogout();
 
   function onSubmit({ password }) {
-    updateUser({ password }, { onSuccess: reset });
+    updateUser({ password }, { onSuccess: logout });
   }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow
         label="Password (min 8 characters)"
-        error={errors?.password?.message}
+        message={errors?.password?.message}
       >
         <Input
           type="password"
@@ -39,7 +45,7 @@ function UpdatePasswordForm() {
 
       <FormRow
         label="Confirm password"
-        error={errors?.passwordConfirm?.message}
+        message={errors?.passwordConfirm?.message}
       >
         <Input
           type="password"
@@ -54,10 +60,12 @@ function UpdatePasswordForm() {
         />
       </FormRow>
       <FormRow>
-        <Button onClick={reset} type="reset" variation="secondary">
+      <ButtonGroup>
+        <Button variation='primary' size="medium">{isUpdating ? <SpinnerMini /> : "Update Password"}</Button>
+        <Button type="reset" variation="secondary" size="medium">
           Cancel
         </Button>
-        <Button disabled={isUpdating}>Update password</Button>
+      </ButtonGroup>
       </FormRow>
     </Form>
   );

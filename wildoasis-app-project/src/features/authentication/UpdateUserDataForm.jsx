@@ -1,27 +1,35 @@
 import { useState } from "react";
+import useUpdateUser from './useUpdateUser';
 
-import Button from "../../ui/Button";
+import ButtonGroup from "../../ui/ButtonGroup";
+import SpinnerMini from "../../ui/SpinnerMini";
 import FileInput from "../../ui/FileInput";
-import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
+import Button from "../../ui/Button";
 import Input from "../../ui/Input";
+import Form from "../../ui/Form";
 
-import { useUser } from "./useUser";
+
+import useUser  from "./useUser";
 
 function UpdateUserDataForm() {
+
   // We don't need the loading state, and can immediately use the user data, because we know that it has already been loaded at this point
   const {
     user: {
       email,
-      user_metadata: { fullName: currentFullName },
+      user_metadata: { full_name: currentFullName, avatar:userAvatar },
     },
   } = useUser();
+  const {updateUser,isPending} = useUpdateUser();
 
   const [fullName, setFullName] = useState(currentFullName);
   const [avatar, setAvatar] = useState(null);
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log(fullName,avatar);
+    updateUser({full_name:fullName,avatar:avatar,userAvatar:userAvatar});
   }
 
   return (
@@ -39,16 +47,20 @@ function UpdateUserDataForm() {
       </FormRow>
       <FormRow label="Avatar image">
         <FileInput
+          type='file'
           id="avatar"
           accept="image/*"
-          onChange={(e) => setAvatar(e.target.files[0])}
+          disabled={isPending}
+          onChange={(e) =>{setAvatar(e.target.files[0])}}
         />
       </FormRow>
       <FormRow>
-        <Button type="reset" variation="secondary">
-          Cancel
-        </Button>
-        <Button>Update account</Button>
+        <ButtonGroup>
+          <Button variation='primary' size="medium" disabled={isPending}>{isPending ? <SpinnerMini /> : "Update account"}</Button>
+          <Button type="reset" variation="secondary" size="medium" disabled={isPending}>
+            Cancel
+          </Button>
+        </ButtonGroup>
       </FormRow>
     </Form>
   );

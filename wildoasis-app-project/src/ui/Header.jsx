@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import UserAvatar from '../features/authentication/UserAvatar';
+import HeaderMenu from './HeaderMenu';
 import Heading from "./Heading";
 import Row from "./Row";
-import Logout from './../features/authentication/Logout';
 
 const StyledHeader = styled.div`
   color:red;
@@ -11,11 +12,21 @@ const StyledHeader = styled.div`
   border-bottom: 1px solid var(--color-grey-100);
   padding: 2.5rem
 `;
+
+const StyledFeats = styled.div`
+  display: flex;
+  justify-content:end;
+  gap:2rem;
+`;
+
 function Header() {
   return (
     <div>
       <StyledHeader>
-        <Logout />
+        <StyledFeats>
+          <UserAvatar />
+          <HeaderMenu />
+        </StyledFeats>
       </StyledHeader>
     </div>
   );

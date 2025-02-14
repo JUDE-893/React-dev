@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import useUser from './useUser';
 
 const StyledUserAvatar = styled.div`
   display: flex;
-  gap: 1.2rem;
+  gap: 1rem;
   align-items: center;
   font-weight: 500;
   font-size: 1.4rem;
@@ -19,3 +20,17 @@ const Avatar = styled.img`
   border-radius: 50%;
   outline: 2px solid var(--color-grey-100);
 `;
+
+export default function UserAvatar() {
+
+  const {user,isPending} = useUser();
+  console.log(user);
+  const {avatar,full_name} = user?.user_metadata ?? {};
+
+  return (
+    <StyledUserAvatar>
+      <Avatar src={avatar || "./default-user.jpg"} alt="@user-avatar" />
+      <p style={{fontWeight: 700}}>{full_name}</p>
+    </StyledUserAvatar>
+  )
+}

@@ -43,7 +43,7 @@ function App() {
 
             <Route path="/" element={<ProtectedRoutes><AppLayout/></ProtectedRoutes>}>
               <Route path="/" element={<Dashboard/>}/>
-              <Route path="/Account" element={<Account/>}/>
+              <Route path="/account" element={<Account/>}/>
               <Route path="/bookings" element={<Bookings/>}/>
               <Route path="/booking/:bookingId" element={<Booking/>}/>
               <Route path="/check-in/:bookingId" element={<CheckIn/>}/>
