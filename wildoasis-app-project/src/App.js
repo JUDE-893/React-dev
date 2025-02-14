@@ -3,21 +3,23 @@ import GlobalStyles from './styles/GlobalStyles';
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {ReactQueryDevtools, ReactQueryDevtoolsPanel} from '@tanstack/react-query-devtools';
-import {Toaster} from 'react-hot-toast'
+import {Toaster} from 'react-hot-toast';
+
+import DarkModeProvider from './hooks/DarkModeProvider.jsx';
+import ProtectedRoutes from './ui/ProtectedRoutes.jsx';
+
+import PageNotFound from './pages/PageNotFound.jsx';
+import Dashboard from './pages/Dashboard.jsx';
+import Settings from './pages/Settings.jsx';
+import Bookings from './pages/Bookings.jsx';
 import AppLayout from './ui/AppLayout.jsx';
 import Account from './pages/Account.jsx';
-import Bookings from './pages/Bookings.jsx';
 import Booking from './pages/Booking.jsx';
 import CheckIn from './pages/CheckIn.jsx';
 import Cabins from './pages/Cabins.jsx';
-import Dashboard from './pages/Dashboard.jsx';
-import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
-import PageNotFound from './pages/PageNotFound.jsx';
-import Settings from './pages/Settings.jsx';
+import Login from './pages/Login.jsx';
 import Users from './pages/Users.jsx';
-import ProtectedRoutes from './ui/ProtectedRoutes.jsx';
-
 
 
 
@@ -36,26 +38,28 @@ function App() {
     <>
       <GlobalStyles/>
       <QueryClientProvider client={client}>
-        <ReactQueryDevtools default={false} />
-        {/*<ReactQueryDevtoolsPanel default={false} />*/}
-        <BrowserRouter>
-          <Routes>
+        <DarkModeProvider>
+          <ReactQueryDevtools default={false} />
+          {/*<ReactQueryDevtoolsPanel default={false} />*/}
+          <BrowserRouter>
+            <Routes>
 
-            <Route path="/" element={<ProtectedRoutes><AppLayout/></ProtectedRoutes>}>
-              <Route path="/" element={<Dashboard/>}/>
-              <Route path="/account" element={<Account/>}/>
-              <Route path="/bookings" element={<Bookings/>}/>
-              <Route path="/booking/:bookingId" element={<Booking/>}/>
-              <Route path="/check-in/:bookingId" element={<CheckIn/>}/>
-              <Route path="/cabins" element={<Cabins/>}/>
-              <Route path="/users" element={<Users/>}/>
-              <Route path="/settings" element={<Settings/>}/>
-              <Route path="/pageNotFound" element={<PageNotFound/>}/>
-            </Route>
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/signup" element={<Signup/>}/>
-          </Routes>
-        </BrowserRouter>
+              <Route path="/" element={<ProtectedRoutes><AppLayout/></ProtectedRoutes>}>
+                <Route path="/" element={<Dashboard/>}/>
+                <Route path="/account" element={<Account/>}/>
+                <Route path="/bookings" element={<Bookings/>}/>
+                <Route path="/booking/:bookingId" element={<Booking/>}/>
+                <Route path="/check-in/:bookingId" element={<CheckIn/>}/>
+                <Route path="/cabins" element={<Cabins/>}/>
+                <Route path="/users" element={<Users/>}/>
+                <Route path="/settings" element={<Settings/>}/>
+                <Route path="/pageNotFound" element={<PageNotFound/>}/>
+              </Route>
+              <Route path="/login" element={<Login/>}/>
+              <Route path="/signup" element={<Signup/>}/>
+            </Routes>
+          </BrowserRouter>
+        </DarkModeProvider>
       </QueryClientProvider>
       <Toaster
         position='top-center'
