@@ -1,7 +1,6 @@
 import {useSearchParams} from 'react-router-dom';
-import {useQuery} from '@tanstack/react-query';
 import styled from "styled-components";
-import {getCabins} from '../../services/apiCabins';
+import useCabins from './useCabins';
 import CabinRow from './CabinRow';
 import Spinner from '../../ui/Spinner';
 import Table from '../../ui/Table';
@@ -36,10 +35,7 @@ export default function CabinsTable({children}) {
 
   // fetching the cabins data periodically [60s] using the react-Query
   // the data is kept in the cach as long as it is  fresh
-  const {data,error,isPending} = useQuery({
-    queryKey: ['cabins'],
-    queryFn: getCabins
-  })
+  const {data,error,isPending} = useCabins()
 
   const [searchParams] = useSearchParams();
 

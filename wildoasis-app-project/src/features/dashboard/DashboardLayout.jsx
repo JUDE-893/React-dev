@@ -1,4 +1,10 @@
 import styled from "styled-components";
+import useBookingsAfterDate from './useBookingsAfterDate';
+import useCabins from '../../features/cabins/useCabins';
+import useStaysAfterDate from './useStaysAfterDate';
+import Spinner from '../../ui/Spinner';
+import Stats from './Stats';
+
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -7,4 +13,20 @@ const StyledDashboardLayout = styled.div`
   gap: 2.4rem;
 `;
 
-export default StyledDashboardLayout;
+
+export default function DashboardLayout() {
+
+  const {stays,confirmedStays,isPending:isGettingStays,days} = useStaysAfterDate();
+  const {bookings,isPending:isGettingBookings} = useBookingsAfterDate();
+  const {data:cabins,error,isPending} = useCabins()
+
+
+  if(isGettingBookings || isGettingStays,isPending) return <Spinner />
+  console.log(bookings);
+  return (
+    <StyledDashboardLayout>
+      <Stats bookings={bookings} stays={stays} days={days} confirmedStays={confirmedStays} cabins={cabins} />
+
+    </StyledDashboardLayout>
+  )
+};
