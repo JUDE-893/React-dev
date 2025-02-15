@@ -4,6 +4,7 @@ import useCabins from '../../features/cabins/useCabins';
 import useStaysAfterDate from './useStaysAfterDate';
 import Spinner from '../../ui/Spinner';
 import Stats from './Stats';
+import SalesChart from './SalesChart';
 
 
 const StyledDashboardLayout = styled.div`
@@ -22,11 +23,11 @@ export default function DashboardLayout() {
 
 
   if(isGettingBookings || isGettingStays,isPending) return <Spinner />
-  console.log(bookings);
+
   return (
     <StyledDashboardLayout>
       <Stats bookings={bookings} stays={stays} days={days} confirmedStays={confirmedStays} cabins={cabins} />
-
+      <SalesChart bookings={bookings} days={days} />
     </StyledDashboardLayout>
   )
 };

@@ -8,7 +8,7 @@ export default function stats({stays,days,confirmedStays,bookings,cabins}) {
   //2
   const sales = bookings?.reduce( (acc,cur) => acc + cur.total_price, 0)
   //3 check-ins
-  const checkInsLength = bookings?.filter( (bk) => bk.status === 'checked-in')?.length;
+  const checkInsLength = stays?.filter( (bk) => bk.status === 'checked-in')?.length;
   const total_nights =  confirmedStays?.reduce( (acc,cur) => acc+cur?.num_nights,0)
   const occupancyRate = (total_nights/(days*cabins?.length)*100).toFixed(1)
 
