@@ -2,10 +2,10 @@ import {useMemo} from 'react';
 import {AreaChart, Area,CartesianGrid,Tooltip,XAxis,YAxis,ResponsiveContainer } from 'recharts';
 import styled from "styled-components";
 import {eachDayOfInterval,subDays,format} from 'date-fns';
+import {useDarkMode} from '../../hooks/DarkModeProvider';
 
 import DashboardBox from "./DashboardBox";
 import Heading from '../../ui/Heading';
-import {useDarkMode} from '../../hooks/DarkModeProvider';
 
 const StyledSalesChart = styled(DashboardBox)`
   grid-column: 1 / -1;

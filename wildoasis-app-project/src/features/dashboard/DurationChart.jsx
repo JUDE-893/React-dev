@@ -1,4 +1,7 @@
+import {ResponsiveContainer,PieChart,Pie,Legend,Cell,Tooltip } from 'recharts';
 import styled from "styled-components";
+import {useDarkMode} from '../../hooks/DarkModeProvider';
+import Heading from '../../ui/Heading';
 
 const ChartBox = styled.div`
   /* Box */
@@ -113,9 +116,8 @@ function prepareData(startData, stays) {
     );
   }
 
-  const data = stays
-    .reduce((arr, cur) => {
-      const num = cur.numNights;
+  const data = stays?.reduce((arr, cur) => {
+      const num = cur.num_nights;
       if (num === 1) return incArrayValue(arr, "1 night");
       if (num === 2) return incArrayValue(arr, "2 nights");
       if (num === 3) return incArrayValue(arr, "3 nights");
@@ -129,4 +131,32 @@ function prepareData(startData, stays) {
     .filter((obj) => obj.value > 0);
 
   return data;
+}
+
+export default function DurationChart({confirmedStays}) {
+  const {isDarkMode} = useDarkMode();
+  const initialData = isDarkMode ? startDataDark : startDataLight;
+  const data = prepareData(initialData,confirmedStays)
+  // const toolBackGround = !isDarkMode ? "#18212f" : "#fff"
+  // const toolColor = isDarkMode ? "#18212f" : "#fff"
+
+  return (
+    <ChartBox>
+      <Heading as='h2'>data visualation</Heading>
+      <ResponsiveContainer width='100%' height={280}>
+        <PieChart>
+          <Tooltip />
+          <Legend verticalAlign='middle' align='right' width='30%' layout='vertical' iconType='circle'/>
+          <Pie
+            data={data} nameKey="duration" dataKey='value'
+            outerRadius={110} innerRadius={85} cx="40%" cy='40%' paddingAngle={3}
+            >
+            {data?.map((entry) => {
+              return <Cell key={entry.color} stroke={entry.color} fill={entry.color}/>
+            })}
+          </Pie>
+        </PieChart>
+      </ResponsiveContainer>
+    </ChartBox>
+  )
 }
