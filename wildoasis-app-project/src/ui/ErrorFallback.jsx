@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Button from './Button';
 
 const StyledErrorFallback = styled.main`
   height: 100vh;
@@ -29,3 +30,11 @@ const Box = styled.div`
     color: var(--color-grey-500);
   }
 `;
+
+export default function ErrorFallback({error, resetErrorBoundary}) {
+  <StyledErrorFallback>
+    <img  src='./sadface.gif' />
+    <p>{error}</p>
+    <Button variation='primary' size="medium" onClick={resetErrorBoundary} ></Button>
+  </StyledErrorFallback>
+} 
