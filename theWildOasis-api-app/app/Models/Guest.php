@@ -11,5 +11,5 @@ class Guest extends Model
     // relationship
     public function bookings() {
       return $this->hasMany(Booking::class);
-    };
+    }
 }
