@@ -89,7 +89,7 @@ class BookingsController extends Controller
     public function update(Request $request, string $id)
     {
       try {
-        \Log::Info($request->all());
+
         $booking = Booking::findOrFail($id);
         $booking = $booking->update($request->all());
 
