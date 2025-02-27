@@ -29,7 +29,7 @@ function UpdateSettingsForm() {
         <Input type='number' id='max-nights' disabled={isUpdating} defaultValue={data.max_booking_length} onBlur={(e) => submitSettings(e,'max_booking_length')}/>
       </FormRow>
       <FormRow label='Maximum guests/booking'>
-        <Input type='number' id='max-guests' disabled={isUpdating} defaultValue={data.max_gests_per_booking}  onBlur={(e) => submitSettings(e,'max_gests_per_booking')}/>
+        <Input type='number' id='max-guests' disabled={isUpdating} defaultValue={data.max_guest_per_booking}  onBlur={(e) => submitSettings(e,'max_gests_per_booking')}/>
       </FormRow>
       <FormRow label='Breakfast price'>
         <Input type='number' id='breakfast-price' disabled={isUpdating} defaultValue={data.breakfast_price} onBlur={(e) => submitSettings(e,'breakfast_price')}/>

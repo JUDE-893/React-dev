@@ -14,7 +14,7 @@ export default function useSetting() {
 
   // set Query client
   const queryClient = useQueryClient();
-
+  
   // set query mutation
   const {error:updateError,data:updatedSettings,isPending:isUpdating,mutate} = useMutation({
     mutationFn: updateSetting,

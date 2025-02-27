@@ -1,28 +1,23 @@
 import {supabase} from "./supabase";
+import axiosClient from './axiosClient';
 
 export async function getSettings() {
-  const { data, error } = await supabase.from("settings").select("*").single();
 
-  if (error) {
-    console.error(error);
+  const { data } = await axiosClient.get('/settings');
+
+  if (!data?.success) {
     throw new Error("Settings could not be loaded");
   }
-  return data;
+  return data?.settings[0];
 }
 
 // We expect a newSetting object that looks like {setting: newValue}
 export async function updateSetting(newSetting) {
-  const { data, error } = await supabase
-    .from("settings")
-    .update(newSetting)
-    // There is only ONE row of settings, and it has the ID=1, and so this is the updated one
-    .eq("id", 1)
-    .single();
+  const { data } = await axiosClient.put('/settings/1',newSetting)
 
-  if (error) {
-    console.error(error);
-    console.log("error::",error);
+  if (!data?.success) {
+    console.log("error::",data?.error);
     throw new Error("Settings could not be updated");
   }
-  return data;
+   return data;
 }
