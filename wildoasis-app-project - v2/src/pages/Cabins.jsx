@@ -36,6 +36,7 @@ function Cabins() {
             {label:'Discount asc',value:'discount-asc'},
             {label:'Discount desc',value:'discount-desc'},
           ]}
+          type='white'
         />
         </HeadingMenu>
       </Row>

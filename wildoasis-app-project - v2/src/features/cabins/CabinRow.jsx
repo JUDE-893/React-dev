@@ -81,7 +81,7 @@ export default function CabinRow({cabin}) {
   return (
     <>
       <Table.Row id={cabin.id} key={cabin.id} >
-        <Img src={cabin.image}/>
+        <Img src={cabin.image ? process.env.REACT_APP_CABIN_IMAGE_BASE_URL + cabin.image : cabin.image}/>
         <Cabin>{cabin.name}</Cabin>
         <Price>{cabin.max_capacity}</Price>
         <Price>{cabin.regular_price}</Price>
@@ -95,7 +95,7 @@ export default function CabinRow({cabin}) {
               <Menu.Button icon={<HiPencil />}><HiPencil />Edit cabin</Menu.Button>
             </CreateEditCabin.OpenModal>
             <CreateEditCabin.Window closeParentMenu={() => handleToggle(menuId)} name='cabin/edit'>
-              <CreateCabinForm  cabinToEdit={cabin}/>
+              <CreateCabinForm  cabinToEdit={cabin}/> 
             </CreateEditCabin.Window>
           </CreateEditCabin>
           <CreateEditCabin>
