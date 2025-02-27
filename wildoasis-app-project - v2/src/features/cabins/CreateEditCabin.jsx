@@ -36,7 +36,7 @@ function Window({children, name,closeParentMenu}){
     function handleClick(e) {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
         close();
-        closeParentMenu();
+        closeParentMenu?.();
       }
     }
 
