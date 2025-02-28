@@ -46,7 +46,7 @@ function CheckinBooking() {
 
   const {
     id: bookingId,
-    guests,
+    guest,
     total_price: totalPrice,
     num_guests: numGuests,
     has_breakfast: hasBreakfast,
@@ -80,7 +80,7 @@ function CheckinBooking() {
 
       <Box>
         <Checkbox id={bookingId} checked={paidConfirmed} onChange={() => setPaidConfirmed((prev) => !prev)} disabled={data.is_paid && paidConfirmed} >
-          I Confirme that the guest {guests.full_name} has paid the full amount of {!wantBreakfast ? formatCurrency(totalPrice): `${formatCurrency(totalPrice+extraPrice)} (${formatCurrency(totalPrice)} + ${formatCurrency(extraPrice)})`}
+          I Confirme that the guest {guest.full_name} has paid the full amount of {!wantBreakfast ? formatCurrency(totalPrice): `${formatCurrency(totalPrice+extraPrice)} (${formatCurrency(totalPrice)} + ${formatCurrency(extraPrice)})`}
         </Checkbox>
       </Box>
 

@@ -29,8 +29,8 @@ function Cabins() {
           options={[
             {label:'Name (A-z)',value:'name-asc'},
             {label:'Name (Z-a)',value:'name-desc'},
-            {label:'Price asc',value:'price-asc'},
-            {label:'Price desc',value:'price-desc'},
+            {label:'Price asc',value:'regular_price-asc'},
+            {label:'Price desc',value:'regular_price-desc'},
             {label:'Capacity asc',value:'max_capacity-asc'},
             {label:'Capacity desc',value:'max_capacity-desc'},
             {label:'Discount asc',value:'discount-asc'},

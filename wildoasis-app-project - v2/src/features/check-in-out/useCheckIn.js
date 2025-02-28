@@ -12,7 +12,8 @@ export default function useCheckIn(orn='in') {
     mutationFn: updateBooking,
     onSuccess: () => {
       toast.success(`Booking got checked ${orn} successfully!` );
-      queryClient.invalidateQueries({queryKey:['booking',bookingId]})
+      queryClient.invalidateQueries({queryKey:['booking',bookingId]});
+      queryClient.invalidateQueries({queryKey:['bookings']});
   },
     onError: (e) => toast.error(e)
   })

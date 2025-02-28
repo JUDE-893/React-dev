@@ -1,46 +1,50 @@
 import { getToday } from "../utils/helpers";
 import {supabase} from "./supabase";
-import axiosClient from "./axiosClient";
 
 // returns all bookings records
 export async function getBookings({filters,sortBy,page}) {
 
-  let payload = {};
+  //query
+  let query = supabase
+    .from("bookings")
+    .select("id,created_at, start_date, end_date, num_nights, num_guests, total_price, status,cabins(name), guests(full_name,email)", { count: "exact" });
+
   // filter
   if (filters) {
-    payload = {filterColumn: filters[0].field, filterValue: filters[0].value };
+    filters.forEach((filter) => {
+      query = query[filter.method || 'eq'](filter.field, filter.value)
+    })
   }
 
   //sortBy
-  console.log(process.env.REACT_APP_PAGE_LENGTH);
-  payload = {...payload, page:page,
-            pageLength:process.env.REACT_APP_PAGE_LENGTH,
-            sortByColumn:sortBy.field,
-            order:sortBy.order
-          };
-
-  const { data } = await axiosClient.post('/bookings/get',JSON.stringify(payload));
+  query = query.order(sortBy.field, {ascending: (sortBy.order === 'asc')}).range(page*10,(page+1)*10-1)
+  console.log(page*10,(page+1)*9);
+  const { data, error,count } = await query;
   // error handling
-  if (!data?.success) {
-    console.error(data?.error);
+  if (error) {
+    console.error(error);
     throw new Error("Can't retrieve bookings data");
   }
-  console.log(data.totalBookings);
-  const bookingsData = {data:data.bookings, count:data?.totalBookings};
+  const bookingsData = {data,count};
+  console.log(bookingsData,count);
 
   return bookingsData;
 }
 
 // returns a single booking record by id
 export async function getBooking(id) {
-  const { data } = await axiosClient.get('/Bookings/'+id);
+  const { data, error } = await supabase
+    .from("bookings")
+    .select("*, cabins(*), guests(*)")
+    .eq("id", id)
+    .single();
 
-  if (!data?.success) {
-    console.error(data?.error);
+  if (error) {
+    console.error(error);
     throw new Error("Booking not found");
   }
 
-  return data?.booking;
+  return data;
 }
 
 // Returns all BOOKINGS that are were created after the given date. Useful to get bookings created in the last 30 days, for example.
@@ -98,22 +102,27 @@ export async function getStaysTodayActivity() {
 }
 
 export async function updateBooking({id, obj}) {
-  const { data } = await axiosClient.put('Bookings/'+id, obj);
+  const { data, error } = await supabase
+    .from("bookings")
+    .update(obj)
+    .eq("id", id)
+    .select()
+    .single();
 
-  if (!data?.success) {
-    console.error(!data?.error);
+  if (error) {
+    console.error(error);
     throw new Error("Booking could not be updated");
   }
-  return data?.booking;
+  return data;
 }
 
 export async function deleteBooking(id) {
   // REMEMBER RLS POLICIES
-  const { data } = await axiosClient.delete('Bookings/'+id);
+  const { data, error } = await supabase.from("bookings").delete().eq("id", id);
 
-  if (!data?.success) {
-    console.error(!data?.error);
-    throw new Error("Booking could not be updated");
+  if (error) {
+    console.error(error);
+    throw new Error("Booking could not be deleted");
   }
-  return data?.booking;
+  return data;
 }
