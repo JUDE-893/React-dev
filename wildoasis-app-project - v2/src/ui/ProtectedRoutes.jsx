@@ -21,7 +21,7 @@ export default function ProtectedRoutes({children}) {
 
   // if not logged
   useEffect( () => {
-    if (user?.role !== "authenticated" && !isPending) navigate('/login')
+    //if (user?.role !== "authenticated" && !isPending) navigate('/login')
   },[user]);
 
   // don't have the data yet ?

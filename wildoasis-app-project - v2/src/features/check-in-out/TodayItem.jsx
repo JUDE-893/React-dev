@@ -34,7 +34,7 @@ export default function TodayItem({booking={}}) {
   const {checkin:checkout,isPending: checkingOut,error:checkoutError} = useCheckout('out');
 
 
-  const {id, status,num_nights, guests} = booking;
+  const {id, status,num_nights, guest:guests} = booking;
 
   const callBack = status === 'checked-in' ? () => checkout({id:id, obj:{status:'checked-out'}}, {
     onSuccess: () => {

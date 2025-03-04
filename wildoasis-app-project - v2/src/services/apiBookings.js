@@ -19,7 +19,7 @@ export async function getBookings({filters,sortBy,page}) {
             order:sortBy.order
           };
 
-  const { data } = await axiosClient.post('/bookings/get',JSON.stringify(payload));
+  const { data } = await axiosClient.post('/Bookings/get',JSON.stringify(payload));
   // error handling
   if (!data?.success) {
     console.error(data?.error);
@@ -45,56 +45,66 @@ export async function getBooking(id) {
 
 // Returns all BOOKINGS that are were created after the given date. Useful to get bookings created in the last 30 days, for example.
 export async function getBookingsAfterDate(date) {
-  const { data, error } = await supabase
-    .from("bookings")
-    .select("created_at, total_price, extra_price")
-    .gte("created_at", date)
-    .lte("created_at", getToday({ end: true }));
 
-  if (error) {
-    console.error(error);
+    let payload = JSON.stringify({
+      column: 'created_at',
+      startDate: date,
+      endDate:  getToday({ end: true })
+    });
+
+    const { data } = await axiosClient.post('/Bookings/get-stats-after-date',payload);
+
+
+  if (!data?.success) {
+    console.error(data?.error);
     throw new Error("Bookings could not get loaded");
-  }
+  };
 
-  return data;
+  return data?.bookings;
 }
 
 // Returns all STAYS that are were created after the given date
 export async function getStaysAfterDate(date) {
-  const { data, error } = await supabase
-    .from("bookings")
-    // .select('*')
-    .select("*, guests(full_name)")
-    .gte("start_date", date)
-    .lte("start_date", getToday());
+    let payload = JSON.stringify({
+      column: 'start_date',
+      startDate: date,
+      endDate:  getToday()
+    });
 
-  if (error) {
-    console.error(error);
+    const { data } = await axiosClient.post('/Bookings/get-stats-after-date',payload);
+
+
+  if (!data?.success) {
+    console.error(data?.error);
     throw new Error("Bookings could not get loaded");
-  }
+  };
 
-  return data;
+  return data?.bookings;
 }
 
 // Activity means that there is a check in or a check out today
 export async function getStaysTodayActivity() {
-  const { data, error } = await supabase
-    .from("bookings")
-    .select("*, guests(full_name, nationality, country_flag)")
-    .or(
-      `and(status.eq.unconfirmed,start_date.eq.${getToday()}),and(status.eq.checked-in,end_date.eq.${getToday()})`
-    )
-    .order("created_at");
+
+  const payload = JSON.stringify({
+    filterColumn: "status",
+    values : [
+      {timeColumn: 'start_date',
+      filterValue: 'unconfirmed'},
+      {timeColumn: 'end_date',
+      filterValue: 'checked-in'}
+    ]});
+
+  const { data } = await axiosClient.post('/Bookings/get-today-activities',payload);
 
   // Equivalent to this. But by querying this, we only download the data we actually need, otherwise we would need ALL bookings ever created
   // (stay.status === 'unconfirmed' && isToday(new Date(stay.start_date))) ||
   // (stay.status === 'checked-in' && isToday(new Date(stay.end_date)))
 
-  if (error) {
-    console.error(error);
+  if (!data?.success) {
+    console.error(data?.error);
     throw new Error("Bookings could not get loaded");
   }
-  return data;
+  return data?.bookings;
 }
 
 export async function updateBooking({id, obj}) {
