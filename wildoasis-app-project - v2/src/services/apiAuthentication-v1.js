@@ -1,32 +1,34 @@
 import {supabase} from './supabase';
-import axiosClient from './axiosClient';
 
 //function that logs a user in
 export async function apiLogin({email,password}) {
-  let { data } = await axiosClient.post('/auth/login', JSON.stringify({email: email,password: password}));
-
-  if (!data?.user?.email_verified_at) {
+  let { data, error } = await supabase.auth.signInWithPassword({
+  email: email,
+  password: password
+})
+  if (!data?.user?.email_confirmed_at) {
     console.log("Please confirm your email before logging in.");
   }
-  else if (data?.error) {
-    throw new Error(data?.error);
-    console.log('error while login',data?.error);
+  else if (error) {
+    throw new Error(error);
+    console.log('error while login',error);
   }
 
   console.log(data);
-  return data?.user;
+  return data;
 }
 
 // function that get the current loged-in user
 export async function getCurrentUser() {
-  const {data} = await axiosClient.get('/user');
+  const {data:session} = await supabase.auth.getSession();
 
-  // if (!session.session) {
-  //   return null
-  // }
+  if (!session.session) {
+    return null
+  }
 
+  const {data,error} = await supabase.auth.getUser();
 
-  if (data?.error) throw new Error(data?.error);
+  if (error) throw new Error(error);
 
   return data?.user
 }
@@ -34,11 +36,11 @@ export async function getCurrentUser() {
 //function that logs a user in
 export async function apiLogout() {
 
-  let { data } = await axiosClient.post('/logout');
+  let { error } = await supabase.auth.signOut()
 
-  if (data?.error) {
-    throw new Error(data?.error);
-    console.log('error while logout',data?.error);
+  if (error) {
+    throw new Error(error);
+    console.log('error while logout',error);
     return null;
   }
 
@@ -46,21 +48,24 @@ export async function apiLogout() {
 }
 
 // function that allow to create a user and SignUp
-export async function apiSignUp({email,password,name,password_confirm}) {
-  // let { csrf } = await axiosClient('')
-  let { data } = await axiosClient.post('/auth/register', JSON.stringify({
+export async function apiSignUp({email,password,full_name}) {
+
+  let { data, error } = await supabase.auth.signUp({
     email: email,
     password: password,
-    password_confirmation: password_confirm,
-    name: name,
-    avatar: null
-  }))
+    options: {
+      data:{
+        full_name: full_name,
+        avatar: ""
+      }
+    }
+  })
 
-  if (data?.error) {
-    throw new Error(data?.error?.message);
+  if (error) {
+    throw new Error(error.message);
     return null;
   }
-  console.log(data);
+
   return data;
 }
 

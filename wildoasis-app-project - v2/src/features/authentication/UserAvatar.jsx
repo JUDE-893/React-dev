@@ -25,7 +25,7 @@ export default function UserAvatar() {
 
   const {user,isPending} = useUser();
   console.log(user);
-  const {avatar,full_name} = user?.user_metadata ?? {};
+  const {avatar,full_name} = user ?? {};
 
   return (
     <StyledUserAvatar>

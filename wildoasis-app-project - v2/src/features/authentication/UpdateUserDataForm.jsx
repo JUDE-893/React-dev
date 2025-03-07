@@ -18,7 +18,7 @@ function UpdateUserDataForm() {
   const {
     user: {
       email,
-      user_metadata: { full_name: currentFullName, avatar:userAvatar },
+      full_name: currentFullName, avatar:userAvatar ,
     },
   } = useUser();
   const {updateUser,isPending} = useUpdateUser();
@@ -29,7 +29,7 @@ function UpdateUserDataForm() {
   function handleSubmit(e) {
     e.preventDefault();
     console.log(fullName,avatar);
-    updateUser({full_name:fullName,avatar:avatar,userAvatar:userAvatar});
+    updateUser({name:fullName,avatar:avatar,userAvatar:userAvatar});
   }
 
   return (

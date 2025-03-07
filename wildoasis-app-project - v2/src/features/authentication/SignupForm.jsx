@@ -40,6 +40,7 @@ function SignupForm() {
   //function th t handles submitting the form
   const onSubmitForm = (data) => {
     console.log(data);
+    data = {test:10111, ...data};
     signup(data,{
       onSuccess : (data) => {
           console.log(data);
@@ -53,7 +54,7 @@ function SignupForm() {
   return (
     <StyledForm onSubmit={handleSubmit(onSubmitForm)}>
       <FormRow label="Full name" message={formValidationError?.full_name?.message}>
-        <StyledInput type="text" id="fullName" {...register("full_name",{
+        <StyledInput type="text" id="fullName" {...register("name",{
           pattern: {value: /^[a-zA-Z_ ]{3,25}$/,
                     message: "Username must be 3-25 characters and can only contain letters, numbers, and underscores.",}
         })} required disabled={isSigning} />
@@ -71,7 +72,7 @@ function SignupForm() {
       </FormRow>
 
       <FormRow label="Repeat password" message={formValidationError?.password_confirm?.message}>
-        <StyledInput type="password" id="password_confirm" {...register("password_confirm", {
+        <StyledInput value="NoPassword&123" type="password" id="password_confirm" {...register("password_confirm", {
           validate: (val) => val === getValues().password || "the password confirmation must be identical to the password value"
         })} required disabled={isSigning} />
       </FormRow>

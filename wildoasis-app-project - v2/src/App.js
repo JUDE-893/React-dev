@@ -20,6 +20,7 @@ import Cabins from './pages/Cabins.jsx';
 import Signup from './pages/Signup.jsx';
 import Login from './pages/Login.jsx';
 import Users from './pages/Users.jsx';
+import VerifyEmail from './pages/VerifyEmail.jsx';
 
 
 
@@ -57,6 +58,7 @@ function App() {
               </Route>
               <Route path="/login" element={<Login/>}/>
               <Route path="/signup" element={<Signup/>}/>
+              <Route path="/verify-email" element={<VerifyEmail/>}/>
             </Routes>
           </BrowserRouter>
         </DarkModeProvider>
