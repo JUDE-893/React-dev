@@ -15,7 +15,7 @@ export default function useLogin() {
     mutationFn: apiUpdateUser,
     onSuccess : (data) => {
       toast.success('User profile updated successfully!');
-      queryClient.setQueryData(['user'],data.user)
+      queryClient.setQueryData(['user'],data)
     },
     onError : (e) => {toast.error(e.message);console.log(e);}
   })

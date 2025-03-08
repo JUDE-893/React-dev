@@ -34,7 +34,7 @@ export async function getCurrentUser() {
 //function that logs a user in
 export async function apiLogout() {
 
-  let { data } = await axiosClient.post('/logout');
+  let { data } = await axiosClient.post('/auth/logout');
 
   if (data?.error) {
     throw new Error(data?.error);
@@ -65,38 +65,42 @@ export async function apiSignUp({email,password,name,password_confirm}) {
 }
 
 // function that allow to update a user data
-export async function apiUpdateUser({password, avatar, full_name,userAvatar}) {
-
+export async function apiUpdateUser({password, avatar, name,userAvatar,toDelete}) {
+  
   //1 get the data obj
-  let payload;
-  if (password) payload = {password}
-  else if (full_name) payload = {data: {full_name:full_name}};
-
   //2 upload the data
-  const {data,error} = await supabase.auth.updateUser(payload);
-  console.log('data0', data);
-  if (error) {
-    throw new Error(error.message);
+  let payload,data;
+  if (password) {
+    payload = {password: password};
+    let resp = await axiosClient.post('/auth/reset-password', payload);
+    data = resp.data;
+  }
+  else if (name){
+    payload = {full_name: name};
+    const resp = await axiosClient.put('/update-profile', payload);
+    data = resp.data;
+  }
+  //fails
+  if (data?.error) {
+    throw new Error(data?.error);
+    console.log('error while logout',data?.error);
     return null;
   }
-  if(password) return data;
 
   //3 determin the image url
   if (!Boolean(userAvatar)) {
-     let imageName = avatar ? `avatar-${data.user.id}${Math.random()}` : null;
-     let imageUrl = imageName ? 'https://axudhzlpgiteizotiimm.supabase.co/storage/v1/object/public/avatars/'+imageName : null;
-     payload= {imageName:imageName,imageUrl:imageUrl}
+    console.log(data);
+     let imageName = avatar ? `avatar-${data.user.id}${Math.random()}.${avatar.name.replace('/','').split('.').reverse()[0]}` : null;
+     payload= {imageName:imageName};
    }else {
      console.log(typeof avatar,avatar);
-     let imageUrl = avatar;
-     let ar = userAvatar.split('/');
-     let imageName = ar[ar.length-1]
-     payload= {imageName:imageName,imageUrl:imageUrl}
+     let imageName = userAvatar;
+     payload= {imageName:imageName};
    }
 
    //4 upload image
-    if (avatar && payload.imageName) {
-      console.log(Boolean(userAvatar));
+   console.log(avatar , payload.imageName, Boolean(avatar && payload.imageName));
+    if (Boolean(avatar && payload.imageName)) {
       const {error: storageError} = await (Boolean(userAvatar) ? updateStoredAvatar(payload.imageName, avatar) : uploadAvatar(payload.imageName, avatar));
 
       if (storageError) {
@@ -106,49 +110,62 @@ export async function apiUpdateUser({password, avatar, full_name,userAvatar}) {
       //5 upload the avatar url
       if (!Boolean(userAvatar)) {
         let imageName = payload.imageName;
-        payload = {data: {avatar: payload.imageUrl}};
-        const {data:finalData,error:updateAvatarError} = await supabase.auth.updateUser(payload);
+        payload = {avatar: payload.imageName};
+        let resp = await axiosClient.put('/update-profile', payload);
+        data = resp.data;
 
-        if (updateAvatarError) {
+        if (!data?.success) {
           await deleteStoredImage(imageName);
-          throw new Error(updateAvatarError.message);
+          throw new Error(data?.error);
           return null;
         }
-        return finalData;
+        return data;
     } //end5
+  }else if (toDelete){ // to delete a user profile
+    const {error: deletetionError} = await deleteStoredImage(userAvatar);
+
+    // fails
+    if (deletetionError) {
+      throw new Error(deletetionError);
+      return null;
+    }
+
+    payload = {avatar: null};
+    const resp = await axiosClient.put('/update-profile', payload);
+    data = resp.data;
   }//end4
 
     console.log('not uploaded image', data);
-    return data
+    return data?.user
 }
-
 
 // update a stored image
 async function updateStoredAvatar(imageName, image) {
-  const { data, error} = await supabase
-    .storage
-    .from('avatars')
-    .update(imageName, image);
-      console.log('update img..');
-  if (error) throw new Error("can't replace avatar image");
-  return {error}
+  console.log('update');
+  let formData = new FormData();
+  formData.append('image',image);
+  formData.append('imageName',imageName);
+
+  const { data } = await axiosClient.post('bucket/avatar/update', formData)
+  console.log('update avatar..');
+  if (data?.error) throw new Error("can't replace avatar image");
+  return {error: data?.error}
 }
 
 async function uploadAvatar(imageName, image) {
-  const { data, error } = await supabase
-    .storage
-    .from('avatars')
-    .upload(imageName, image);
-    console.log('upload new img..');
+  console.log('upload');
+  let formData = new FormData();
+  formData.append('image',image);
+  formData.append('imageName',imageName);
 
-  if (error) throw new Error("can't upload avatar image");
-  return {error};
+  const { data } = await axiosClient.post('bucket/avatar', formData)
+  console.log('upload avatar..');
+  if (data?.error) throw new Error("can't upload avatar image");
+  return {error: data?.error}
 }
 
 // DELETE  STORED FILE
 async function deleteStoredImage(imageName) {
-  const { data, error } = await supabase
-  .storage
-  .from('cabin-images')
-  .remove([imageName])
+  const { data } = await axiosClient.delete('/bucket/avatar/'+imageName);
+  return {error: data?.error}
 }

@@ -26,10 +26,11 @@ export default function UserAvatar() {
   const {user,isPending} = useUser();
   console.log(user);
   const {avatar,full_name} = user ?? {};
+  const iavatar = avatar ? process.env.REACT_APP_AVATAR_IMAGE_BASE_URL +"/"+ avatar : "./default-user.jpg"
 
   return (
     <StyledUserAvatar>
-      <Avatar src={avatar || "./default-user.jpg"} alt="@user-avatar" />
+      <Avatar src={iavatar} alt="@user-avatar" />
       <p style={{fontWeight: 700}}>{full_name}</p>
     </StyledUserAvatar>
   )
