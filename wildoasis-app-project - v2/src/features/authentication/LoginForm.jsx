@@ -52,7 +52,7 @@ function LoginForm() {
         />
       </FormRowVertical>
       <FormRowVertical>
-        <Button size="large" disabled={email.split('').length === 0 || password.split('').length === 0}>{isPending ? <SpinnerMini /> : 'Login'}</Button>
+        <Button size="large" variation='primary' disabled={email.split('').length === 0 || password.split('').length === 0}>{isPending ? <SpinnerMini /> : 'Login'}</Button>
       </FormRowVertical>
     </Form>
   );

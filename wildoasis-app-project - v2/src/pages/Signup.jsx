@@ -1,6 +1,9 @@
 import styled from "styled-components";
+import { HiOutlineArrowRight } from "react-icons/hi2";
+
 import Logo from './../ui/Logo';
 import Heading from './../ui/Heading';
+import BottomFormLink from './../ui/BottomFormLink';
 import SignupForm from './../features/authentication/SignupForm';
 
 const LoginLayout = styled.main`
@@ -19,6 +22,9 @@ function Login() {
       <Logo />
       <Heading as="h2" style={{textAlign: "center"}}>Create new account</Heading>
       <SignupForm />
+      <BottomFormLink>
+        Already have an account? <BottomFormLink.Link to='/login' > Log In <HiOutlineArrowRight /></BottomFormLink.Link>
+      </BottomFormLink>
     </LoginLayout>
   )
 }

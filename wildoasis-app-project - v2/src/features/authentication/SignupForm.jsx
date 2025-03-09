@@ -42,12 +42,11 @@ function SignupForm() {
     data = {test:10111, ...data};
     signup(data,{
       onSuccess : (data) => {
-          console.log(data);
           setSigned(true)
     },})
   }
 
-  if (signed) return <StyledBox><h3>Congras!🎉You did signed Successfully. We did sent you a link, Check your email indox in order to confirm your account </h3></StyledBox>
+
 
 
   return (
@@ -71,7 +70,7 @@ function SignupForm() {
       </FormRow>
 
       <FormRow label="Repeat password" message={formValidationError?.password_confirm?.message}>
-        <StyledInput value="NoPassword&123" type="password" id="password_confirm" {...register("password_confirm", {
+        <StyledInput type="password" id="password_confirm" {...register("password_confirm", {
           validate: (val) => val === getValues().password || "the password confirmation must be identical to the password value"
         })} required disabled={isSigning} />
       </FormRow>

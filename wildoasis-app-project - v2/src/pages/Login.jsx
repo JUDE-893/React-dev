@@ -1,7 +1,10 @@
 import styled from "styled-components";
-import Logo from './../ui/Logo';
-import Heading from './../ui/Heading';
+import { HiOutlineArrowRight } from "react-icons/hi2";
+
 import LoginForm from './../features/authentication/LoginForm';
+import BottomFormLink from './../ui/BottomFormLink';
+import Heading from './../ui/Heading';
+import Logo from './../ui/Logo';
 
 const LoginLayout = styled.main`
   min-height: 100vh;
@@ -19,6 +22,12 @@ function Login() {
       <Logo />
       <Heading as="h2" style={{textAlign: "center"}}>Login in to your account</Heading>
       <LoginForm />
+      <BottomFormLink>
+        Forgot password? <BottomFormLink.Link to='/forgot-password' > Reset Password <HiOutlineArrowRight /></BottomFormLink.Link>
+      </BottomFormLink>
+      <BottomFormLink>
+        You don't have an account yet? <BottomFormLink.Link to='/signup' > Sign up <HiOutlineArrowRight /></BottomFormLink.Link>
+      </BottomFormLink>
     </LoginLayout>
   )
 }

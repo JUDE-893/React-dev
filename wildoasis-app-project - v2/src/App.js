@@ -8,6 +8,7 @@ import {Toaster} from 'react-hot-toast';
 import DarkModeProvider from './hooks/DarkModeProvider.jsx';
 import ProtectedRoutes from './ui/ProtectedRoutes.jsx';
 
+import ForgotPassword from './pages/ForgotPassword.jsx';
 import ResetPassword from './pages/ResetPassword.jsx';
 import PageNotFound from './pages/PageNotFound.jsx';
 import VerifyEmail from './pages/VerifyEmail.jsx';
@@ -61,6 +62,7 @@ function App() {
               <Route path="/signup" element={<Signup/>}/>
               <Route path="/verify-email" element={<VerifyEmail/>}/>
               <Route path="/password-reset/:token" element={<ResetPassword/>}/>
+              <Route path="/forgot-password" element={<ForgotPassword/>}/>
             </Routes>
           </BrowserRouter>
         </DarkModeProvider>
