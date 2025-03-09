@@ -39,7 +39,6 @@ function SignupForm() {
 
   //function th t handles submitting the form
   const onSubmitForm = (data) => {
-    console.log(data);
     data = {test:10111, ...data};
     signup(data,{
       onSuccess : (data) => {

@@ -21,11 +21,6 @@ export async function apiLogin({email,password}) {
 export async function getCurrentUser() {
   const {data} = await axiosClient.get('/user');
 
-  // if (!session.session) {
-  //   return null
-  // }
-
-
   if (data?.error) throw new Error(data?.error);
 
   return data?.user
@@ -66,16 +61,12 @@ export async function apiSignUp({email,password,name,password_confirm}) {
 
 // function that allow to update a user data
 export async function apiUpdateUser({password, avatar, name,userAvatar,toDelete}) {
-  
+
   //1 get the data obj
   //2 upload the data
   let payload,data;
-  if (password) {
-    payload = {password: password};
-    let resp = await axiosClient.post('/auth/reset-password', payload);
-    data = resp.data;
-  }
-  else if (name){
+
+  if (name){
     payload = {full_name: name};
     const resp = await axiosClient.put('/update-profile', payload);
     data = resp.data;
@@ -138,6 +129,22 @@ export async function apiUpdateUser({password, avatar, name,userAvatar,toDelete}
     console.log('not uploaded image', data);
     return data?.user
 }
+
+// function that trigger a password reset email verification sending
+export async function apiTriggerPasswordReset(email) {
+  const { data } = await axiosClient.post('/auth/forgot-password',JSON.stringify({email:email}));
+
+  if (data?.error) throw new Error("can't reset password");
+  return {error: data?.error}
+}
+
+export async function apiPasswordReset(payload) {
+  const { data } = await axiosClient.post('/auth/reset-password',JSON.stringify({...payload}));
+
+  if (data?.error) throw new Error("can't reset password");
+  return {error: data?.error}
+}
+
 
 // update a stored image
 async function updateStoredAvatar(imageName, image) {

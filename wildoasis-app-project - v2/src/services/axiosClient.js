@@ -23,7 +23,7 @@ axiosClient.interceptors.request.use( async (config) => {
 
   }
 
-  if (/^\/auth\/\w+$/.test(config.url)) {
+  if ((config.url).toLowerCase().includes('auth')) {
     let { csrf } = await axios.get("http://127.0.0.1:8000/sanctum/csrf-cookie", {
     withCredentials: true
 });

@@ -24,7 +24,6 @@ const Avatar = styled.img`
 export default function UserAvatar() {
 
   const {user,isPending} = useUser();
-  console.log(user);
   const {avatar,full_name} = user ?? {};
   const iavatar = avatar ? process.env.REACT_APP_AVATAR_IMAGE_BASE_URL +"/"+ avatar : "./default-user.jpg"
 
