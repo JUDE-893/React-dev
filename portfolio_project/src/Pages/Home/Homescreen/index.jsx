@@ -1,4 +1,3 @@
-import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {useState,useEffect} from 'react';
 
 import NavBar from "../NavBar";
@@ -8,6 +7,7 @@ import MySkills from "../MySkills";
 import AboutMe from "../aboutMe";
 import MyPortfolio from "../MyPortfolio";
 import Testimonials from "../Testimonials";
+import Technologies from "../Technologies";
 import ContactMe from "../ContactMe";
 import Footer from "../Footer";
 
@@ -43,21 +43,12 @@ export default function Home() {
       <HeroSection />
       <MySkills />
       <AboutMe />
+      <Technologies />
       <MyPortfolio />
-      <Testimonials />
+      {false && <Testimonials />}
       <ContactMe />
       <Footer toggleLink={toggleLink} activeLink={activeLink} />
 
-      <BrowserRouter>
-        <Routes>
-        <Route path="/home" element={<HeroSection />} />
-        <Route path="/skills" element={<MySkills />} />
-        <Route path="/about" element={<AboutMe />} />
-        <Route path="/portfolio" element={<MyPortfolio />} />
-        <Route path="/testimonials" element={<Testimonials />} />
-        <Route path="/contact" element={<ContactMe />} />
-        </Routes>
-      </BrowserRouter>
     </>
   )
 }

@@ -285,7 +285,7 @@ h1,h2,h3,h4,h5,h6,p {
 
 }
 
-.skill-box img {
+.skill-box img, .Tech {
   width : 38px;
   background-color: var(--white);
   box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
@@ -319,6 +319,38 @@ h1,h2,h3,h4,h5,h6,p {
 
 .About-Section .Section-big-title {
   margin-bottom: 40px;
+}
+
+/***************************/
+/*    Technologies       */
+/***********************/
+#Technologies {
+  display: flex;
+  gap: 1.0rem;
+  width: 80%;
+  flex-wrap: wrap;
+  margin: auto;
+}
+.Tech {
+  flex-basis: 15%;
+  width: 6rem;
+  height: 3rem;
+  padding:1rem 1rem -1rem 1rem;
+  width:100%;
+}
+.Tech img {
+  width: 6rem;
+  height: 3rem;
+}
+.tech-section {
+  width:'80%';
+  margin-left: auto!important;
+  text-align: center;
+  & .Section-big-title {
+    word-wrap: wrap !important;
+    width:90%!important;
+    font-size: 1.8rem;
+  }
 }
 
 
@@ -863,6 +895,30 @@ hr {
   }
   .Hero--section-img img {
     width: 350px;
+  }
+
+  /* tech section */
+  #Technologies {
+    display: flex;
+    gap: 1.0rem;
+    width: 90%;
+    flex-wrap: wrap;
+  }
+  .Tech {
+    flex-basis: 15%;
+    width: 6rem;
+    height: 3rem;
+    padding:1rem 1rem -1rem 1rem;
+    width:100%;
+  }
+  .Tech img {
+    width: 6rem;
+    height: 3rem;
+  }
+
+  .tech-section {
+    width:80%;
+    margin: auto
   }
 
   /* portfolio */

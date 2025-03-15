@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faFacebookF,faInstagram,faXTwitter,faLinkedin} from '@fortawesome/free-brands-svg-icons'
+import {faGithub,faXTwitter,faLinkedin} from '@fortawesome/free-brands-svg-icons'
 
 
 export default function Footer(props) {
@@ -21,21 +21,20 @@ export default function Footer(props) {
           <a href="#" className={activeLink.home ? active : "navLink"} onClick={() => toggleLink('home')}>Home</a>
           <a href="#portfolio" className={activeLink.portfolio ? active : "navLink"} onClick={() => toggleLink('portfolio')}>Portfolio</a>
           <a href="#about" className={activeLink.about ? active : "navLink"} onClick={() => toggleLink('about')}>About Me</a>
-          <a href='#testimonials' className={activeLink.testimonials ? active : "navLink"} onClick={() => toggleLink('testimonials')}>Testemonials</a>
+          <a href='#updates' className={activeLink.testimonials ? active : "navLink"} onClick={() => toggleLink('testimonials')}>Updates</a>
         </div>
         <div className="social-media">
-          <button  className="social-media-btn" type="button" name="button"><FontAwesomeIcon icon={faFacebookF} /></button>
-          <button  className="social-media-btn" type="button" name="button"><FontAwesomeIcon icon={faInstagram} /></button>
-          <button  className="social-media-btn" type="button" name="button"><FontAwesomeIcon icon={faXTwitter} /></button>
-          <button  className="social-media-btn" type="button" name="button"><FontAwesomeIcon icon={faLinkedin} /></button>
+          <button  onClick={() => window.open('https://github.com/JUDE-893','_blianc')} className="social-media-btn" type="button" name="button"><FontAwesomeIcon icon={faGithub} /></button>
+          <button  onClick={() => window.open('','_blianc')} className="social-media-btn" type="button" name="button"><FontAwesomeIcon icon={faXTwitter} /></button>
+          <button  onClick={() => window.open('','_blianc')} className="social-media-btn" type="button" name="button"><FontAwesomeIcon icon={faLinkedin} /></button>
         </div>
       </div>
 
       <hr />
 
       <div className="footer-bottom">
-        <div className="by-who">Made With ♥️ In Italy.</div>
-        <div className="copyright">© 2024 JUDE-893 All Rights Reserved.</div>
+        <div className="by-who">Made With ♥️ In Morocco.</div>
+        <div className="copyright">© 2024 <a href="https://github.com/JUDE-893" target='_blanc' style={{color:'inherit'}}>JUDE-893</a> All Rights Reserved.</div>
         <div className="Terms">
           <a href="#" className="">Privecy Policy</a>
           <a href="#" className="">Terms of Service</a>

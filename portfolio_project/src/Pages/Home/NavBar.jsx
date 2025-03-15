@@ -8,7 +8,7 @@ export default function NavBar(props) {
   //const [expanded,setExpanded] = useState(true),
   active = 'navLink activeLink';
 
-  console.log("NavBar");
+
   return(
     <div className="Nav">
       <div className="navLogo">
@@ -18,10 +18,10 @@ export default function NavBar(props) {
         <a href="#" className={activeLink.home ? active : "navLink"} onClick={() => toggleLink('home')}>Home</a>
         <a href="#portfolio" className={activeLink.portfolio ? active : "navLink"} onClick={() => toggleLink('portfolio')}>Portfolio</a>
         <a href="#about" className={activeLink.about ? active : "navLink"} onClick={() => toggleLink('about')}>About Me</a>
-        <a href='#testimonials' className={activeLink.testimonials ? active : "navLink"} onClick={() => toggleLink('testimonials')}>Testemonials</a>
+        <a href='#updates' className={activeLink.testimonials ? active : "navLink"} onClick={() => toggleLink('testimonials')}>Updates</a>
       </div>
       <div className="contactBtn">
-        <button  className='btn btn-outline-primary' type="button" name="button">Contact Me</button>
+        <button  className='btn btn-outline-primary' type="button" name="button" onClick={() => document.location.replace('#Contact')}><a style={{color:'inherit'}}>Contact Me</a></button>
       </div>
 
       <div className="menu">

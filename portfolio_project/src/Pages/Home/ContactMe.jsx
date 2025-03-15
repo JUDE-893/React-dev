@@ -1,6 +1,6 @@
 import {PureComponent,memo} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCircleExclamation} from '@fortawesome/free-solid-svg-icons';
+import {faPhone, faAt} from '@fortawesome/free-solid-svg-icons';
 
 
 export default class ContactMe extends PureComponent {
@@ -121,9 +121,9 @@ export default class ContactMe extends PureComponent {
 
         <p className="Section-title">Get In Touch</p>
         <p className="Section-big-title">Contact Me</p>
-        <p className="small-para">Lorem ipsum dolor sit amet, consectetur adipisicing elit!</p>
+        <p className="small-para">For any collaboration or opportunity, feel free to contact me.</p>
 
-        <div className="">
+        {false && <div className="">
 
           <div className="inp-container">
 
@@ -177,7 +177,14 @@ export default class ContactMe extends PureComponent {
             </div>
           </div>
           <button  className='btn btn-primary' type="submit" name="button" disabled={!this.onSubmit()}>Submit</button>
-        </div></div>
+        </div>}
+          <div>
+            <p className="Section-title" style={{marginTop:-50}}><FontAwesomeIcon icon={faAt} /> Email</p>
+             ayoub.arif541@gmail.com
+            <p className="Section-title" style={{marginTop:30}}><FontAwesomeIcon icon={faPhone} /> Phone Number</p>
+             +21707284258
+          </div>
+        </div>
     )}
 
 }
