@@ -1,0 +1,258 @@
+{
+  "react" : [
+    {
+    "title": "The Wild Oasis",
+    "description": "A comprehensive web application for managing a hotel resort, enabling administrators to handle bookings, rooms, guests, and staff efficiently.",
+    "features": [
+      "Booking Management",
+      "Room Management",
+      "Guest Management",
+      "Staff Management",
+      "Admin Dashboard",
+      "Authentication and Authorization"
+    ],
+    "technologies": {
+      "frontend": [
+        "React",
+        "React Router",
+        "Styled Components",
+        "Context API"
+      ],
+      "backend": [
+        "Supabase"
+      ],
+      "tools": [
+        "Vite",
+        "React Query",
+        "React Hook Form",
+        "Chart.js"
+      ]
+    },
+    "video": null,
+    "link": "https://thewildoasis-ebon.vercel.app/signup",
+    "poster": "./img/wildoasis.jpg",
+    "github": "https://github.com/JUDE-893/React-dev/tree/main/wildoasis-app-project"
+  },
+    {
+
+  "title": "CinemaParadiso",
+  "description": "A React-based web application that allows users to search for movies and TV shows using the TMDB API. It displays detailed information about movies, TV shows, seasons, episodes, and actors, and includes a custom layout for each type of content. Users can also watch trailers.",
+  "features": [
+    "Search Movies and TV Shows",
+    "Display Movie/TV Show Details",
+    "Custom Layouts for Movies, TV Shows, Seasons, and Episodes",
+    "Actor Details",
+    "Watch Trailers",
+    "Responsive Design with Bootstrap 5"
+  ],
+  "technologies": {
+    "frontend": [
+      "React",
+      "JavaScript",
+      "Axios (API Requests)",
+      "Bootstrap 5 (Styling)",
+      "React Router (Navigation)"
+    ],
+    "backend": [
+      "TMDB API (Movie and TV Data)"
+    ],
+    "tools": [
+      "VS Code (Development)",
+      "Git (Version Control)",
+      "Postman (API Testing)"
+    ]
+  },
+  "video": null,
+  "link": "https://cinemaparadiso02.vercel.app/",
+  "poster": "./img/cinemaParadiso.png",
+  "github": "https://github.com/JUDE-893/React-dev/tree/main/movie-app-project"
+}
+],
+  "react & laravel" : [
+    {
+    "title": "The Worldwise",
+    "description": "A travel tracking application that allows users to log and manage their travel experiences, including visited cities, countries, and personal notes. The app uses a Laravel REST API for backend operations and authentication.",
+    "features": [
+      "Travel Log Management",
+      "City and Country Tracking",
+      "User Authentication",
+      "CRUD Operations for Travel Data",
+      "Interactive Map Integration",
+      "User Profile Management"
+    ],
+    "technologies": {
+      "frontend": [
+        "React",
+        "React Router",
+        "Styled Components",
+        "Context API"
+      ],
+      "backend": [
+        "Laravel (REST API)",
+        "PHP",
+        "MySQL",
+        "Authentication (JWT or Sanctum)"
+      ],
+      "tools": [
+        "Vite",
+        "React Query",
+        "React Hook Form",
+        "Chart.js"
+      ]
+    },
+    "video": "https://example.com/videos/the-worldwise-demo.mp4",
+    "link": "https://theworldwise.vercel.app/",
+    "poster": "./img/worldwise.png",
+    "github": "https://github.com/JUDE-893/React-dev/tree/main/wildoasis-app-project"
+    },
+    {
+  "title": "The Wild Oasis v2",
+  "description": "A comprehensive hotel management application that allows administrators to manage bookings, rooms, guests, and staff. The backend is powered by a Laravel REST API, with Sanctum for authentication and Brevo for email verification.",
+  "features": [
+    "Booking Management",
+    "Room Management",
+    "Guest Management",
+    "Staff Management",
+    "Admin Dashboard",
+    "User Authentication (Sanctum)",
+    "Email Verification (Brevo)",
+    "CRUD Operations via Laravel REST API"
+  ],
+  "technologies": {
+    "frontend": [
+      "React",
+      "React Router",
+      "Styled Components",
+      "Context API"
+    ],
+    "backend": [
+      "Laravel (REST API)",
+      "PHP",
+      "MySQL",
+      "Sanctum (Authentication)",
+      "Brevo (Email Verification)"
+    ],
+    "tools": [
+      "Vite",
+      "React Query",
+      "React Hook Form",
+      "Chart.js"
+    ]
+  },
+  "video": "https://example.com/videos/the-wild-oasis-demo.mp4",
+  "link": "https://thewildoasisv20.vercel.app/login",
+  "poster": "data:image/jpeg;base64,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",
+  "github": "https://github.com/JUDE-893/React-dev/tree/main/wildoasis-app-project%20-%20v2"
+
+  }
+  ],
+  "nodejs" : [
+    {
+      "title": "Natours",
+      "description": "A RESTful API for a nature tours application, built with Node.js, Express, and MongoDB. It allows users to explore tours, book tours, and manage their bookings. The API includes advanced features like authentication, payment integration, and email notifications.",
+      "features": [
+        "Tour Management (CRUD Operations)",
+        "User Authentication and Authorization",
+        "Password Reset and Email Notifications",
+        "Payment Integration (Stripe)",
+        "Advanced Filtering, Sorting, and Pagination",
+        "Geospatial Queries (Find Tours Near You)",
+        "Error Handling and Security Best Practices",
+        "API Documentation with Postman"
+      ],
+      "technologies": {
+        "frontend": [
+          "Pug (for server-rendered views)",
+          "HTML/CSS",
+          "JavaScript"
+        ],
+        "backend": [
+          "Node.js",
+          "Express",
+          "MongoDB (with Mongoose)",
+          "JWT (JSON Web Tokens for Authentication)",
+          "Stripe (Payment Processing)",
+          "Nodemailer (Email Notifications)",
+          "Multer (File Uploads)"
+        ],
+        "tools": [
+          "Postman (API Testing)",
+          "MongoDB Compass (Database Management)",
+          "Git (Version Control)",
+          "Heroku (Deployment)"
+        ]
+      },
+      "video": null,
+      "link": null,
+      "poster" : "data:image/jpeg;base64,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",
+      "github" : "https://github.com/JUDE-893/NodeJs-dev/tree/main/Natour"
+    },
+    {
+      "title": "NodeFarm",
+      "description": "A simple Node.js application that demonstrates the basics of building a server, reading data from files, and rendering HTML templates dynamically. It simulates a farm product listing page, showcasing core Node.js concepts.",
+      "features": [
+        "Dynamic HTML Rendering",
+        "Reading Data from Files",
+        "Basic Routing",
+        "Error Handling",
+        "Simple API Endpoints"
+      ],
+      "technologies": {
+        "frontend": [
+          "HTML",
+          "CSS",
+          "JavaScript"
+        ],
+        "backend": [
+          "Node.js",
+          "Core Modules (fs, http, url)",
+          "Templating (Plain HTML with Dynamic Data)"
+        ],
+        "tools": [
+          "VS Code (Development)",
+          "Git (Version Control)",
+          "Command Line (Execution)"
+        ]
+      },
+      "video": null,
+      "link": null,
+      "poster" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNJXGZE2y9Hzea5XKrBuNNK6QNBqoTpLUriA&s",
+      "github" : "https://github.com/JUDE-893/NodeJs-dev/tree/main/NodeFarm"
+    }
+],
+  "react native" : [
+  {
+
+    "title": "React Native Music App",
+    "description": "A mobile music application built with React Native that allows users to search for albums, tracks, and artists using the Deezer API. The app includes features like playing 30-second audio previews, listing albums and tracks, and a search form.",
+    "features": [
+      "Search Form (Albums, Tracks, Artists)",
+      "Play 30-Second Audio Previews",
+      "List Albums and Tracks",
+      "Basic Navigation",
+      "Responsive UI for Mobile Devices"
+    ],
+    "technologies": {
+      "frontend": [
+        "React Native",
+        "JavaScript",
+        "useState (Hooks)",
+        "Class-Based Components",
+        "React Navigation"
+      ],
+      "backend": [
+        "Deezer API (Music Data)",
+        "Axios (API Requests)"
+      ],
+      "tools": [
+        "Expo (Development Environment)",
+        "VS Code (Code Editor)",
+        "Git (Version Control)"
+      ]
+    },
+    "video": "https://example.com/videos/react-native-music-app-demo.mp4",
+    "link": null
+
+}
+]
+}

@@ -28,7 +28,7 @@ export default memo(function MyPortfolio() {
               <p className='small-para'>A React admin dashboard app withe Supabase service.</p>
               <span style={{display:'flex'}}>
                 <p className='project-link'><a href="https://github.com/JUDE-893/React-dev/tree/main/wildoasis-app-project" target="_blank">View On GitHub</a> <FontAwesomeIcon icon={faArrowUpRightFromSquare} /> </p>
-                <p className='project-link' style={{marginLeft:'auto'}}><a href="https://thewildoasis-qqm1x88hd-jude-893s-projects.vercel.app" target="_blank">Live Preview</a> <FontAwesomeIcon icon={faArrowUpRightFromSquare} /> </p>
+                <p className='project-link' style={{marginLeft:'auto'}}><a href="https://thewildoasis-ebon.vercel.app/login" target="_blank">Live Preview</a> <FontAwesomeIcon icon={faArrowUpRightFromSquare} /> </p>
               </span>
             </div>
 
